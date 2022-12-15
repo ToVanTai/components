@@ -9,7 +9,7 @@
 <script>
 import Header from "./header/TheHeader.vue"
 import Title from "./title/TheTitle.vue"
-import EmployesPage from "../pages/employes/Employes.vue"
+import EmployesPage from "../../pages/employes/Employes.vue"
 export default {
   name : "MainLayout", 
   components: {

@@ -41,7 +41,7 @@
 
 <script>
 import EmployesTableItem from "./EmployesTableItem.vue"
-import employesData from "../../../../../data/employes" 
+import employesData from "../../../../data/employes" 
 export default {
   components: {EmployesTableItem},
   data(){

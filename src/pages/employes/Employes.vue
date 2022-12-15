@@ -413,7 +413,7 @@ export default {
   left: 0;
   right: 0;
   height: 100%;
-  background-image: url('../../../assets/loading.svg');
+  background-image: url('../../assets/loading.svg');
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 50px 50px;
@@ -573,16 +573,16 @@ export default {
   flex-basis: 48px;
   flex-grow: 0;
   flex-shrink: 0;
-  background-image: url('../../../assets/img/warning-question.png');
+  background-image: url('../../assets/img/warning-question.png');
   background-size: contain;
   background-repeat: no-repeat;
   background-position: center center;
 }
 .popup-warningred .employespage__popupnotify__body__icon {
-  background-image: url('../../../assets/img/warning-red.png');
+  background-image: url('../../assets/img/warning-red.png');
 }
 .popup-question .employespage__popupnotify__body__icon {
-  background-image: url('../../../assets/img/warning-question.png');
+  background-image: url('../../assets/img/warning-question.png');
 }
 .employespage__popupnotify__body__messenger {
   flex-grow: 1;
