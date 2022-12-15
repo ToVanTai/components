@@ -1,10 +1,10 @@
 <template>
-  <a href="javascript:void(0)" class="sidebar__body__item">
+  <router-link :to="sidebarItemData.to" class="sidebar__body__item">
     <div class="sidebar__body__item--icon">
       <i :class="sidebarItemData.icon"></i>
     </div>
     <div class="sidebar__body__item--text">{{sidebarItemData.title}}</div>
-  </a>
+  </router-link>
 </template>
 
 <script>
@@ -12,7 +12,8 @@ export default {
   props: {
     sidebarItemData : {
       icon: String,
-      title: String
+      title: String,
+      to: String
     }
   }
 }

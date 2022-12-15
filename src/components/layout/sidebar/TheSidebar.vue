@@ -2,12 +2,12 @@
   <div class="sidebar">
       <div class="sidebar__header">
         <div class="sidebar__header--toggle"><i class="fas fa-th"></i></div>
-        <a href="javascript:void(0)" class="sidebar__header__logo">
+        <router-link to="/" class="sidebar__header__logo">
           <img
             src="../../../assets/img/Logo_Module_TiengViet_White.66947422.svg"
             alt="QLNV AMIS kế toán"
           />
-        </a>
+        </router-link>
       </div>
       <div class="sidebar__body">
         <SidebarItem v-for="(item, index) in sidebarData" :key="index" :sidebarItemData="item">

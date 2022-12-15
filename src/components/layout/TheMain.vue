@@ -1,19 +1,16 @@
 <template>
   <div class="main">
     <Header/>
-    <Title/>
-    <EmployesPage/>
+    <router-view/>
   </div>
 </template>
 
 <script>
 import Header from "./header/TheHeader.vue"
-import Title from "./title/TheTitle.vue"
-import EmployesPage from "../../pages/employes/Employes.vue"
 export default {
   name : "MainLayout", 
   components: {
-    Header,Title,EmployesPage
+    Header
   }
 }
 </script>

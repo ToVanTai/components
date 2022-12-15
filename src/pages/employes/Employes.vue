@@ -1,4 +1,5 @@
 <template>
+  <TheTitle/>
   <div class="employespage">
         <!-- tìm kiếm theo tên, mã, số điện thoại -->
         <EmployesController/>
@@ -376,16 +377,17 @@
           </div>
         </div>
         <!-- end employespage__popupnotify -->
-      </div>
+  </div>
 </template>
 
 <script>
 import EmployesController from "./components/employesController/EmployesController.vue" 
 import EmployesPagination from "./components/employesPagination/EmployesPagination.vue"
 import EmployesTable from "./components/employesTable/EmployesTable.vue"
+import TheTitle from "../../components/layout/title/TheTitle.vue"
 export default {
   name: "EmployesPage",
-  components: {EmployesController, EmployesPagination,EmployesTable},  
+  components: {EmployesController, EmployesPagination,EmployesTable, TheTitle},  
 }
 </script>
 
