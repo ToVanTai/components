@@ -7,7 +7,7 @@ function padTo2Digits (num) {
 }
 /**
  * useTo: định dạng date
- * updateAt: tovantai_12/12/2022
+ * updateAt: tovantai_17/12/2022
  * author: tovantai
  * createdAt: 12/12/2022 
  */

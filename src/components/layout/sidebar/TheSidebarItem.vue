@@ -11,9 +11,9 @@
 export default {
   props: {
     sidebarItemData : {
-      icon: String,
-      title: String,
-      to: String
+      icon: String,//icon
+      title: String,//mô tả đường đẫn
+      to: String//ấn vào sẽ chuyển sang...
     }
   }
 }

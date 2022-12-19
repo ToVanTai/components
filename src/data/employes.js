@@ -1,3 +1,4 @@
+//fake dữ liệu nhân viên.
 const employesData = {
   "TotalPage": 3,
   "TotalRecord": 11,

@@ -1,44 +1,46 @@
 <template>
   <div class="header">
-        <div class="header__left">
-          <div class="header__left__icon--toggle">
-            <i class="fas fa-bars"></i>
-          </div>
-          <div class="header__left__company">
-            <p class="header__left__company--name">
-              công ty tnhh sản xuất - thương mại - dịch vụ qui phúc
-            </p>
-            <div class="header__left__company--arrowdown">
-              <i class="fas fa-chevron-down"></i>
-            </div>
-          </div>
+    <!-- start header left -->
+    <div class="header__left">
+      <div class="header__left__icon--toggle">
+        <i class="fas fa-bars"></i>
+      </div>
+      <div class="header__left__company">
+        <p class="header__left__company--name">
+          công ty tnhh sản xuất - thương mại - dịch vụ qui phúc
+        </p>
+        <div class="header__left__company--arrowdown">
+          <i class="fas fa-chevron-down"></i>
         </div>
-        <div class="header__right">
-          <div class="header__right__notify">
-            <div class="header__right__notify--icon">
-              <i class="far fa-bell"></i>
-            </div>
-          </div>
-          <div class="header__right__user">
-            <div class="header__right__user--avatar">
-              <img
-                src="../../../assets/img/default-avatar.jpg"
-                alt="ảnh đại diện mặc định"
-              />
-            </div>
-            <div class="header__right__user--name">Nguyễn Văn Mạnh</div>
-            <div class="header__right__user--iconmore">
-              <i class="fas fa-chevron-down"></i>
-            </div>
-          </div>
+      </div>
+    </div>
+    <!-- end header left -->
+    <!-- start header right -->
+    <div class="header__right">
+      <div class="header__right__notify">
+        <div class="header__right__notify--icon">
+          <i class="far fa-bell"></i>
         </div>
+      </div>
+      <div class="header__right__user">
+        <div class="header__right__user--avatar">
+          <img
+            src="../../../assets/img/default-avatar.jpg"
+            alt="ảnh đại diện mặc định"
+          />
+        </div>
+        <div class="header__right__user--name">Nguyễn Văn Mạnh</div>
+        <div class="header__right__user--iconmore">
+          <i class="fas fa-chevron-down"></i>
+        </div>
+      </div>
+    </div>
+    <!-- end header right -->
   </div>
 </template>
 
 <script>
-export default {
-  
-}
+export default {};
 </script>
 
 <style >

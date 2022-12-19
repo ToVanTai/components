@@ -1,5 +1,6 @@
 <template>
   <div class="employespage__pagination">
+          <!-- hiển thị số lượng bản ghi đã tìm thấy -->
           <div class="employespage__pagination__left">
             <div class="employespage__pagination__left--text">
               Tổng số: <b>25</b> bản ghi
@@ -7,6 +8,7 @@
           </div>
           <div class="employespage__pagination__right">
             <div class="employespage__pagination__right--selectquantity">
+              <!-- ô select để thay đổi số lượng bản ghi trên 1 trang -->
               <div class="input__controller input__iconend">
                 <select class="input__primary">
                   <option value="5" selected="">5 bản ghi trên 1 trang</option>
@@ -20,6 +22,7 @@
               </div>
             </div>
             <div class="employespage__pagination__right--pagination">
+              <!-- hiển thị thanh phân trang -->
               <Pagination/>
             </div>
           </div>

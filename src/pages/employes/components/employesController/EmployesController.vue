@@ -1,4 +1,5 @@
 <template>
+  <!-- hiển thị ô input tìm kiếm theo mã và tên nhân viên, và icon để thực hiện hành động tìm kiếm -->
   <div class="employespage__controller">
     <div
       class="input__controller input__iconend"

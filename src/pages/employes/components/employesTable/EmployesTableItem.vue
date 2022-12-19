@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {formatDate} from "../../../../util/format"
+import {formatDate} from "../../../../utils/format"
 export default {
   components: {},
   props: {

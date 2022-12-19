@@ -33,23 +33,16 @@
               </tr>
             </thead>
             <tbody id="employestable">
-              <EmployesTableItem v-for="employee in employesData.Data" :key="employee.EmployeeId" :employee="employee" />
+              <!-- danh sách employes sẽ hiển thị tại đây -->
             </tbody>
           </table>
         </div>
 </template>
 
 <script>
-import EmployesTableItem from "./EmployesTableItem.vue"
-import employesData from "../../../../data/employes" 
+// import EmployesTableItem from "./EmployesTableItem.vue"
 export default {
-  components: {EmployesTableItem},
-  data(){
-    return {
-      employesData
-    }
-    
-  }
+  components: {}
 }
 </script>
 

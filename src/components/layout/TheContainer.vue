@@ -1,4 +1,5 @@
 <template>
+  <!-- thùng chứa để bao quanh 2 components là sidebar và main -->
   <div class="container">
     <Sidebar/>
     <Main/>

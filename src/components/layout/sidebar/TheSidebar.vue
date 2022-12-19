@@ -10,6 +10,7 @@
         </router-link>
       </div>
       <div class="sidebar__body">
+        <!-- render danh sách các item bên trong sidebar -->
         <SidebarItem v-for="(item, index) in sidebarData" :key="index" :sidebarItemData="item">
         </SidebarItem>
       </div>
