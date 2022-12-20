@@ -3,14 +3,12 @@
   <div class="employespage__controller">
     <div
       class="input__controller input__iconend"
-      id="employespage__controller__search"
-    >
+      id="employespage__controller__search">
       <input
         class="italic input__primary"
         type="text"
         placeholder="Tìm theo mã, tên nhân viên"
-        name="txtEmployeeFilter"
-      />
+        name="txtEmployeeFilter" />
       <div class="input__icon--end"><i class="fas fa-search"></i></div>
       <!-- <div class="input__error_messenger">da co loi</div> -->
     </div>
@@ -18,17 +16,25 @@
       <i class="fas fa-redo"></i>
     </div>
   </div>
+  
 </template>
 
 <script>
+
 export default {
-  
-  
-}
+  data() {
+    return {
+      
+    };
+  },
+  components: {
+    
+  }
+};
 </script>
 
 <style>
-  .employespage__controller {
+.employespage__controller {
   padding-bottom: var(--padding-18);
   display: flex;
   align-items: center;

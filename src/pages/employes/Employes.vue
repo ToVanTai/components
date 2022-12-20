@@ -5,35 +5,61 @@
     <EmployesController />
     <EmployesTable />
     <EmployesPagination />
-
   </div>
+  <!-- hiển thị employesForm ở chỗ này -->
+  <EmployesForm
+    :isShow="isShowForm"
+    :isShowInfo="isShowInfo"
+    :isPending="isPending"
+    :overlayClick="overlayClick" />
 </template>
 
 <script>
+import EmployesForm from './components/employesForm/EmployesForm.vue';
 import EmployesController from "./components/employesController/EmployesController.vue";
 import EmployesPagination from "./components/employesPagination/EmployesPagination.vue";
 import EmployesTable from "./components/employesTable/EmployesTable.vue";
 import TheTitle from "../../components/layout/title/TheTitle.vue";
-import {} from "vue";
+// import {reactive} from "vue";
+// import {employesUrl} from "../../config/index"
+// import {httpGetAsync} from "../../utils/request"
 export default {
   name: "EmployesPage",
   components: {
     EmployesController,
     EmployesPagination,
     EmployesTable,
-    TheTitle
+    TheTitle,
+    EmployesForm
   },
-  setup() {
-    // tạo provide cho các components: controller, pagination, table, popup
-  },
+  
   data() {
     return {
-      
+      isShowForm: false, //đóng, mở form
+      isShowInfo: false, //trạng thái thêm mới
+      isPending: false, //ẩn, hiển pending
+      overlayClick: null, //xử lý click vào overlay
     }
   },
   methods: {
+    /**
+     * useTo: hiển thị form thêm mới nhân viên
+     * updatedAt: tovantai_20/12/2022
+     * author: tovantai
+     * createdAt: 20/12/2022
+     */
+    handleOverlayClick() {
+
+    },
+    /**
+     * useTo: 
+     * updatedAt: tovantai_20/12/2022
+     * author: tovantai
+     * createdAt: 20/12/2022
+     */
+    handleOverlayClick() {},
     
-  },
+  }
 };
 </script>
 

@@ -1,5 +1,5 @@
 <template>
-  <Popup :isShow="true">
+  <Popup :isShow="isShow" :isPending="isPending" :overlayClick="overlayClick">
     <form class="employeeForm">
       <!-- start btn close -->
       <div class="employeeForm__close">
@@ -284,7 +284,9 @@
       <div class="employeeform__footer">
         <div class="employeeform__footer__right">
           <!-- btn for close and createnew -->
-          <button class="btn btn-primary" v-if="!isShowInfo">Cất và Thêm</button>
+          <button class="btn btn-primary" v-if="!isShowInfo">
+            Cất và Thêm
+          </button>
           <!-- btn for close and update -->
           <button class="btn btn-primary" v-if="isShowInfo">Sửa</button>
           <!-- btn for close form -->
@@ -307,7 +309,25 @@ export default {
     Popup,
   },
   data() {
-    return { isShowInfo: false };
+    return {};
+  },
+  props: {
+    isShow: {
+      type: Boolean,
+      default: false,
+    },
+    isPending: {
+      type: Boolean,
+      default: false,
+    },
+    isShowInfo: {
+      type: Boolean,
+      default: false,
+    },
+    overlayClick: {
+      type: [Function, null],
+      default: function () {},
+    }
   },
 };
 </script>
