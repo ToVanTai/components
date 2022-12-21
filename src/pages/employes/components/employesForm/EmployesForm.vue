@@ -1,8 +1,8 @@
 <template>
-  <Popup :isShow="isShow" :isPending="isPending" :overlayClick="overlayClick">
+  <Popup :isShow="true" :isPending="isPending" :overlayClick="closeForm">
     <form class="employeeForm">
       <!-- start btn close -->
-      <div class="employeeForm__close">
+      <div class="employeeForm__close" @click="closeForm">
         <i class="fas fa-times"></i>
       </div>
       <!-- end btn close -->
@@ -46,8 +46,8 @@
                     type="text"
                     class="input__primary"
                     id="txtEmployeeCode"
-                    name="employeeCode"
-                    readonly />
+                    v-model="employeeCode"
+                    disabled />
                 </div>
               </div>
               <div class="col col-8" style="padding-left: 8px">
@@ -59,7 +59,8 @@
                     type="text"
                     class="input__primary"
                     id="txtEmployeeName"
-                    name="employeeName" />
+                    v-model="employeeName"
+                    ref="employeeNameElm"/>
                 </div>
               </div>
             </div>
@@ -73,7 +74,14 @@
                   <select
                     class="input__primary"
                     id="txtDepartmentId"
-                    name="departmentId"></select>
+                    v-model="departmentId">
+                    <option
+                      v-for="department in departments"
+                      :value="department.DepartmentId"
+                      :key="department.DepartmentId">
+                      {{ department.DepartmentName }}
+                    </option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -294,40 +302,144 @@
         </div>
         <div class="employeeform__footer__left">
           <!-- btn for reset form -->
-          <button class="btn">Hủy</button>
+          <button class="btn" @click.prevent="closeForm">Hủy</button>
         </div>
       </div>
       <!-- end footer -->
     </form>
   </Popup>
+  <Notify
+    :isShow="isErr"
+    :isWaringRed="isErr"
+    :messages="messages"
+    :overlayClick="closeNotify"
+    :btnOKClick="closeNotify"
+    :btnCloseClick="closeNotify"
+    :isPending="false" />
 </template>
 
 <script>
 import Popup from '../../../../components/common/Popup.vue';
+import Notify from '../../../../components/common/Notify.vue';
+import { departmentsUrl, employesUrl } from '../../../../config/index';
 export default {
   components: {
     Popup,
+    Notify,
   },
   data() {
-    return {};
+    return {
+      isPending: true,
+      departments: null,
+
+      //model cho input
+      employeeCode: '',
+      departmentId: '',
+      employeeName: '',
+
+      //hiển thị lỗi
+      isErr: false,
+      messages: [],
+    };
   },
   props: {
-    isShow: {
-      type: Boolean,
-      default: false,
-    },
-    isPending: {
-      type: Boolean,
-      default: false,
-    },
     isShowInfo: {
       type: Boolean,
       default: false,
     },
-    overlayClick: {
+    closeForm: {
+      //xử lý khi click vào overlay||nút đóng, nút hủy
       type: [Function, null],
-      default: function () {},
+      default: null,
+    },
+  },
+  mounted() {
+    if (this.isShowInfo) {
+      //ở trạng thái hiển thị thông tin nhân viên...
+    } else {
+      this.initFromCreatenewEmployee();
     }
+  },
+  updated() {},
+  methods: {
+    /**
+     * useTo: lấy mã nhân viên mới nhất
+     * updateBy: tovantai_21/12/2022
+     * author: tovantai
+     * createdAt: 21/12/2022
+     */
+    async getNewEmployeeCode() {
+      await new Promise((resolve, reject) => {
+        fetch(`${employesUrl}/NewEmployeeCode`).then((res) => {
+          if (res.status == 200) {
+            resolve(res.text());
+          } else {
+            reject('Không lấy được mã nhân viên mới.');
+          }
+        });
+      })
+        .then((res) => (this.employeeCode = res))
+        .catch((err) => {
+          //show notify err
+          this.isErr = true;
+          this.messages.push(err);
+        });
+    },
+    /**
+     * useTo: lấy danh sách phòng ban
+     * updateBy: tovantai_12/12/2022
+     * author: tovantai
+     * createdAt: 21/12/2022
+     */
+    async getDepartments() {
+      await new Promise((resolve, reject) => {
+        fetch(`${departmentsUrl}`).then((res) => {
+          if (res.status == 200) {
+            resolve(res.json());
+          } else {
+            reject('Không lấy được danh sách phòng ban.');
+          }
+        });
+      })
+        .then((res) => {
+          this.departments = res;
+        })
+        .catch((err) => {
+          // show notify err
+          this.isErr = true;
+          this.messages.push(err);
+        });
+    },
+    /**
+     * useTo: lấy danh sách phòng ban, mã nhân viên mới, focus input tên nhân viên
+     * updateBy: tovantai_12/12/2022
+     * author: tovantai
+     * createdAt: 21/12/2022
+     */
+    async initFromCreatenewEmployee() {
+      try {
+        this.isPending = true;
+        await Promise.all([this.getNewEmployeeCode(), this.getDepartments()]);
+        this.isPending = false;
+        if(!this.isErr){
+          this.$refs.employeeNameElm.focus()
+        }
+      } catch (err) {
+        this.isPending = false;
+        this.messages.push(err);
+        this.isErr = true;
+      }
+    },
+    /**
+     * useTo: đóng popup
+     * updateBy: tovantai_12/12/2022
+     * author: tovantai
+     * createdAt: 21/12/2022
+     */
+    closeNotify() {
+      this.isErr = false;
+      this.messages = [];
+    },
   },
 };
 </script>

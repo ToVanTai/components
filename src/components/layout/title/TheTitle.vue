@@ -1,7 +1,7 @@
 <template>
   <div class="title">
     <div class="title__text">Nhân viên</div>
-    <button class="btn btn-primary" id="btn__createnew__employee">
+    <button class="btn btn-primary" id="btn__createnew__employee" @click="btnCreatenewEmployeeClick">
       thêm mới nhân viên
     </button>
   </div>
@@ -9,7 +9,12 @@
 
 <script>
 export default {
-
+  props: {
+    btnCreatenewEmployeeClick: {
+      type: [Function, null],
+      default: null
+    }
+  }
 }
 </script>
 

@@ -20,8 +20,8 @@
         </div>
       </div>
       <div class="notify__footer">
-        <button class="btn btn-primary" @click="btnCloseClick">Đóng</button>
-        <button class="btn btn-danger notify__btnok" @click="btnOKClick">
+        <button class="btn btn-primary" ref="btnCloseElm" @click="btnCloseClick">Đóng</button>
+        <button class="btn btn-danger notify__btnok" ref="btnOkElm" @click="btnOKClick">
           Đồng ý
         </button>
       </div>
@@ -42,7 +42,7 @@ export default {
       type: Boolean,
       default: false,
     },
-    messages: [],
+    messages: null,
     isWaringRed: {
       type: Boolean,
       default: false,
@@ -64,6 +64,14 @@ export default {
       default: function () {},
     },
   },
+  mounted(){
+    //nếu là câu hỏi thì forcus vào oke
+    if(this.isQuestion){
+      this.$refs.btnOkElm.focus()
+    }else{
+      this.$refs.btnCloseElm.focus()
+    }
+  }
 };
 </script>
 

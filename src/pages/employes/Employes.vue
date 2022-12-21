@@ -1,5 +1,5 @@
 <template>
-  <TheTitle />
+  <TheTitle :btnCreatenewEmployeeClick="showFormInfo"/>
   <div class="employespage">
     <!-- tìm kiếm theo tên, mã, số điện thoại -->
     <EmployesController />
@@ -8,10 +8,9 @@
   </div>
   <!-- hiển thị employesForm ở chỗ này -->
   <EmployesForm
-    :isShow="isShowForm"
+    v-if="isShowForm"
     :isShowInfo="isShowInfo"
-    :isPending="isPending"
-    :overlayClick="overlayClick" />
+    :closeForm="closeForm"/>
 </template>
 
 <script>
@@ -36,29 +35,30 @@ export default {
   data() {
     return {
       isShowForm: false, //đóng, mở form
-      isShowInfo: false, //trạng thái thêm mới
-      isPending: false, //ẩn, hiển pending
-      overlayClick: null, //xử lý click vào overlay
+      isShowInfo: false, //trạng thái thêm mới || thông tin nhân viên
     }
   },
   methods: {
     /**
      * useTo: hiển thị form thêm mới nhân viên
-     * updatedAt: tovantai_20/12/2022
+     * updatedAt: tovantai_21/12/2022
      * author: tovantai
      * createdAt: 20/12/2022
      */
-    handleOverlayClick() {
-
+    showFormInfo() {
+      this.isShowForm = true
+      this.isShowInfo = false
     },
     /**
-     * useTo: 
-     * updatedAt: tovantai_20/12/2022
+     * useTo: đóng form 
+     * updatedAt: tovantai_21/12/2022
      * author: tovantai
-     * createdAt: 20/12/2022
+     * createdAt: 21/12/2022
      */
-    handleOverlayClick() {},
-    
+    closeForm() {
+      this.isShowForm = false
+      this.isShowInfo = false
+    }
   }
 };
 </script>
