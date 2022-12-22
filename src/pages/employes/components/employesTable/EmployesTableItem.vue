@@ -1,10 +1,10 @@
 <template>
-  <tr>
+  <tr @dblclick="(event)=>showEmployeeDetail(event, employee)">
     <td class="checkbox"><input type="checkbox" /></td>
     <td>{{employee.EmployeeCode}}</td>
     <td>{{employee.EmployeeName}}</td>
     <td>{{employee.Gender + "" === "0" ? "Nữ" : employee.Gender === 1 ? "Nam" : "Khác"}}</td>
-    <td class="date">{{DateOfBirth ? formatDate(employee.DateOfBirth) : ""}}</td>
+    <td class="date">{{employee.DateOfBirth && formatDate(employee.DateOfBirth)}}</td>
     <td>{{employee.IdentityNumber}}</td>
     <td>{{employee.PositionName}}</td>
     <td>{{employee.DepartmentName}}</td>
@@ -82,12 +82,40 @@ export default {
       ModifiedDate: null,
       ModifiedBy: null,
     },
+    showEmployeeFormInfor:{
+      type: [Function, null],
+      default: function(){}
+    }
   },
   data(){
     return {
-      formatDate
     }
-  }
+  },
+  methods: {
+    /**
+     * useTo: hiển thị dữ liệu ngày tháng đúng định dạng
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
+    formatDate,
+    /**
+     * useTo: lấy nhân viên muấn hiển thị ra form
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
+    showEmployeeDetail(event, employee){
+      try{
+      if (!event.target.closest(".checkbox") && !event.target.closest(".more")){
+              this.showEmployeeFormInfor(employee)
+            }
+      }catch(err){
+        console.log(err);
+      }
+      
+    }
+  },
 };
 </script>
 

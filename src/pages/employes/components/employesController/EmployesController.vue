@@ -12,7 +12,7 @@
       <div class="input__icon--end"><i class="fas fa-search"></i></div>
       <!-- <div class="input__error_messenger">da co loi</div> -->
     </div>
-    <div class="employespage__controller__iconreload">
+    <div class="employespage__controller__iconreload" @click="btnReloadClick">
       <i class="fas fa-redo"></i>
     </div>
   </div>
@@ -27,6 +27,13 @@ export default {
       
     };
   },
+  props: {
+    btnReloadClick: {
+      type: [Function, null],
+      default: function () {},
+    }
+  }
+  ,
   components: {
     
   }
