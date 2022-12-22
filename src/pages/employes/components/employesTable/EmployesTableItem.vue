@@ -1,16 +1,26 @@
 <template>
-  <tr @dblclick="(event)=>showEmployeeDetail(event, employee)">
+  <tr @dblclick="(event) => showEmployeeDetail(event, employee)">
     <td class="checkbox"><input type="checkbox" /></td>
-    <td>{{employee.EmployeeCode}}</td>
-    <td>{{employee.EmployeeName}}</td>
-    <td>{{employee.Gender + "" === "0" ? "Nữ" : employee.Gender === 1 ? "Nam" : "Khác"}}</td>
-    <td class="date">{{employee.DateOfBirth && formatDate(employee.DateOfBirth)}}</td>
-    <td>{{employee.IdentityNumber}}</td>
-    <td>{{employee.PositionName}}</td>
-    <td>{{employee.DepartmentName}}</td>
-    <td>{{employee.BankAccountNumber}}</td>
-    <td>{{employee.BankName}}</td>
-    <td>{{employee.BankBranchName}}</td>
+    <td>{{ employee.EmployeeCode }}</td>
+    <td>{{ employee.EmployeeName }}</td>
+    <td>
+      {{
+        employee.Gender + "" === "0"
+          ? "Nữ"
+          : employee.Gender === 1
+          ? "Nam"
+          : "Khác"
+      }}
+    </td>
+    <td class="date">
+      {{ employee.DateOfBirth && formatDate(employee.DateOfBirth) }}
+    </td>
+    <td>{{ employee.IdentityNumber }}</td>
+    <td>{{ employee.PositionName }}</td>
+    <td>{{ employee.DepartmentName }}</td>
+    <td>{{ employee.BankAccountNumber }}</td>
+    <td>{{ employee.BankName }}</td>
+    <td>{{ employee.BankBranchName }}</td>
     <td class="more">
       <div class="employespage__table__action__dropdown">
         Sửa
@@ -23,6 +33,7 @@
           </div>
           <div
             class="employespage__table__action__dropdown--item delete"
+            @click="showNofifyDeleteEmployee"
           >
             Xóa
           </div>
@@ -33,12 +44,30 @@
       </div>
     </td>
   </tr>
+  <Notify
+    v-if="messages.length != 0"
+    :isShow="messages.length != 0"
+    :isQuestion="true"
+    :messages="messages"
+    :overlayClick="cancelDelete"
+    :btnOKClick="handleDeleteEmployee"
+    :btnCloseClick="cancelDelete"
+    :isPending="isPending"
+  />
 </template>
 
 <script>
-import {formatDate} from "../../../../utils/format"
+import { formatDate } from "../../../../utils/format";
+import { employesUrl } from "../../../../config/index";
+import Notify from "../../../../components/common/Notify.vue";
 export default {
-  components: {},
+  components: { Notify },
+  data() {
+    return {
+      messages: [], //nếu có thì sẽ hiện notify,
+      isPending: false,
+    };
+  },
   props: {
     employee: {
       EmployeeId: null,
@@ -82,14 +111,10 @@ export default {
       ModifiedDate: null,
       ModifiedBy: null,
     },
-    showEmployeeFormInfor:{
+    showEmployeeFormInfor: {
       type: [Function, null],
-      default: function(){}
-    }
-  },
-  data(){
-    return {
-    }
+      default: function () {},
+    },
   },
   methods: {
     /**
@@ -105,16 +130,65 @@ export default {
      * author: tovantai
      * createAt: 22/12/2022
      */
-    showEmployeeDetail(event, employee){
-      try{
-      if (!event.target.closest(".checkbox") && !event.target.closest(".more")){
-              this.showEmployeeFormInfor(employee)
-            }
-      }catch(err){
+    showEmployeeDetail(event, employee) {
+      try {
+        if (
+          !event.target.closest(".checkbox") &&
+          !event.target.closest(".more")
+        ) {
+          this.showEmployeeFormInfor(employee);
+        }
+      } catch (err) {
         console.log(err);
       }
-      
-    }
+    },
+    /**
+     * useTo: Xử lý xóa nhân viên
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
+    showNofifyDeleteEmployee() {
+      try {
+        this.messages = [`Bạn có thực sự muấn xóa Nhân viên <${this.employee.EmployeeCode}> không? `];
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    /**
+     * useTo: Xử lý hủy xóa nhân viên
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
+    cancelDelete() {
+      this.messages = [];
+    },
+    async handleDeleteEmployee() {
+      try {
+        this.isPending = true;
+        await new Promise((resolve, reject) => {
+          fetch(`${employesUrl}/${this.employee.EmployeeId}`, {
+            method: "DELETE",
+          }).then((res) => {
+            this.isPending = false;
+            if (res.status == 200) {
+              resolve();
+            } else {
+              reject(res.json());
+            }
+          });
+        })
+          .then(() => {
+            this.messages = [];
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 </script>
