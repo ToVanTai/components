@@ -16,17 +16,9 @@
           Thêm mới nhân viên
         </div>
         <div class="input__controller group" style="padding-left: 12px">
-          <input
-            type="checkbox"
-            name="iscustomer"
-            id="checkbox__iscustomer"
-            value="true" />
+          <input type="checkbox" name="iscustomer" id="checkbox__iscustomer" value="true" />
           <label for="checkbox__iscustomer">Là khách hàng</label>
-          <input
-            type="checkbox"
-            name="issupplier"
-            id="checkbox__issupplier"
-            value="false" />
+          <input type="checkbox" name="issupplier" id="checkbox__issupplier" value="false" />
           <label for="checkbox__issupplier">Là nhà cung cấp</label>
         </div>
       </div>
@@ -38,46 +30,26 @@
             <!-- idemployee, name -->
             <div class="row">
               <div class="col col-4">
-                <label class="input__label required" for="txtEmployeeCode"
-                  >Mã</label
-                >
+                <label class="input__label required" for="txtEmployeeCode">Mã</label>
                 <div class="input__controller">
-                  <input
-                    type="text"
-                    class="input__primary"
-                    id="txtEmployeeCode"
-                    v-model="employeeCode"
-                    disabled />
+                  <input type="text" class="input__primary" id="txtEmployeeCode" v-model="employeeCode" ref="employeeCodeElm" />
                 </div>
               </div>
               <div class="col col-8" style="padding-left: 8px">
-                <label class="input__label required" for="txtEmployeeName"
-                  >Tên</label
-                >
+                <label class="input__label required" for="txtEmployeeName">Tên</label>
                 <div class="input__controller">
-                  <input
-                    type="text"
-                    class="input__primary"
-                    id="txtEmployeeName"
-                    v-model="employeeName"
-                    ref="employeeNameElm"/>
+                  <input type="text" class="input__primary" id="txtEmployeeName" v-model="employeeName"
+                    ref="employeeNameElm" />
                 </div>
               </div>
             </div>
             <!-- đơn vị -->
             <div class="row">
               <div class="col col-12">
-                <label class="input__label required" for="txtDepartmentId"
-                  >Đơn vị</label
-                >
+                <label class="input__label required" for="txtDepartmentId">Đơn vị</label>
                 <div class="input__controller">
-                  <select
-                    class="input__primary"
-                    id="txtDepartmentId"
-                    v-model="departmentId">
-                    <option
-                      v-for="department in departments"
-                      :value="department.DepartmentId"
+                  <select class="input__primary" id="txtDepartmentId" v-model="departmentId" ref="departmentIdElm">
+                    <option v-for="department in departments" :value="department.DepartmentId"
                       :key="department.DepartmentId">
                       {{ department.DepartmentName }}
                     </option>
@@ -88,15 +60,9 @@
             <!-- chức danh -->
             <div class="row">
               <div class="col col-12">
-                <label class="input__label" for="txtPositionName"
-                  >Chức danh</label
-                >
+                <label class="input__label" for="txtPositionName">Chức danh</label>
                 <div class="input__controller">
-                  <input
-                    type="text"
-                    name="positionName"
-                    class="input__primary"
-                    id="txtPositionName" />
+                  <input type="text" v-model="positionName" class="input__primary" id="txtPositionName" />
                 </div>
               </div>
             </div>
@@ -105,40 +71,19 @@
             <!-- birthday, gender, -->
             <div class="row">
               <div class="col col-4">
-                <label class="input__label" for="txtDateOfBirth"
-                  >Ngày sinh</label
-                >
+                <label class="input__label" for="txtDateOfBirth">Ngày sinh</label>
                 <div class="input__controller">
-                  <input
-                    type="date"
-                    class="input__primary"
-                    id="txtDateOfBirth"
-                    name="dateOfBirth" />
+                  <input type="date" class="input__primary" id="txtDateOfBirth" v-model="dateOfBirth" />
                 </div>
               </div>
               <div class="col col-8" style="padding-left: 8px">
                 <div class="input__label">Giới tính</div>
-                <div
-                  class="input__controller group"
-                  style="height: 32px"
-                  id="txtGender">
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="1"
-                    id="gender__male" />
+                <div class="input__controller group" style="height: 32px" id="txtGender">
+                  <input type="radio" v-model="gender" value="1" id="gender__male" />
                   <label for="gender__male">Nam</label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="0"
-                    id="gender__female" />
+                  <input type="radio" v-model="gender" value="0" id="gender__female" />
                   <label for="gender__female">Nữ</label>
-                  <input
-                    type="radio"
-                    name="gender"
-                    value="-1"
-                    id="gender__other" />
+                  <input type="radio" v-model="gender" value="-1" id="gender__other" />
                   <label for="gender__other">Khác</label>
                 </div>
               </div>
@@ -154,39 +99,22 @@
                   </div>
                 </label>
                 <div class="input__controller">
-                  <input
-                    type="text"
-                    class="input__primary"
-                    name="identityNumber"
-                    id="txtIdentityNumber"
-                    value="sfsfsf" />
+                  <input type="text" class="input__primary" v-model="identityNumber" id="txtIdentityNumber" />
                 </div>
               </div>
               <div class="col col-4">
-                <label class="input__label" for="txtIdentityDate"
-                  >Ngày cấp</label
-                >
+                <label class="input__label" for="txtIdentityDate">Ngày cấp</label>
                 <div class="input__controller">
-                  <input
-                    type="date"
-                    name="identityDate"
-                    class="input__primary"
-                    id="txtIdentityDate" />
+                  <input type="date" v-model="identityDate" class="input__primary" id="txtIdentityDate" />
                 </div>
               </div>
             </div>
             <!-- nơi cấp -->
             <div class="row">
               <div class="col col-12">
-                <label class="input__label" for="txtIdentityPlace"
-                  >Nơi cấp</label
-                >
+                <label class="input__label" for="txtIdentityPlace">Nơi cấp</label>
                 <div class="input__controller">
-                  <input
-                    type="text"
-                    name="identityPlace"
-                    class="input__primary"
-                    id="txtIdentityPlace" />
+                  <input type="text" v-model="identityPlace" class="input__primary" id="txtIdentityPlace" />
                 </div>
               </div>
             </div>
@@ -197,11 +125,7 @@
         <div class="row" style="margin-top: 18px">
           <label class="input__label" for="txtAddress">Địa chỉ</label>
           <div class="input__controller">
-            <input
-              type="text"
-              name="address"
-              id="txtAddress"
-              class="input__primary" />
+            <input type="text" v-model="address" id="txtAddress" class="input__primary" />
           </div>
         </div>
         <!-- phone, điện thoại cố định, email -->
@@ -215,11 +139,7 @@
               di đông
             </label>
             <div class="input__controller">
-              <input
-                type="tel"
-                name="phoneNumber"
-                id="txtPhoneNumber"
-                class="input__primary" />
+              <input type="tel" v-model="phoneNumber" id="txtPhoneNumber" class="input__primary" />
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
@@ -231,58 +151,34 @@
               cố định
             </label>
             <div class="input__controller">
-              <input
-                type="tel"
-                name="telephoneNumber"
-                class="input__primary"
-                id="txtTelephoneNumber" />
+              <input type="tel" v-model="telephoneNumber" class="input__primary" id="txtTelephoneNumber" />
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
             <label class="input__label" for="txtEmail">Email</label>
             <div class="input__controller">
-              <input
-                type="email"
-                name="email"
-                class="input__primary"
-                id="txtEmail" />
+              <input type="email" v-model="email" class="input__primary" id="txtEmail" />
             </div>
           </div>
         </div>
         <!-- accountbank, bankname -->
         <div class="row">
           <div class="col col-3" style="padding-right: 8px">
-            <label class="input__label" for="txtBankAccountNumber"
-              >Tài khoản ngân hàng</label
-            >
+            <label class="input__label" for="txtBankAccountNumber">Tài khoản ngân hàng</label>
             <div class="input__controller">
-              <input
-                type="text"
-                name="bankAccountNumber"
-                class="input__primary"
-                id="txtBankAccountNumber" />
+              <input type="text" v-model="bankAccountNumber" class="input__primary" id="txtBankAccountNumber" />
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
             <label class="input__label" for="txtBankName">Tên ngân hàng</label>
             <div class="input__controller">
-              <input
-                type="text"
-                name="bankName"
-                class="input__primary"
-                id="txtBankName" />
+              <input type="text" v-model="bankName" class="input__primary" id="txtBankName" />
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
-            <label class="input__label" for="txtBankBranchName"
-              >Chi nhánh</label
-            >
+            <label class="input__label" for="txtBankBranchName">Chi nhánh</label>
             <div class="input__controller">
-              <input
-                type="text"
-                name="bankBranchName"
-                class="input__primary"
-                id="txtBankBranchName" />
+              <input type="text" v-model="bankBranchName" class="input__primary" id="txtBankBranchName" />
             </div>
           </div>
         </div>
@@ -297,25 +193,19 @@
           </button>
           <!-- btn for close and update -->
           <button class="btn btn-primary" v-if="isShowInfo">Sửa</button>
-          <!-- btn for close form -->
-          <button class="btn" v-if="!isShowInfo">Cất</button>
+          <!-- btn for createnew -->
+          <button class="btn" v-if="!isShowInfo" @click.prevent="handleSubmitCreatenew">Cất</button>
         </div>
         <div class="employeeform__footer__left">
-          <!-- btn for reset form -->
+          <!-- btn for đóng form -->
           <button class="btn" @click.prevent="closeForm">Hủy</button>
         </div>
       </div>
       <!-- end footer -->
     </form>
   </Popup>
-  <Notify
-    :isShow="isErr"
-    :isWaringRed="isErr"
-    :messages="messages"
-    :overlayClick="closeNotify"
-    :btnOKClick="closeNotify"
-    :btnCloseClick="closeNotify"
-    :isPending="false" />
+  <Notify :isShow="messages.length != 0" :messages="messages" :overlayClick="closeNotify"
+    :btnOKClick="closeNotify" :btnCloseClick="closeNotify" :isPending="false" />
 </template>
 
 <script>
@@ -327,19 +217,32 @@ export default {
     Popup,
     Notify,
   },
-  data() {
+  data () {
     return {
       isPending: true,
-      departments: null,
+      departments: "",
 
       //model cho input
-      employeeCode: '',
-      departmentId: '',
-      employeeName: '',
-
-      //hiển thị lỗi
-      isErr: false,
-      messages: [],
+      employeeCode: '',//required
+      departmentId: '',//required
+      employeeName: '',//required
+      positionName: '',
+      dateOfBirth: '',
+      gender: '',
+      identityNumber: '',
+      identityDate: '',
+      identityPlace: '',
+      address: '',
+      phoneNumber: '',
+      telephoneNumber: '',
+      email: '',
+      bankAccountNumber: '',
+      bankName: '',
+      bankBranchName: '',
+      //hiển thị notify lỗi
+      messages: [],//nếu có thì sẽ hiện notify
+      inputErr: null, // true nếu submit form bị lỗi do server, hoặc input đầu tiên đang bị lỗi 
+      //khi đóng thông báo lỗi thì mới focus vào inputErr
     };
   },
   props: {
@@ -353,14 +256,16 @@ export default {
       default: null,
     },
   },
-  mounted() {
+  mounted () {
     if (this.isShowInfo) {
       //ở trạng thái hiển thị thông tin nhân viên...
     } else {
       this.initFromCreatenewEmployee();
     }
   },
-  updated() {},
+  updated () {
+    // console.log(this.departmentId);
+  },
   methods: {
     /**
      * useTo: lấy mã nhân viên mới nhất
@@ -368,21 +273,24 @@ export default {
      * author: tovantai
      * createdAt: 21/12/2022
      */
-    async getNewEmployeeCode() {
+    async getNewEmployeeCode () {
       await new Promise((resolve, reject) => {
         fetch(`${employesUrl}/NewEmployeeCode`).then((res) => {
           if (res.status == 200) {
             resolve(res.text());
           } else {
-            reject('Không lấy được mã nhân viên mới.');
+            if (res.status == 500) {
+              res.text().then(res => reject(JSON.parse(res).userMsg))
+            } else {
+              reject("Không lấy được mã nhân vien mới.")
+            }
           }
         });
       })
         .then((res) => (this.employeeCode = res))
         .catch((err) => {
-          //show notify err
-          this.isErr = true;
           this.messages.push(err);
+          this.inputErr = this.$refs.employeeCodeElm
         });
     },
     /**
@@ -391,7 +299,7 @@ export default {
      * author: tovantai
      * createdAt: 21/12/2022
      */
-    async getDepartments() {
+    async getDepartments () {
       await new Promise((resolve, reject) => {
         fetch(`${departmentsUrl}`).then((res) => {
           if (res.status == 200) {
@@ -405,9 +313,8 @@ export default {
           this.departments = res;
         })
         .catch((err) => {
-          // show notify err
-          this.isErr = true;
           this.messages.push(err);
+          this.inputErr = this.$refs.departmentIdElm
         });
     },
     /**
@@ -416,18 +323,17 @@ export default {
      * author: tovantai
      * createdAt: 21/12/2022
      */
-    async initFromCreatenewEmployee() {
+    async initFromCreatenewEmployee () {
       try {
         this.isPending = true;
         await Promise.all([this.getNewEmployeeCode(), this.getDepartments()]);
         this.isPending = false;
-        if(!this.isErr){
+        if(this.messages.length==0 && this.inputErr == null){
           this.$refs.employeeNameElm.focus()
         }
       } catch (err) {
         this.isPending = false;
         this.messages.push(err);
-        this.isErr = true;
       }
     },
     /**
@@ -436,11 +342,130 @@ export default {
      * author: tovantai
      * createdAt: 21/12/2022
      */
-    closeNotify() {
-      this.isErr = false;
-      this.messages = [];
+    closeNotify () {
+      this.messages = []//đóng form
+      //nếu submit form bị lỗi thì đóng luân form
+      if(this.inputErr === true){
+        console.log("Đóng luân form do submit form bị lỗi do server");
+      }else if(this.inputErr !== null){
+        //focus vào input đầu tiên bị lỗi
+        
+        setTimeout(()=>{
+          console.log(this.$refs[this.inputErr]);
+          this.$refs[this.inputErr].focus()
+        },100)
+      }
     },
+    /**
+     * useTo: xử lý submit form để thêm mới và 0 đóng form
+     * updateBy: tovantai_22/12/2022
+     * author: tovantai
+     * createdAt: 22/12/2022
+     */
+    async handleSubmitCreatenew () {
+      try {
+        if (this.isShowInfo === false) {
+          //nếu không có lỗi gì thì gọi api thêm mới nv
+          if(this.isErrForm() == false){
+            //goị api đẩy dữ liệu lên sever
+            this.isPending = true
+            var headers = new Headers()
+            headers.append("Content-Type", "application/json")
+            let dataNewEmployee = {
+              employeeCode: this.employeeCode,
+              departmentId: this.departmentId,
+              employeeName: this.employeeName,
+              positionName: this.positionName,
+              dateOfBirth: this.dateOfBirth,
+              gender: this.gender,
+              identityNumber: this.identityNumber,
+              identityDate: this.identityDate,
+              identityPlace: this.identityPlace,
+              address: this.address,
+              phoneNumber: this.phoneNumber,
+              telephoneNumber: this.telephoneNumber,
+              email: this.email,
+              bankAccountNumber: this.bankAccountNumber,
+              bankName: this.bankName,
+              bankBranchName: this.bankBranchName
+            }
+            fetch(`${employesUrl}`,{
+              method: "POST",
+              body: JSON.stringify(dataNewEmployee),
+              headers
+            }).then(res=>{
+              if(res.status == 201){
+                this.isPending = false
+                this.clearForm()
+                this.initFromCreatenewEmployee()
+              }else{
+                this.isPending = false
+                res.json().then(res=>{
+                  this.inputErr = "employeeCodeElm"
+                  this.messages.push(res.devMsg)
+                })
+              }
+            })
+          }
+        }
+      } catch (err) {
+        console.log();
+      }
+
+    },
+    /**
+     * useTo: 
+     * updateBy: tovantai_22/12/2022
+     * author: tovantai
+     * createdAt: 22/12/2022
+     */
+    isErrForm () {
+      let inputErrResult = false
+      let messagesResult = []
+
+      if (!this.departmentId) {
+        inputErrResult = "departmentIdElm"
+        messagesResult.push("Mã phòng ban là bắt buộc!")
+      }
+      if (!this.employeeName) {
+        inputErrResult = "employeeNameElm"
+        messagesResult.push("Tên nhân viên là bắt buộc!")
+      }
+      if (!this.employeeCode) {
+        inputErrResult = "employeeCodeElm"
+        messagesResult.push("Mã nhân viên là bắt buộc!")
+      }
+      if(inputErrResult !== false){
+        this.inputErr = inputErrResult
+        this.messages = messagesResult
+      }
+      return inputErrResult
+    },
+    clearForm(){
+      this.employeeCode = ""
+      this.departmentId = ""
+      this.employeeName = ""
+      this.positionName = ""
+      this.dateOfBirth = ""
+      this.gender = ""
+      this.identityNumber = ""
+      this.identityDate = ""
+      this.identityPlace = ""
+      this.address = ""
+      this.phoneNumber = ""
+      this.telephoneNumber = ""
+      this.email = ""
+      this.bankAccountNumber = ""
+      this.bankName = ""
+      this.bankBranchName = ""
+    }
   },
+  watch: {
+    // forcus vào input lỗi đầu tiên
+    inputErr(){
+      
+    }
+  }
 };
 </script>
 
@@ -454,9 +479,9 @@ export default {
   overflow-x: hidden;
   background-color: var(--color-bg-white);
   cursor: default;
-  padding: var(--padding-28) var(--padding-28) var(--padding-18)
-    var(--padding-28);
+  padding: var(--padding-28) var(--padding-28) var(--padding-18) var(--padding-28);
 }
+
 .employeeForm::-webkit-scrollbar {
   display: none;
 }
@@ -478,16 +503,19 @@ export default {
   transition: color var(--time-transition) ease,
     background-color var(--time-transition) ease;
 }
+
 .employeeForm__close:hover {
   background-color: var(--color-border-red);
   color: var(--color-text-white);
 }
+
 /* heading */
 .employeeForm__heading {
   display: flex;
   align-items: center;
   padding-bottom: var(--padding-10);
 }
+
 .employeeForm__heading--titleshow,
 .employeeForm__heading--titlecreatenew {
   font-family: notosans semibold;
@@ -501,6 +529,7 @@ export default {
   flex-direction: column;
   /* gap: var(--padding-18); */
 }
+
 .employeeform__body .input__label {
   margin-top: var(--padding-18);
 }
@@ -508,6 +537,7 @@ export default {
 .employeeform__body::-webkit-scrollbar {
   display: none;
 }
+
 /* footer */
 .employeeform__footer {
   margin-top: var(--margin-28);
@@ -517,11 +547,13 @@ export default {
   justify-content: space-between;
   align-items: center;
 }
+
 .employeeform__footer {
   display: flex;
   align-items: center;
   flex-direction: row-reverse;
 }
+
 .employeeform__footer__right {
   display: flex;
   flex-direction: row-reverse;

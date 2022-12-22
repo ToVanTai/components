@@ -68,6 +68,18 @@ export default {
     //nếu là câu hỏi thì forcus vào oke
     if(this.isQuestion){
       this.$refs.btnOkElm.focus()
+    }else if(this.isWaringRed){
+      this.$refs.btnCloseElm.focus()
+    }else{
+      this.$refs.btnCloseElm.focus()
+    }
+  },
+  updated(){
+    //nếu là câu hỏi thì forcus vào oke
+    if(this.isQuestion){
+      this.$refs.btnOkElm.focus()
+    }else if(this.isWaringRed){
+      this.$refs.btnCloseElm.focus()
     }else{
       this.$refs.btnCloseElm.focus()
     }
