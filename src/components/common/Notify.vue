@@ -11,8 +11,9 @@
     @click.self="overlayClick"
   >
     <div class="notify__container">
+      <div class="notify__container__close" @click="overlayClick"><i class="fas fa-times"></i></div>
       <div class="notify__body">
-        <div class="notify__body__icon"></div>
+        <div class="notify__body__heading">Thông báo</div>
         <div class="notify__body__messenger">
           <li v-for="message in messages" :key="message">
             {{ message }}
@@ -20,8 +21,18 @@
         </div>
       </div>
       <div class="notify__footer">
-        <button class="btn btn-primary" ref="btnCloseElm" @click="btnCloseClick">Đóng</button>
-        <button class="btn btn-danger notify__btnok" ref="btnOkElm" @click="btnOKClick">
+        <button
+          class="btn btn-primary"
+          ref="btnCloseElm"
+          @click="btnCloseClick"
+        >
+          Đóng
+        </button>
+        <button
+          class="btn btn-danger notify__btnok"
+          ref="btnOkElm"
+          @click="btnOKClick"
+        >
           Đồng ý
         </button>
       </div>
@@ -64,26 +75,26 @@ export default {
       default: function () {},
     },
   },
-  mounted(){
+  mounted() {
     //nếu là câu hỏi thì forcus vào oke
-    if(this.isQuestion){
-      this.$refs.btnOkElm.focus()
-    }else if(this.isWaringRed){
-      this.$refs.btnCloseElm.focus()
-    }else{
-      this.$refs.btnCloseElm.focus()
+    if (this.isQuestion) {
+      this.$refs.btnOkElm.focus();
+    } else if (this.isWaringRed) {
+      this.$refs.btnCloseElm.focus();
+    } else {
+      this.$refs.btnCloseElm.focus();
     }
   },
-  updated(){
+  updated() {
     //nếu là câu hỏi thì forcus vào oke
-    if(this.isQuestion){
-      this.$refs.btnOkElm.focus()
-    }else if(this.isWaringRed){
-      this.$refs.btnCloseElm.focus()
-    }else{
-      this.$refs.btnCloseElm.focus()
+    if (this.isQuestion) {
+      this.$refs.btnOkElm.focus();
+    } else if (this.isWaringRed) {
+      this.$refs.btnCloseElm.focus();
+    } else {
+      this.$refs.btnCloseElm.focus();
     }
-  }
+  },
 };
 </script>
 
@@ -143,40 +154,43 @@ export default {
   width: var(--popupnotify-width);
   background-color: var(--color-bg-white);
   border-radius: var(--border-radius);
-  padding: var(--padding-28);
+  padding: var(--padding-24);
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+.notify__container__close{
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  color: var(--color-text-grey);
+  cursor: pointer;
+  width: 24px;
+  height: 24px;
+  display:  flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
 }
 .notify__body {
   display: flex;
+  flex-direction: column;
   width: 100%;
   justify-content: space-between;
-  align-items: center;
-  gap: var(--padding-28);
-  margin-bottom: var(--margin-28);
+  gap: var(--padding-24);
 }
-.notify__body__icon {
-  height: 70px;
-  flex-basis: 48px;
-  flex-grow: 0;
-  flex-shrink: 0;
-  background-image: url("../../assets/img/warning-yellow.png");
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center center;
-}
-.popup-warningred .notify__body__icon {
-  background-image: url("../../assets/img/warning-red.png");
-}
-.popup-question .notify__body__icon {
-  background-image: url("../../assets/img/warning-question.png");
+.notify__body__heading {
+  font-size: 20px;
+  font-family: notosans bold;
 }
 .notify__body__messenger {
   flex-grow: 1;
   color: var(--color-text-grey);
+  font-size: 14px;
+  line-height: 18px;
 }
 .notify__footer {
-  padding-top: var(--padding-28);
-  border-top: 1px solid var(--color-border);
   display: flex;
   align-items: center;
   justify-content: flex-end;

@@ -155,6 +155,7 @@ export default {
     async initEmployesTable() {
       try {
         this.isPendingEmployes = true;
+        this.employes = {};
         await this.getEmployeeList();
         this.isPendingEmployes = false;
       } catch (err) {
