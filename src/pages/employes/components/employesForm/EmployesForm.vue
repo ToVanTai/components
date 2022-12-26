@@ -401,6 +401,10 @@ export default {
       type: [Object, null],
       default: null,
     },
+    resetTable: {
+      type: [Function, null],
+      default: null
+    }
   },
   mounted() {
     if (this.isShowInfo) {
@@ -576,6 +580,7 @@ export default {
                 this.isPending = false;
                 this.clearForm();
                 this.initFromCreatenewEmployee();
+                this.resetTable();
               } else {
                 this.isPending = false;
                 res.json().then((res) => {
@@ -630,6 +635,7 @@ export default {
             }).then((res) => {
               if (res.status == 201) {
                 this.closeForm();
+                this.resetTable();
               } else {
                 this.isPending = false;
                 res.json().then((res) => {
@@ -685,6 +691,7 @@ export default {
               if (res.status == 200) {
                 this.isPending = false;
                 this.closeForm();
+                this.resetTable();
               } else {
                 this.isPending = false;
                 res.json().then((res) => {
@@ -816,7 +823,7 @@ export default {
 }
 
 .employeeform__body .input__label {
-  margin-top: var(--padding-18);
+  margin-top: var(--padding-10);
 }
 
 .employeeform__body::-webkit-scrollbar {

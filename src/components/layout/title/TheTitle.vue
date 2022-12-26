@@ -2,7 +2,7 @@
   <div class="title">
     <div class="title__text">Nhân viên</div>
     <button class="btn btn-primary" id="btn__createnew__employee" @click="btnCreatenewEmployeeClick">
-      thêm mới nhân viên
+      Thêm mới nhân viên
     </button>
   </div>
 </template>

@@ -10,7 +10,7 @@
   top: 0;
   left: 50%;
   transform: translate(-50%, -100%);
-  background-color: var(--color-border-red);
+  background-color: var(--color-bg-green);
   color: var(--color-text-white);
   font-family: notosans semibold;
   min-width: 120px;
@@ -30,7 +30,7 @@
   border-width: 8px 12px;
   border-style: solid;
   border-color: transparent;
-  border-top-color: var(--color-border-red);
+  border-top-color: var(--color-bg-green);
   cursor: pointer;
 }
 .tooltip.tooltip__bottom .tooltip__messenger {
@@ -43,7 +43,7 @@
   bottom: unset;
   top: 0;
   transform: translate(-50%, -100%);
-  border-color: transparent transparent var(--color-border-red) transparent;
+  border-color: transparent transparent var(--color-bg-green) transparent;
 }
 .tooltip:hover .tooltip__messenger {
   display: block;

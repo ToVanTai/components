@@ -115,6 +115,10 @@ export default {
       type: [Function, null],
       default: function () {},
     },
+    resetTable:{
+      type: [Function, null],
+      default: null
+    }
   },
   methods: {
     /**
@@ -181,6 +185,7 @@ export default {
         })
           .then(() => {
             this.messages = [];
+            this.resetTable();
           })
           .catch((err) => {
             console.log(err);
