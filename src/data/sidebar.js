@@ -1,6 +1,6 @@
 //các dữ liệu dùng để hiển thị sidebar items
 const sidebarData = [
-  { icon: "fas fa-chart-pie", title: "tổng quan", to: "/" },
+  { icon: "fas fa-chart-pie", title: "Tổng quan", to: "/" },
   { icon: "fas fa-funnel-dollar", title: "Tiền mặt", to: "/" },
   { icon: "fas fa-university", title: "Tiền gửi", to: "/" },
   { icon: "fas fa-shopping-bag", title: "Mua hàng", to: "/" },

@@ -20,7 +20,7 @@
     :resetTable="initEmployesTable"
   />
   <!-- hiển thị thông báo ở chỗ này -->
-  <Notify
+  <BaseNotify
     v-if="messages.length != 0"
     :isShow="messages.length != 0"
     :messages="messages"
@@ -37,7 +37,7 @@ import EmployesController from "./components/employesController/EmployesControll
 import EmployesPagination from "./components/employesPagination/EmployesPagination.vue";
 import EmployesTable from "./components/employesTable/EmployesTable.vue";
 import TheTitle from "../../components/layout/title/TheTitle.vue";
-import Notify from "../../components/common/Notify.vue";
+import BaseNotify from "../../components/common/BaseNotify.vue";
 import { employesUrl } from "../../config/index";
 export default {
   name: "EmployesPage",
@@ -47,15 +47,15 @@ export default {
     EmployesTable,
     TheTitle,
     EmployesForm,
-    Notify,
+    BaseNotify,
   },
   data() {
     return {
-      isShowForm: false, //đóng, mở form
+      isShowForm: false, //trạng thái đóng, mở form
       isShowInfo: false, //trạng thái thêm mới || thông tin nhân viên
       employeeShow: null, //nhân viên đang show
-      employes: {},
-      isPendingEmployes: false,
+      employes: {}, //danh sách nhân viên
+      isPendingEmployes: false,//trạng thái pending khi lấy danh sách nhân viên
       //hiển thị notify lỗi
       messages: [], //nếu có thì sẽ hiện notify
     };

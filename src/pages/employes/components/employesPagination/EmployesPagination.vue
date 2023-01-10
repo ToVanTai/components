@@ -23,17 +23,17 @@
             </div>
             <div class="employespage__pagination__right--pagination">
               <!-- hiển thị thanh phân trang -->
-              <Pagination/>
+              <BasePagination/>
             </div>
           </div>
         </div>
 </template>
 
 <script>
-import Pagination from "../../../../components/common/Pagination.vue"
+import BasePagination from "../../../../components/common/BasePagination.vue"
 export default {
   components: {
-    Pagination
+    BasePagination
   }
 }
 </script>

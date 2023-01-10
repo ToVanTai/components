@@ -1,5 +1,5 @@
 <template>
-  <Popup :isShow="true" :isPending="isPending" :overlayClick="closeForm">
+  <BasePopup :isShow="true" :isPending="isPending" :overlayClick="closeForm">
     <form class="employeeForm">
       <!-- start btn close -->
       <div class="employeeForm__close" @click="closeForm">
@@ -339,8 +339,8 @@
       </div>
       <!-- end footer -->
     </form>
-  </Popup>
-  <Notify
+  </BasePopup>
+  <BaseNotify
     :isShow="messages.length != 0"
     :messages="messages"
     :overlayClick="closeNotify"
@@ -351,13 +351,13 @@
 </template>
 
 <script>
-import Popup from "../../../../components/common/Popup.vue";
-import Notify from "../../../../components/common/Notify.vue";
+import BasePopup from "../../../../components/common/BasePopup.vue";
+import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { departmentsUrl, employesUrl } from "../../../../config/index";
 export default {
   components: {
-    Popup,
-    Notify,
+    BasePopup,
+    BaseNotify,
   },
   data() {
     return {

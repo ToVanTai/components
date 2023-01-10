@@ -44,7 +44,7 @@
       </div>
     </td>
   </tr>
-  <Notify
+  <BaseNotify
     v-if="messages.length != 0"
     :isShow="messages.length != 0"
     :isQuestion="true"
@@ -59,9 +59,9 @@
 <script>
 import { formatDate } from "../../../../utils/format";
 import { employesUrl } from "../../../../config/index";
-import Notify from "../../../../components/common/Notify.vue";
+import BaseNotify from "../../../../components/common/BaseNotify.vue";
 export default {
-  components: { Notify },
+  components: { BaseNotify },
   data() {
     return {
       messages: [], //nếu có thì sẽ hiện notify,
@@ -168,6 +168,12 @@ export default {
     cancelDelete() {
       this.messages = [];
     },
+    /**
+     * useTo: Xử lý xóa nhân viên
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
     async handleDeleteEmployee() {
       try {
         this.isPending = true;
@@ -188,6 +194,7 @@ export default {
             this.resetTable();
           })
           .catch((err) => {
+            this.messages = [];
             console.log(err);
           });
       } catch (err) {
