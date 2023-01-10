@@ -7,32 +7,29 @@
       <thead>
         <tr>
           <th class="checkbox"><input type="checkbox" /></th>
-          <th>Mã nhân viên</th>
-          <th>Tên nhân viên</th>
-          <th>Giới tính</th>
-          <th class="date">Ngày sinh</th>
+          <th>{{ employeePage.employee.EmployeeCode }}</th>
+          <th>{{ employeePage.employee.EmployeeName }}</th>
+          <th>{{ employeePage.employee.Gender }}</th>
+          <th class="date">{{ employeePage.employee.DateOfBirth }}</th>
           <th>
-            Số
             <div class="tooltip tooltip__bottom">
-              cmnd
-              <div class="tooltip__messenger">số chứng minh nhân dân</div>
+              {{ employeePage.employee.IdentityNumber.Title }}
+              <div class="tooltip__messenger">{{ employeePage.employee.IdentityNumber.Subtitle }}</div>
             </div>
           </th>
-          <th>Chức danh</th>
-          <th>Tên đơn vị</th>
-          <th>Số tài khoản</th>
-          <th>Tên ngân hàng</th>
+          <th>{{ employeePage.employee.PositionName }}</th>
+          <th>{{ employeePage.employee.DepartmentName }}</th>
+          <th>{{ employeePage.employee.BankAccountNumber }}</th>
+          <th>{{ employeePage.employee.BankName }}</th>
           <th>
-            Chi nhánh
             <div class="tooltip tooltip__bottom">
-              TK
+              {{ employeePage.employee.BankBranchName.Title }}
               <div class="tooltip__messenger">
-                chi nhánh tài khoản ngân hàng
+                {{ employeePage.employee.BankBranchName.Subtitle }}
               </div>
             </div>
-            ngân hàng
           </th>
-          <th class="more">Chức năng</th>
+          <th class="more">{{ employeePage.employee.Functions }}</th>
         </tr>
       </thead>
       <tbody id="employestable">
@@ -45,10 +42,12 @@
 </template>
 
 <script>
+import { employeePage } from "@/resources";
 import EmployesTableItem from "./EmployesTableItem.vue"
 export default {
   components: {EmployesTableItem},
   data(){return {
+    employeePage
   }},
   props:{
     employeeList: {

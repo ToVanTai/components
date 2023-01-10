@@ -1,9 +1,68 @@
+<template>
+  <button
+    :class="{
+      btn: true,
+      disable: isDisable,
+      'btn-primary': isPrimary,
+      'btn-danger': isDanger,
+    }"
+    @click.prevent="btnClick"
+    @dblclick.prevent="btnDbclick"
+    ref="btnRef"
+  >
+    <slot />
+  </button>
+</template>
+
+<script>
+export default {
+  props: {
+    isFocus: {
+      type: Boolean,
+      default: false,
+    },
+    isDanger: {
+      type: Boolean,
+      default: false,
+    },
+    isPrimary: {
+      type: Boolean,
+      default: false,
+    },
+    isDisable: {
+      type: Boolean,
+      default: false,
+    },
+    btnClick: {
+      type: [Function, null],
+      default: function () {},
+    },
+    btnDbclick: {
+      type: [Function, null],
+      default: function () {},
+    },
+  },
+  mounted(){
+    if(this.isFocus){
+      this.$refs.btnRef.focus();
+    }
+  },
+  updated(){
+    if(this.isFocus){
+      this.$refs.btnRef.focus();
+    }
+  }
+};
+</script>
+
+<style scoped>
+/**Start css cho nút phụ */
 .btn {
   outline: none;
-  border: 1px solid var(--color-border);
+  border: 1px solid var(--color-border-btn);
   position: relative;
   border-radius: var(--border-radius);
-  height: var(--button-height);
+  height: var(--button-height-small);
   min-width: 80px;
   display: flex;
   justify-content: center;
@@ -23,16 +82,16 @@
 .btn:focus {
   background-color: var(--color-bg-grey-four);
 }
+/**End css Dành cho nút phụ */
 
+/**Start css trạng thái disable */
 .btn.disable {
   cursor: not-allowed !important;
-  opacity: 0.8 !important;
-  background-color: var(--color-bg-white) !important;
-  color: var(--color-text-black) !important;
-  border: 1px solid var(--color-border) !important;
+  opacity: 0.56 !important;
 }
+/**End css trạng thái disable */
 
-/* btn-primary */
+/* Start css cho nút chính */
 .btn.btn-primary {
   border-color: var(--color-bg-green);
   background: var(--color-bg-green);
@@ -46,9 +105,9 @@
 .btn.btn-primary:focus {
   background-color: var(--color-bg-green-press);
 }
-/* btn-primary */
+/* End css cho nút chính */
 
-/* btn-danger */
+/* Start css cho nút nguy hiểm */
 .btn.btn-danger {
   border-color: var(--color-border-red);
   background: var(--color-border-red);
@@ -63,4 +122,5 @@
   background-color: var(--color-border-red-active);
   border-color: var(--color-border-red-active);
 }
-/* btn-danger */
+/* End css cho nút nguy hiểm */
+</style>

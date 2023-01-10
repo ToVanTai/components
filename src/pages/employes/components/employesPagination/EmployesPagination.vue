@@ -3,7 +3,7 @@
           <!-- hiển thị số lượng bản ghi đã tìm thấy -->
           <div class="employespage__pagination__left">
             <div class="employespage__pagination__left--text">
-              Tổng số: <b>25</b> bản ghi
+              {{ paginationResource.total }}: <b>25</b> {{ paginationResource.records }}
             </div>
           </div>
           <div class="employespage__pagination__right">
@@ -11,10 +11,10 @@
               <!-- ô select để thay đổi số lượng bản ghi trên 1 trang -->
               <div class="input__controller input__iconend">
                 <select class="input__primary">
-                  <option value="5" selected="">5 bản ghi trên 1 trang</option>
-                  <option value="10">10 bản ghi trên 1 trang</option>
-                  <option value="15">15 bản ghi trên 1 trang</option>
-                  <option value="20">20 bản ghi trên 1 trang</option>
+                  <option value="5" selected="">5 {{paginationResource.recordPerPage}}</option>
+                  <option value="10">10 {{paginationResource.recordPerPage}}</option>
+                  <option value="15">15 {{paginationResource.recordPerPage}}</option>
+                  <option value="20">20 {{paginationResource.recordPerPage}}</option>
                 </select>
                 <div class="input__icon--end">
                   <i class="fas fa-sort-down"></i>
@@ -31,9 +31,15 @@
 
 <script>
 import BasePagination from "../../../../components/common/BasePagination.vue"
+import { employeePage } from "@/resources";
 export default {
   components: {
     BasePagination
+  },
+  data(){
+    return  {
+      paginationResource: employeePage.pagination
+    }
   }
 }
 </script>

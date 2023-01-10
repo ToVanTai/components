@@ -10,10 +10,10 @@
       <!-- start heading -->
       <div class="employeeForm__heading">
         <div v-if="isShowInfo" class="employeeForm__heading--titleshow">
-          Thông tin nhân viên
+          {{ resources.employee.Info }}
         </div>
         <div v-else class="employeeForm__heading--titlecreatenew">
-          Thêm mới nhân viên
+          {{ resources.employee.Create }}
         </div>
         <div class="input__controller group" style="padding-left: 12px">
           <input
@@ -22,14 +22,18 @@
             id="checkbox__iscustomer"
             value="true"
           />
-          <label for="checkbox__iscustomer">Là khách hàng</label>
+          <label for="checkbox__iscustomer">{{
+            resources.employee.IsCustomer
+          }}</label>
           <input
             type="checkbox"
             name="issupplier"
             id="checkbox__issupplier"
             value="false"
           />
-          <label for="checkbox__issupplier">Là nhà cung cấp</label>
+          <label for="checkbox__issupplier">{{
+            resources.employee.IsManufacture
+          }}</label>
         </div>
       </div>
       <!-- end heading -->
@@ -40,9 +44,9 @@
             <!-- idemployee, name -->
             <div class="row">
               <div class="col col-4">
-                <label class="input__label required" for="txtEmployeeCode"
-                  >Mã</label
-                >
+                <label class="input__label required" for="txtEmployeeCode">{{
+                  resources.employee.EmployeeCode
+                }}</label>
                 <div class="input__controller">
                   <input
                     type="text"
@@ -54,9 +58,9 @@
                 </div>
               </div>
               <div class="col col-8" style="padding-left: 8px">
-                <label class="input__label required" for="txtEmployeeName"
-                  >Tên</label
-                >
+                <label class="input__label required" for="txtEmployeeName">{{
+                  resources.employee.EmployeeName
+                }}</label>
                 <div class="input__controller">
                   <input
                     type="text"
@@ -71,9 +75,9 @@
             <!-- đơn vị -->
             <div class="row">
               <div class="col col-12">
-                <label class="input__label required" for="txtDepartmentId"
-                  >Đơn vị</label
-                >
+                <label class="input__label required" for="txtDepartmentId">{{
+                  resources.employee.DepartmentName
+                }}</label>
                 <div class="input__controller">
                   <select
                     class="input__primary"
@@ -95,9 +99,9 @@
             <!-- chức danh -->
             <div class="row">
               <div class="col col-12">
-                <label class="input__label" for="txtPositionName"
-                  >Chức danh</label
-                >
+                <label class="input__label" for="txtPositionName">{{
+                  resources.employee.PositionName
+                }}</label>
                 <div class="input__controller">
                   <input
                     type="text"
@@ -113,9 +117,9 @@
             <!-- birthday, gender, -->
             <div class="row">
               <div class="col col-4">
-                <label class="input__label" for="txtDateOfBirth"
-                  >Ngày sinh</label
-                >
+                <label class="input__label" for="txtDateOfBirth">{{
+                  resources.employee.DateOfBirth
+                }}</label>
                 <div class="input__controller">
                   <input
                     type="date"
@@ -126,7 +130,7 @@
                 </div>
               </div>
               <div class="col col-8" style="padding-left: 8px">
-                <div class="input__label">Giới tính</div>
+                <div class="input__label">{{ resources.employee.Gender }}</div>
                 <div
                   class="input__controller group"
                   style="height: 32px"
@@ -138,21 +142,27 @@
                     value="1"
                     id="gender__male"
                   />
-                  <label for="gender__male">Nam</label>
+                  <label for="gender__male">{{
+                    resources.employee.GenderMale
+                  }}</label>
                   <input
                     type="radio"
                     v-model="gender"
                     value="0"
                     id="gender__female"
                   />
-                  <label for="gender__female">Nữ</label>
+                  <label for="gender__female">{{
+                    resources.employee.GenderFemale
+                  }}</label>
                   <input
                     type="radio"
                     v-model="gender"
                     value="-1"
                     id="gender__other"
                   />
-                  <label for="gender__other">Khác</label>
+                  <label for="gender__other">{{
+                    resources.employee.GenderOther
+                  }}</label>
                 </div>
               </div>
             </div>
@@ -160,10 +170,11 @@
             <div class="row">
               <div class="col col-8" style="padding-right: 8px">
                 <label class="input__label" for="txtIdentityNumber">
-                  Số
                   <div class="tooltip">
-                    CMND
-                    <div class="tooltip__messenger">Số chứng minh nhân dân</div>
+                    {{ resources.employee.IdentityNumber.Title }}
+                    <div class="tooltip__messenger">
+                      {{ resources.employee.IdentityNumber.Subtitle }}
+                    </div>
                   </div>
                 </label>
                 <div class="input__controller">
@@ -176,9 +187,9 @@
                 </div>
               </div>
               <div class="col col-4">
-                <label class="input__label" for="txtIdentityDate"
-                  >Ngày cấp</label
-                >
+                <label class="input__label" for="txtIdentityDate">{{
+                  resources.employee.IdentityDate
+                }}</label>
                 <div class="input__controller">
                   <input
                     type="date"
@@ -192,9 +203,9 @@
             <!-- nơi cấp -->
             <div class="row">
               <div class="col col-12">
-                <label class="input__label" for="txtIdentityPlace"
-                  >Nơi cấp</label
-                >
+                <label class="input__label" for="txtIdentityPlace">{{
+                  resources.employee.IdentityPlace
+                }}</label>
                 <div class="input__controller">
                   <input
                     type="text"
@@ -210,7 +221,9 @@
         <div></div>
         <!-- address -->
         <div class="row" style="margin-top: 18px">
-          <label class="input__label" for="txtAddress">Địa chỉ</label>
+          <label class="input__label" for="txtAddress">{{
+            resources.employee.Address
+          }}</label>
           <div class="input__controller">
             <input
               type="text"
@@ -225,10 +238,11 @@
           <div class="col col-3" style="padding-right: 8px">
             <label class="input__label" for="txtPhoneNumber">
               <div class="tooltip">
-                ĐT
-                <div class="tooltip__messenger">Số điện thoại di động</div>
+                {{ resources.employee.PhoneNumber.Title }}
+                <div class="tooltip__messenger">
+                  {{ resources.employee.PhoneNumber.Subtitle }}
+                </div>
               </div>
-              di đông
             </label>
             <div class="input__controller">
               <input
@@ -242,10 +256,11 @@
           <div class="col col-3" style="padding-right: 8px">
             <label class="input__label" for="txtTelephoneNumber">
               <div class="tooltip">
-                ĐT
-                <div class="tooltip__messenger">Số điện thoại cố định</div>
+                {{ resources.employee.TelephoneNumber.Title }}
+                <div class="tooltip__messenger">
+                  {{ resources.employee.TelephoneNumber.Subtitle }}
+                </div>
               </div>
-              cố định
             </label>
             <div class="input__controller">
               <input
@@ -257,7 +272,9 @@
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
-            <label class="input__label" for="txtEmail">Email</label>
+            <label class="input__label" for="txtEmail">{{
+              resources.employee.Email
+            }}</label>
             <div class="input__controller">
               <input
                 type="email"
@@ -271,9 +288,9 @@
         <!-- accountbank, bankname -->
         <div class="row">
           <div class="col col-3" style="padding-right: 8px">
-            <label class="input__label" for="txtBankAccountNumber"
-              >Tài khoản ngân hàng</label
-            >
+            <label class="input__label" for="txtBankAccountNumber">{{
+              resources.employee.BankAccountNumber
+            }}</label>
             <div class="input__controller">
               <input
                 type="text"
@@ -284,7 +301,9 @@
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
-            <label class="input__label" for="txtBankName">Tên ngân hàng</label>
+            <label class="input__label" for="txtBankName">{{
+              resources.employee.BankName
+            }}</label>
             <div class="input__controller">
               <input
                 type="text"
@@ -296,7 +315,12 @@
           </div>
           <div class="col col-3" style="padding-right: 8px">
             <label class="input__label" for="txtBankBranchName"
-              >Chi nhánh</label
+              ><div class="tooltip">
+                {{ resources.employee.BankBranchName.Title }}
+                <div class="tooltip__messenger">
+                  {{ resources.employee.BankBranchName.Subtitle }}
+                </div>
+              </div></label
             >
             <div class="input__controller">
               <input
@@ -314,27 +338,33 @@
       <div class="employeeform__footer">
         <div class="employeeform__footer__right">
           <!-- btn for close and createnew -->
-          <button
-            class="btn btn-primary"
+          <BaseButton
+            :isPrimary="true"
             v-if="!isShowInfo"
-            @click.prevent="handleSubmitCreatenew"
+            :btnClick="handleSubmitCreatenew"
           >
-            Cất và Thêm
-          </button>
+            {{ resources.employee.ActionKeepAndContinue }}
+          </BaseButton>
           <!-- btn for close and update -->
-          <button class="btn btn-primary" v-if="isShowInfo" @click.prevent="handleSubmitUpdateEmployee">Sửa</button>
-          <!-- btn for createnew -->
-          <button
-            class="btn"
-            v-if="!isShowInfo"
-            @click.prevent="handleSubmitCreatenewAndClose"
+          <BaseButton
+            :isPrimary="true"
+            v-if="isShowInfo"
+            :btnClick="handleSubmitUpdateEmployee"
+            >{{ resources.employee.ActionUpdate }}</BaseButton
           >
-            Cất
-          </button>
+          <!-- btn for createnew -->
+          <BaseButton
+            v-if="!isShowInfo"
+            :btnClick="handleSubmitCreatenewAndClose"
+          >
+            {{ resources.employee.ActionKeep }}
+          </BaseButton>
         </div>
         <div class="employeeform__footer__left">
           <!-- btn for đóng form -->
-          <button class="btn" @click.prevent="closeForm">Hủy</button>
+          <BaseButton :btnClick="closeForm">{{
+            resources.employee.ActionCancel
+          }}</BaseButton>
         </div>
       </div>
       <!-- end footer -->
@@ -352,15 +382,21 @@
 
 <script>
 import BasePopup from "../../../../components/common/BasePopup.vue";
+import BaseButton from "../../../../components/common/BaseButton.vue";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { departmentsUrl, employesUrl } from "../../../../config/index";
+import { employeePage } from "@/resources";
 export default {
   components: {
     BasePopup,
     BaseNotify,
+    BaseButton,
   },
   data() {
     return {
+      //resources
+      resources: employeePage,
+      //trạng thái pending
       isPending: false,
       departments: "",
 
@@ -403,8 +439,8 @@ export default {
     },
     resetTable: {
       type: [Function, null],
-      default: null
-    }
+      default: null,
+    },
   },
   mounted() {
     if (this.isShowInfo) {
@@ -433,7 +469,7 @@ export default {
             if (res.status == 500) {
               res.text().then((res) => reject(JSON.parse(res).userMsg));
             } else {
-              reject("Không lấy được mã nhân vien mới.");
+              reject(this.resources.employeeNotify.GetNewEmployeeCodeFailed);
             }
           }
         });
@@ -456,7 +492,7 @@ export default {
           if (res.status == 200) {
             resolve(res.json());
           } else {
-            reject("Không lấy được danh sách phòng ban.");
+            reject(this.resources.employeeNotify.GetDepartmentsFailed);
           }
         });
       })
@@ -718,15 +754,15 @@ export default {
 
       if (!this.departmentId) {
         inputErrResult = "departmentIdElm";
-        messagesResult.push("Mã phòng ban là bắt buộc!");
+        messagesResult.push(this.resources.employeeNotify.RequiredDepartmentID);
       }
       if (!this.employeeName) {
         inputErrResult = "employeeNameElm";
-        messagesResult.push("Tên nhân viên là bắt buộc!");
+        messagesResult.push(this.resources.employeeNotify.RequiredEmployeeName);
       }
       if (!this.employeeCode) {
         inputErrResult = "employeeCodeElm";
-        messagesResult.push("Mã nhân viên là bắt buộc!");
+        messagesResult.push(this.resources.employeeNotify.RequiredEmployeeCode);
       }
       if (inputErrResult !== false) {
         this.inputErr = inputErrResult;

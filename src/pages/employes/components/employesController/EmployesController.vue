@@ -7,7 +7,7 @@
       <input
         class="italic input__primary"
         type="text"
-        placeholder="Tìm theo mã, tên nhân viên"
+        :placeholder="employeePage.controller.inputPlaceholder"
         name="txtEmployeeFilter" />
       <div class="input__icon--end"><i class="fas fa-search"></i></div>
       <!-- <div class="input__error_messenger">da co loi</div> -->
@@ -20,11 +20,12 @@
 </template>
 
 <script>
+import { employeePage } from '@/resources';
 
 export default {
   data() {
     return {
-      
+      employeePage
     };
   },
   props: {

@@ -1,14 +1,24 @@
 <template>
   <div class="title">
-    <div class="title__text">Nhân viên</div>
-    <button class="btn btn-primary" id="btn__createnew__employee" @click="btnCreatenewEmployeeClick">
-      Thêm mới nhân viên
-    </button>
+    <div class="title__text">{{ mainTitle.employee.title }}</div>
+    <BaseButton :btnClick="btnCreatenewEmployeeClick" 
+    :isPrimary="true">
+    {{ mainTitle.employee.createNewEmployee }}
+    </BaseButton>
   </div>
 </template>
 
 <script>
+import BaseButton from "../../../components/common/BaseButton.vue"
+import {mainTitle} from "../../../resources/index"
 export default {
+  components: {BaseButton},
+  
+  data(){
+    return {
+      mainTitle
+    }
+  },
   props: {
     btnCreatenewEmployeeClick: {
       type: [Function, null],

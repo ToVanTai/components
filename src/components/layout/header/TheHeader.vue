@@ -7,7 +7,7 @@
       </div>
       <div class="header__left__company">
         <p class="header__left__company--name">
-          công ty tnhh sản xuất - thương mại - dịch vụ qui phúc
+          {{mainHeader.companyName }}
         </p>
         <div class="header__left__company--arrowdown">
           <i class="fas fa-chevron-down"></i>
@@ -26,10 +26,10 @@
         <div class="header__right__user--avatar">
           <img
             src="../../../assets/img/default-avatar.jpg"
-            alt="ảnh đại diện mặc định"
+            :alt="mainHeader.avatarName"
           />
         </div>
-        <div class="header__right__user--name">Nguyễn Văn Mạnh</div>
+        <div class="header__right__user--name">{{ mainHeader.defaultUserName }}</div>
         <div class="header__right__user--iconmore">
           <i class="fas fa-chevron-down"></i>
         </div>
@@ -40,7 +40,12 @@
 </template>
 
 <script>
-export default {};
+import {mainHeader} from "../../../resources/index"
+export default {
+  data(){
+    return {mainHeader}
+  }
+};
 </script>
 
 <style >

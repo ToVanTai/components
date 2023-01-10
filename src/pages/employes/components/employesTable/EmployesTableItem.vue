@@ -6,10 +6,10 @@
     <td>
       {{
         employee.Gender + "" === "0"
-          ? "Nữ"
+          ? resources.employee.GenderFemale
           : employee.Gender === 1
-          ? "Nam"
-          : "Khác"
+          ? resources.employee.GenderMale
+          : resources.employee.GenderOther
       }}
     </td>
     <td class="date">
@@ -23,22 +23,22 @@
     <td>{{ employee.BankBranchName }}</td>
     <td class="more">
       <div class="employespage__table__action__dropdown">
-        Sửa
+        {{ resources.employee.ActionUpdate }}
         <div class="employespage__table__action__dropdown--toggle">
           <i class="fas fa-sort-down"></i>
         </div>
         <div class="employespage__table__action__dropdown--list">
           <div class="employespage__table__action__dropdown--item">
-            Nhân bản
+            {{ resources.employee.ActionDuplicate }}
           </div>
           <div
             class="employespage__table__action__dropdown--item delete"
             @click="showNofifyDeleteEmployee"
           >
-            Xóa
+          {{ resources.employee.ActionDelete }}
           </div>
           <div class="employespage__table__action__dropdown--item">
-            Ngừng sử dụng
+            {{ resources.employee.ActionStopUse }}
           </div>
         </div>
       </div>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import { employeePage } from "@/resources";
 import { formatDate } from "../../../../utils/format";
 import { employesUrl } from "../../../../config/index";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
@@ -64,6 +65,7 @@ export default {
   components: { BaseNotify },
   data() {
     return {
+      resources:employeePage,
       messages: [], //nếu có thì sẽ hiện notify,
       isPending: false,
     };
@@ -154,7 +156,7 @@ export default {
      */
     showNofifyDeleteEmployee() {
       try {
-        this.messages = [`Bạn có thực sự muấn xóa Nhân viên <${this.employee.EmployeeCode}> không? `];
+        this.messages = [`${this.resources.employeeNotify.ConfirmEmployeeDelete} <${this.employee.EmployeeCode}>? `];
       } catch (err) {
         console.log(err);
       }

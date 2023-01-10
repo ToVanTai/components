@@ -5,13 +5,17 @@
     <li data-index="3" class="num">3</li>
     <li data-index="4" class="num">4</li>
     <li data-index="5" class="num">5</li>
-    <li data-index="2" class="next">Sau</li>
+    <li data-index="2" class="next">{{paginationResources.next  }}</li>
   </ul>
 </template>
 
 <script>
+import { employeePage } from '@/resources';
 export default {
-  name: "PaginationComponent"
+  name: "PaginationComponent",
+  data(){
+    return { paginationResources : employeePage.pagination}
+  }
 }
 </script>
 

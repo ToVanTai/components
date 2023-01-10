@@ -21,20 +21,21 @@
         </div>
       </div>
       <div class="notify__footer">
-        <button
-          class="btn btn-primary"
-          ref="btnCloseElm"
-          @click="btnCloseClick"
+        <BaseButton
+          :isPrimary="true"
+          :isFocus="!isQuestion || true"
+          :btnClick="btnCloseClick"
         >
           Đóng
-        </button>
-        <button
-          class="btn btn-danger notify__btnok"
-          ref="btnOkElm"
-          @click="btnOKClick"
+        </BaseButton>
+        <BaseButton
+          v-if="isQuestion"
+          :isDanger="true"
+          :isFocus="isQuestion"
+          :btnClick="btnOKClick"
         >
           Đồng ý
-        </button>
+        </BaseButton>
       </div>
     </div>
   </div>
@@ -42,7 +43,10 @@
 </template>
 
 <script>
+import BaseButton from "./BaseButton.vue"
 export default {
+  components: {BaseButton}
+  ,
   name: "MyNotify",
   props: {
     isShow: {
@@ -74,27 +78,7 @@ export default {
       type: [Function, null],
       default: function () {},
     },
-  },
-  mounted() {
-    //nếu là câu hỏi thì forcus vào oke
-    if (this.isQuestion) {
-      this.$refs.btnOkElm.focus();
-    } else if (this.isWaringRed) {
-      this.$refs.btnCloseElm.focus();
-    } else {
-      this.$refs.btnCloseElm.focus();
-    }
-  },
-  updated() {
-    //nếu là câu hỏi thì forcus vào oke
-    if (this.isQuestion) {
-      this.$refs.btnOkElm.focus();
-    } else if (this.isWaringRed) {
-      this.$refs.btnCloseElm.focus();
-    } else {
-      this.$refs.btnCloseElm.focus();
-    }
-  },
+  }
 };
 </script>
 
@@ -195,11 +179,5 @@ export default {
   align-items: center;
   justify-content: flex-end;
   gap: 8px;
-}
-.notify__btnok {
-  display: none;
-}
-.popup-question .notify__btnok {
-  display: block;
 }
 </style>

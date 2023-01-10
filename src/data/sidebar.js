@@ -1,19 +1,22 @@
+import { sidebar } from "../resources/index"
+
+
 //các dữ liệu dùng để hiển thị sidebar items
 const sidebarData = [
-  { icon: "fas fa-chart-pie", title: "Tổng quan", to: "/" },
-  { icon: "fas fa-funnel-dollar", title: "Tiền mặt", to: "/" },
-  { icon: "fas fa-university", title: "Tiền gửi", to: "/" },
-  { icon: "fas fa-shopping-bag", title: "Mua hàng", to: "/" },
-  { icon: "fas fa-cart-arrow-down", title: "Bán hàng", to: "/" },
-  { icon: "fas fa-file-invoice-dollar", title: "Quản lý hóa đơn", to: "/" },
-  { icon: "fas fa-store-alt", title: "Kho", to: "/" },
-  { icon: "fas fa-tools", title: "Công cụ dụng cụ", to: "/" },
-  { icon: "fas fa-taxi", title: "Tài sản cố định", to: "/" },
-  { icon: "fas fa-university", title: "Thuế", to: "/" },
-  { icon: "fas fa-tags", title: "Giá thành", to: "/" },
-  { icon: "far fa-address-book", title: "Tổng hợp", to: "/" },
-  { icon: "fas fa-comment-dollar", title: "Ngân sách", to: "/" },
-  { icon: "fas fa-chart-bar", title: "Báo cáo", to: "/" },
-  { icon: "fas fa-chart-line", title: "Phân tích tài chính", to: "/" }
+  { icon: "fas fa-chart-pie", title: sidebar.overview, to: "/" },
+  { icon: "fas fa-funnel-dollar", title: sidebar.cash, to: "/" },
+  { icon: "fas fa-university", title: sidebar.savedMoney, to: "/" },
+  { icon: "fas fa-shopping-bag", title: sidebar.purchase, to: "/" },
+  { icon: "fas fa-cart-arrow-down", title: sidebar.sell, to: "/" },
+  { icon: "fas fa-file-invoice-dollar", title: sidebar.managementInvoice, to: "/" },
+  { icon: "fas fa-store-alt", title: sidebar.store, to: "/" },
+  { icon: "fas fa-tools", title: sidebar.tools, to: "/" },
+  { icon: "fas fa-taxi", title: sidebar.fixedAssets, to: "/" },
+  { icon: "fas fa-university", title: sidebar.tax, to: "/" },
+  { icon: "fas fa-tags", title: sidebar.price, to: "/" },
+  { icon: "far fa-address-book", title: sidebar.sum, to: "/" },
+  { icon: "fas fa-comment-dollar", title: sidebar.budget, to: "/" },
+  { icon: "fas fa-chart-bar", title: sidebar.report, to: "/" },
+  { icon: "fas fa-chart-line", title: sidebar.analysisFinancial, to: "/" }
 ]
 export default sidebarData
