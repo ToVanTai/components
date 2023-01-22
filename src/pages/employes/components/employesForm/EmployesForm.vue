@@ -67,7 +67,6 @@
                     class="input__primary"
                     id="txtEmployeeName"
                     v-model="employeeName"
-                    
                   />
                   <div class="input__error_messenger"></div>
                 </div>
@@ -84,7 +83,6 @@
                     class="input__primary"
                     id="txtDepartmentId"
                     v-model="departmentId"
-                    
                   >
                     <option
                       v-for="department in departments"
@@ -240,7 +238,7 @@
         <!-- phone, điện thoại cố định, email -->
         <div class="row">
           <div class="col col-3" style="padding-right: 8px">
-            <label class="input__label" for="txtPhoneNumber">
+            <label class="input__label required" for="txtPhoneNumber">
               <div class="tooltip">
                 {{ resources.employee.PhoneNumber.Title }}
                 <div class="tooltip__messenger">
@@ -248,13 +246,14 @@
                 </div>
               </div>
             </label>
-            <div class="input__controller">
+            <div class="input__controller" ref="phoneNumberElm">
               <input
                 type="tel"
                 v-model="phoneNumber"
                 id="txtPhoneNumber"
                 class="input__primary"
               />
+              <div class="input__error_messenger"></div>
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
@@ -392,7 +391,7 @@ import BaseButton from "../../../../components/common/BaseButton.vue";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { departmentsUrl, employesUrl } from "../../../../config/index";
 import { employeePage } from "@/resources";
-import {IsValidEmail} from "@/utils/format"
+import { IsValidEmail } from "@/utils/format";
 export default {
   components: {
     BasePopup,
@@ -493,7 +492,7 @@ export default {
      * author: tovantai
      * createdAt: 22/01/2023
      */
-     async getEmployeeInfo() {
+    async getEmployeeInfo() {
       await new Promise((resolve, reject) => {
         fetch(`${employesUrl}/${this.employeeShow}`).then((res) => {
           if (res.status == 200) {
@@ -627,6 +626,33 @@ export default {
       }
     },
     /**
+     * useTo: lấy form nhân viên đẩy lên sever
+     * updateBy: tovantai_12/12/2022
+     * author: tovantai
+     * createdAt: 21/12/2022
+     */
+    getEmployeeFormData() {
+      var employeeData = {
+        employeeCode: this.employeeCode.trim(),//
+        departmentId: this.departmentId.trim(),//
+        employeeName: this.employeeName.trim(),//
+        positionName: this.positionName.trim(),
+        dateOfBirth: this.dateOfBirth || null,
+        gender: this.gender.trim(),
+        identityNumber: this.identityNumber.trim(),
+        identityDate: this.identityDate || null,
+        identityPlace: this.identityPlace.trim(),
+        address: this.address.trim(),
+        phoneNumber: this.phoneNumber.trim(),//
+        telephoneNumber: this.telephoneNumber.trim(),
+        email: this.email.trim(),
+        bankAccountNumber: this.bankAccountNumber.trim(),
+        bankName: this.bankName.trim(),
+        bankBranchName: this.bankBranchName.trim(),
+      };
+      return employeeData;
+    },
+    /**
      * useTo: xử lý submit form để thêm mới và 0 đóng form
      * updateBy: tovantai_22/12/2022
      * author: tovantai
@@ -641,24 +667,7 @@ export default {
             this.isPending = true;
             var headers = new Headers();
             headers.append("Content-Type", "application/json");
-            let dataNewEmployee = {
-              employeeCode: this.employeeCode,
-              departmentId: this.departmentId,
-              employeeName: this.employeeName,
-              positionName: this.positionName,
-              dateOfBirth: this.dateOfBirth,
-              gender: this.gender,
-              identityNumber: this.identityNumber,
-              identityDate: this.identityDate,
-              identityPlace: this.identityPlace,
-              address: this.address,
-              phoneNumber: this.phoneNumber,
-              telephoneNumber: this.telephoneNumber,
-              email: this.email,
-              bankAccountNumber: this.bankAccountNumber,
-              bankName: this.bankName,
-              bankBranchName: this.bankBranchName,
-            };
+            let dataNewEmployee = this.getEmployeeFormData();
             fetch(`${employesUrl}`, {
               method: "POST",
               body: JSON.stringify(dataNewEmployee),
@@ -698,24 +707,7 @@ export default {
             this.isPending = true;
             var headers = new Headers();
             headers.append("Content-Type", "application/json");
-            let dataNewEmployee = {
-              employeeCode: this.employeeCode,
-              departmentId: this.departmentId,
-              employeeName: this.employeeName,
-              positionName: this.positionName,
-              dateOfBirth: this.dateOfBirth,
-              gender: this.gender,
-              identityNumber: this.identityNumber,
-              identityDate: this.identityDate,
-              identityPlace: this.identityPlace,
-              address: this.address,
-              phoneNumber: this.phoneNumber,
-              telephoneNumber: this.telephoneNumber,
-              email: this.email,
-              bankAccountNumber: this.bankAccountNumber,
-              bankName: this.bankName,
-              bankBranchName: this.bankBranchName,
-            };
+            let dataNewEmployee = this.getEmployeeFormData();
             fetch(`${employesUrl}`, {
               method: "POST",
               body: JSON.stringify(dataNewEmployee),
@@ -753,24 +745,7 @@ export default {
             this.isPending = true;
             var headers = new Headers();
             headers.append("Content-Type", "application/json");
-            let dataNewEmployee = {
-              employeeCode: this.employeeCode,
-              departmentId: this.departmentId,
-              employeeName: this.employeeName,
-              positionName: this.positionName,
-              dateOfBirth: this.dateOfBirth,
-              gender: this.gender,
-              identityNumber: this.identityNumber,
-              identityDate: this.identityDate,
-              identityPlace: this.identityPlace,
-              address: this.address,
-              phoneNumber: this.phoneNumber,
-              telephoneNumber: this.telephoneNumber,
-              email: this.email,
-              bankAccountNumber: this.bankAccountNumber,
-              bankName: this.bankName,
-              bankBranchName: this.bankBranchName,
-            };
+            let dataNewEmployee = this.getEmployeeFormData();
             fetch(`${employesUrl}/${this.employeeShow}`, {
               method: "PUT",
               body: JSON.stringify(dataNewEmployee),
@@ -803,62 +778,80 @@ export default {
     isErrForm() {
       let inputErrResult = false;
       let messagesResult = [];
-      this.$refs.departmentIdElm.classList.remove("err")
-      this.$refs.employeeNameElm.classList.remove("err")
-      this.$refs.employeeCodeElm.classList.remove("err")
-      this.$refs.dateOfBirthElm.classList.remove("err")
-      this.$refs.identityDateElm.classList.remove("err")
-      this.$refs.emailElm.classList.remove("err")
+      this.$refs.departmentIdElm.classList.remove("err");
+      this.$refs.employeeNameElm.classList.remove("err");
+      this.$refs.employeeCodeElm.classList.remove("err");
+      this.$refs.dateOfBirthElm.classList.remove("err");
+      this.$refs.identityDateElm.classList.remove("err");
+      this.$refs.emailElm.classList.remove("err");
+      this.$refs.phoneNumberElm.classList.remove("err");
 
+      //số điện thoại là bắt buộc
+      if(!this.phoneNumber.trim()){
+        inputErrResult = "phoneNumberElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.EmailNotValidate;
+        messagesResult.push(this.resources.employeeNotify.RequiredPhonenumber);
+      }
       //kiểm tra có đúng định dạng email
-      if(this.email && !IsValidEmail(this.email)){
+      if (this.email && !IsValidEmail(this.email)) {
         inputErrResult = "emailElm";
-        this.$refs[inputErrResult].classList.add("err")
-        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.EmailNotValidate;
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.EmailNotValidate;
         messagesResult.push(this.resources.employeeNotify.EmailNotValidate);
       }
-
       //so sánh ngày cấp với ngày hiện tại
-      if(this.identityDate){
+      if (this.identityDate) {
         let currentDate = new Date();
-        let identityDate2 = new Date(this.identityDate)
-        if(currentDate<identityDate2){
+        let identityDate2 = new Date(this.identityDate);
+        if (currentDate < identityDate2) {
           inputErrResult = "identityDateElm";
-          this.$refs[inputErrResult].classList.add("err")
-          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.IdentityDateNotValid;
-          messagesResult.push(this.resources.employeeNotify.IdentityDateNotValid);
+          this.$refs[inputErrResult].classList.add("err");
+          this.$refs[inputErrResult].lastChild.innerHTML =
+            this.resources.employeeNotify.IdentityDateNotValid;
+          messagesResult.push(
+            this.resources.employeeNotify.IdentityDateNotValid
+          );
         }
       }
       if (!this.departmentId) {
         inputErrResult = "departmentIdElm";
-        this.$refs[inputErrResult].classList.add("err")
-        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredDepartmentID;
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.RequiredDepartmentID;
         messagesResult.push(this.resources.employeeNotify.RequiredDepartmentID);
       }
       //so sánh ngày sinh với ngày hiện tại
-      if(this.dateOfBirth){
+      if (this.dateOfBirth) {
         let currentDate = new Date();
-        let dateOfBirth2 = new Date(this.dateOfBirth)
-        if(currentDate < dateOfBirth2){
+        let dateOfBirth2 = new Date(this.dateOfBirth);
+        if (currentDate < dateOfBirth2) {
           inputErrResult = "dateOfBirthElm";
-          this.$refs[inputErrResult].classList.add("err")
-          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.DateOfBirthNotValid;
-          messagesResult.push(this.resources.employeeNotify.DateOfBirthNotValid);
+          this.$refs[inputErrResult].classList.add("err");
+          this.$refs[inputErrResult].lastChild.innerHTML =
+            this.resources.employeeNotify.DateOfBirthNotValid;
+          messagesResult.push(
+            this.resources.employeeNotify.DateOfBirthNotValid
+          );
         }
       }
-      if (!this.employeeName) {
+      if (!this.employeeName.trim()) {
         inputErrResult = "employeeNameElm";
-        this.$refs[inputErrResult].classList.add("err")
-        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredEmployeeName;
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.RequiredEmployeeName;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeName);
       }
-      if (!this.employeeCode) {
+      if (!this.employeeCode.trim()) {
         inputErrResult = "employeeCodeElm";
-        this.$refs[inputErrResult].classList.add("err")
-        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredEmployeeCode;
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.RequiredEmployeeCode;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeCode);
       }
-      
+
       if (inputErrResult !== false) {
         this.inputErr = inputErrResult;
         this.messages = messagesResult;

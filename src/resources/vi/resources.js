@@ -110,11 +110,12 @@ export const employeePage = {
     "next": "Sau"
   },
   employeeNotify: {
-    GetNewEmployeeCodeFailed: "Không lấy được mã nhân vien mới.",
+    GetNewEmployeeCodeFailed: "Không lấy được mã nhân viên mới.",
     GetDepartmentsFailed: "Không lấy danh sách phòng ban.",
     RequiredDepartmentID: "Mã phòng ban là bắt buộc!",
     RequiredEmployeeName: "Tên nhân viên là bắt buộc!",
     RequiredEmployeeCode: "Mã nhân viên là bắt buộc!",
+    RequiredPhonenumber: "Số điện thoại là bắt buộc!",
     ConfirmEmployeeDelete: "Bạn có thực sự muấn xóa Nhân viên",
     DateOfBirthNotValid: "Ngày sinh không được lớn hơn ngày hiện tại!",
     IdentityDateNotValid: "Ngày cấp không được lớn hơn ngày hiện tại!",
