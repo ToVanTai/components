@@ -6,7 +6,7 @@ function padTo2Digits (num) {
   }
 }
 /**
- * useTo: định dạng date yy-mm-dd
+ * useTo: định dạng date dd-mm-yy
  * updateAt: tovantai_17/12/2022
  * author: tovantai
  * createdAt: 12/12/2022
@@ -23,6 +23,24 @@ export function formatDate (dateString) {
     console.log(err);
   }
 }
+
+/**
+ * useTo: định dạng date yy-mm-dd
+ * updateAt: tovantai_17/12/2022
+ * author: tovantai
+ * createdAt: 12/12/2022
+ */
+export function formatDateV2 (dateString) {
+  try {
+    let date = new Date(dateString);
+    return [
+      date.getFullYear(), padTo2Digits(date.getMonth() + 1), padTo2Digits(date.getDate()),
+    ].join('-');
+  } catch (err) {
+    console.log(err);
+  }
+}
+
 /**
  * useTo: kiểm tra email có đúng định dạng
  * updateAt

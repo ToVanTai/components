@@ -391,7 +391,7 @@ import BaseButton from "../../../../components/common/BaseButton.vue";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { departmentsUrl, employesUrl } from "../../../../config/index";
 import { employeePage } from "@/resources";
-import { IsValidEmail } from "@/utils/format";
+import { IsValidEmail, formatDateV2 } from "@/utils/format";
 export default {
   components: {
     BasePopup,
@@ -521,11 +521,11 @@ export default {
           this.departmentId = res.DepartmentId;
           this.employeeName = res.EmployeeName;
           this.positionName = res.PositionName;
-          this.dateOfBirth = res.DateOfBirth;
+          this.dateOfBirth = res.DateOfBirth && formatDateV2(res.DateOfBirth);
           this.gender = res.Gender;
-          this.identityNumber = res.IdentityNumber;
-          this.identityDate = res.IdentityDate;
-          this.identityPlace = res.IdentityPlace;
+          this.identityNumber = res.IndentityNumber;
+          this.identityDate = res.IndentityDate && formatDateV2(res.IndentityDate);
+          this.identityPlace = res.IndentityPlace;
           this.address = res.Address;
           this.phoneNumber = res.PhoneNumber;
           this.telephoneNumber = res.TelephoneNumber;
@@ -658,26 +658,26 @@ export default {
         employeeName: this.employeeName.trim(),//
         positionName: this.positionName.trim(),
         dateOfBirth: this.dateOfBirth || null,
-        gender: this.gender || -1,
-        identityNumber: this.identityNumber,
-        identityDate: this.identityDate || null,
-        identityPlace: this.identityPlace,
-        address: this.address,
+        gender: this.gender || 0,
+        IndentityNumber: this.identityNumber || "",
+        IndentityDate: this.identityDate || null,
+        IndentityPlace: this.identityPlace || "",
+        address: this.address || "",
         phoneNumber: this.phoneNumber.trim(),//
-        telephoneNumber: this.telephoneNumber,
+        telephoneNumber: this.telephoneNumber || "",
         email: this.email.trim(),
-        bankAccountNumber: this.bankAccountNumber,
-        bankName: this.bankName,
-        bankBranchName: this.BankBranchName,
+        bankAccountNumber: this.bankAccountNumber || "",
+        bankName: this.bankName || "",
+        bankBranchName: this.BankBranchName || "",
         joinDate: this.joinDate || null,
         workStatus: this.workStatus || 0,
         salary: this.salary || 0,
-        bankAccountName: this.bankAccountName,
-        createdBy: this.createdBy,
+        bankAccountName: this.bankAccountName || "", 
+        createdBy: this.createdBy || "",
         createdDate: this.createdDate || null,
-        updatedBy: this.updatedBy,
+        updatedBy: this.updatedBy || "",
         updatedDate: this.updatedDate || null,
-        positionId: this.positionId || null
+        positionId: this.positionId || "7c4f14d8-66fb-14ae-198f-6354f958f4c0"
       };
       return employeeData;
     },
