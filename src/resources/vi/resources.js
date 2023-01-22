@@ -115,7 +115,9 @@ export const employeePage = {
     RequiredDepartmentID: "Mã phòng ban là bắt buộc!",
     RequiredEmployeeName: "Tên nhân viên là bắt buộc!",
     RequiredEmployeeCode: "Mã nhân viên là bắt buộc!",
-    ConfirmEmployeeDelete: "Bạn có thực sự muấn xóa Nhân viên"
+    ConfirmEmployeeDelete: "Bạn có thực sự muấn xóa Nhân viên",
+    DateOfBirthNotValid: "Ngày sinh không được lớn hơn ngày hiện tại!",
+    IdentityDateNotValid: "Ngày cấp không được lớn hơn ngày hiện tại!"
   }
 }
 

@@ -90,9 +90,9 @@
 /* end icon */
 
 /* start err */
-.input__controller.err input:hover,
-.input__controller.err select:hover {
-  border-color: var(--color-border-red);
+.input__controller.err input,
+.input__controller.err select {
+  border-color: var(--color-border-red) !important;
 }
 .input__controller.err .input__icon--end:hover {
   background-color: transparent;

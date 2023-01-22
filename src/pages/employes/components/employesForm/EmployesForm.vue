@@ -122,13 +122,14 @@
                 <label class="input__label" for="txtDateOfBirth">{{
                   resources.employee.DateOfBirth
                 }}</label>
-                <div class="input__controller">
+                <div class="input__controller" ref="dateOfBirthElm">
                   <input
                     type="date"
                     class="input__primary"
                     id="txtDateOfBirth"
                     v-model="dateOfBirth"
                   />
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
               <div class="col col-8" style="padding-left: 8px">
@@ -192,13 +193,14 @@
                 <label class="input__label" for="txtIdentityDate">{{
                   resources.employee.IdentityDate
                 }}</label>
-                <div class="input__controller">
+                <div class="input__controller" ref="identityDateElm">
                   <input
                     type="date"
                     v-model="identityDate"
                     class="input__primary"
                     id="txtIdentityDate"
                   />
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
             </div>
@@ -598,7 +600,6 @@ export default {
         // this.bankName = this.employeeShow.BankName;
         // this.bankBranchName = this.employeeShow.BankBranchName;
         this.$refs.employeeCodeElm.firstChild.focus();
-        console.log([this.$refs.employeeCodeElm]);
       } catch (err) {
         this.isPending = false;
         this.messages.push(err);
@@ -677,7 +678,7 @@ export default {
           }
         }
       } catch (err) {
-        console.log();
+        console.log(err);
       }
     },
     /**
@@ -732,7 +733,7 @@ export default {
           }
         }
       } catch (err) {
-        console.log();
+        console.log(err);
       }
     },
     /**
@@ -788,7 +789,7 @@ export default {
           }
         }
       } catch (err) {
-        console.log();
+        console.log(err);
       }
     },
     /**
@@ -803,6 +804,8 @@ export default {
       this.$refs.departmentIdElm.classList.remove("err")
       this.$refs.employeeNameElm.classList.remove("err")
       this.$refs.employeeCodeElm.classList.remove("err")
+      this.$refs.dateOfBirthElm.classList.remove("err")
+      this.$refs.identityDateElm.classList.remove("err")
       if (!this.departmentId) {
         inputErrResult = "departmentIdElm";
         this.$refs[inputErrResult].classList.add("err")
@@ -820,6 +823,28 @@ export default {
         this.$refs[inputErrResult].classList.add("err")
         this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredEmployeeCode;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeCode);
+      }
+      //so sánh ngày sinh với ngày hiện tại
+      if(this.dateOfBirth){
+        let currentDate = new Date();
+        let dateOfBirth2 = new Date(this.dateOfBirth)
+        if(currentDate < dateOfBirth2){
+          inputErrResult = "dateOfBirthElm";
+          this.$refs[inputErrResult].classList.add("err")
+          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.DateOfBirthNotValid;
+          messagesResult.push(this.resources.employeeNotify.DateOfBirthNotValid);
+        }
+      }
+      //so sánh ngày cấp với ngày hiện tại
+      if(this.identityDate){
+        let currentDate = new Date();
+        let identityDate2 = new Date(this.identityDate)
+        if(currentDate<identityDate2){
+          inputErrResult = "identityDateElm";
+          this.$refs[inputErrResult].classList.add("err")
+          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.IdentityDateNotValid;
+          messagesResult.push(this.resources.employeeNotify.IdentityDateNotValid);
+        }
       }
       if (inputErrResult !== false) {
         this.inputErr = inputErrResult;
