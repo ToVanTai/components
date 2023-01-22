@@ -23,7 +23,7 @@
             </div>
             <div class="employespage__pagination__right--pagination">
               <!-- hiển thị thanh phân trang -->
-              <BasePagination/>
+              <BasePagination :totalPage="totalPage" :currentPage="currentPage" :onPaginationClick="handleChangePage"/>
             </div>
           </div>
         </div>
@@ -38,7 +38,14 @@ export default {
   },
   data(){
     return  {
-      paginationResource: employeePage.pagination
+      paginationResource: employeePage.pagination,
+      totalPage: 7,
+      currentPage: 5
+    }
+  },
+  methods: {
+    handleChangePage(pageChange){
+      this.currentPage = pageChange
     }
   }
 }
