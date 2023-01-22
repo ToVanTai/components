@@ -9,15 +9,15 @@ function padTo2Digits (num) {
  * useTo: định dạng date
  * updateAt: tovantai_17/12/2022
  * author: tovantai
- * createdAt: 12/12/2022 
+ * createdAt: 12/12/2022
  */
 export function formatDate (dateString) {
   try {
-    let date = new Date(dateString)
+    let date = new Date(dateString);
     return [
-      date.getFullYear(),
-      padTo2Digits(date.getMonth() + 1),
       padTo2Digits(date.getDate()),
+      padTo2Digits(date.getMonth() + 1),
+      date.getFullYear(),
     ].join('/');
   } catch (err) {
     console.log(err);

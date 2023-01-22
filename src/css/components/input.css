@@ -90,7 +90,8 @@
 /* end icon */
 
 /* start err */
-.input__controller.err input {
+.input__controller.err input:hover,
+.input__controller.err select:hover {
   border-color: var(--color-border-red);
 }
 .input__controller.err .input__icon--end:hover {
@@ -100,16 +101,20 @@
 .input__controller .input__error_messenger {
   display: none;
 }
-.input__controller.err .input__error_messenger {
+.input__controller.err:hover .input__error_messenger {
   display: block;
   position: absolute;
   z-index: 1;
-  color: var(--color-border-red);
+  color: var(--color-text-white-second);
+  background-color: var(--color-bg-grey);
+  white-space: nowrap;
+  padding: var(--padding-10) var(--padding-12);
   font-size: var(--size-text-sm);
-  line-height: var(--size-text-sm);
-  font-family: notosans semibold;
-  left: 0;
-  top: calc(100% + var(--padding-8));
+  line-height: 8px;
+  font-family: notosans regular;
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, 50%);
 }
 /* end err */
 /* end css for lable, input:text, select */

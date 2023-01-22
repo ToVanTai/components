@@ -53,7 +53,7 @@ export default {
     return {
       isShowForm: false, //trạng thái đóng, mở form
       isShowInfo: false, //trạng thái thêm mới || thông tin nhân viên
-      employeeShow: null, //nhân viên đang show
+      employeeShow: null, //mã id nhân viên đang show
       employes: {}, //danh sách nhân viên
       isPendingEmployes: false,//trạng thái pending khi lấy danh sách nhân viên
       //hiển thị notify lỗi
@@ -93,7 +93,7 @@ export default {
       try {
         this.isShowForm = true;
         this.isShowInfo = true;
-        this.employeeShow = employee;
+        this.employeeShow = employee.EmployeeId;
       } catch (err) {
         console.log(err);
       }

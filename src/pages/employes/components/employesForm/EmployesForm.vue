@@ -47,28 +47,29 @@
                 <label class="input__label required" for="txtEmployeeCode">{{
                   resources.employee.EmployeeCode
                 }}</label>
-                <div class="input__controller">
+                <div class="input__controller" ref="employeeCodeElm">
                   <input
                     type="text"
                     class="input__primary"
                     id="txtEmployeeCode"
                     v-model="employeeCode"
-                    ref="employeeCodeElm"
                   />
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
               <div class="col col-8" style="padding-left: 8px">
                 <label class="input__label required" for="txtEmployeeName">{{
                   resources.employee.EmployeeName
                 }}</label>
-                <div class="input__controller">
+                <div class="input__controller" ref="employeeNameElm">
                   <input
                     type="text"
                     class="input__primary"
                     id="txtEmployeeName"
                     v-model="employeeName"
-                    ref="employeeNameElm"
+                    
                   />
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
             </div>
@@ -78,12 +79,12 @@
                 <label class="input__label required" for="txtDepartmentId">{{
                   resources.employee.DepartmentName
                 }}</label>
-                <div class="input__controller">
+                <div class="input__controller" ref="departmentIdElm">
                   <select
                     class="input__primary"
                     id="txtDepartmentId"
                     v-model="departmentId"
-                    ref="departmentIdElm"
+                    
                   >
                     <option
                       v-for="department in departments"
@@ -93,6 +94,7 @@
                       {{ department.DepartmentName }}
                     </option>
                   </select>
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
             </div>
@@ -329,6 +331,7 @@
                 class="input__primary"
                 id="txtBankBranchName"
               />
+              <div class="input__error_messenger"></div>
             </div>
           </div>
         </div>
@@ -434,7 +437,7 @@ export default {
       default: null,
     },
     employeeShow: {
-      type: [Object, null],
+      type: [String, null],
       default: null,
     },
     resetTable: {
@@ -481,6 +484,49 @@ export default {
         });
     },
     /**
+     * useTo: lấy thông tin chi tiết nhân viên
+     * updateBy: tovantai_22/01/2023
+     * author: tovantai
+     * createdAt: 22/01/2023
+     */
+     async getEmployeeInfo() {
+      await new Promise((resolve, reject) => {
+        fetch(`${employesUrl}/${this.employeeShow}`).then((res) => {
+          if (res.status == 200) {
+            resolve(res.json());
+          } else {
+            if (res.status == 500) {
+              res.text().then((res) => reject(JSON.parse(res).userMsg));
+            } else {
+              reject(this.resources.employeeNotify.GetNewEmployeeCodeFailed);
+            }
+          }
+        });
+      })
+        .then((res) => {
+          this.employeeCode = res.EmployeeCode;
+          this.departmentId = res.DepartmentId;
+          this.employeeName = res.EmployeeName;
+          this.positionName = res.PositionName;
+          this.dateOfBirth = res.DateOfBirth;
+          this.gender = res.Gender;
+          this.identityNumber = res.IdentityNumber;
+          this.identityDate = res.IdentityDate;
+          this.identityPlace = res.IdentityPlace;
+          this.address = res.Address;
+          this.phoneNumber = res.PhoneNumber;
+          this.telephoneNumber = res.TelephoneNumber;
+          this.email = res.Email;
+          this.bankAccountNumber = res.BankAccountNumber;
+          this.bankName = res.BankName;
+          this.bankBranchName = res.BankBranchName;
+        })
+        .catch((err) => {
+          this.messages.push(err);
+          this.inputErr = "employeeCodeElm";
+        });
+    },
+    /**
      * useTo: lấy danh sách phòng ban
      * updateBy: tovantai_12/12/2022
      * author: tovantai
@@ -516,7 +562,7 @@ export default {
         await Promise.all([this.getNewEmployeeCode(), this.getDepartments()]);
         this.isPending = false;
         if (this.messages.length == 0 && this.inputErr == null) {
-          this.$refs.employeeNameElm.focus();
+          this.$refs.employeeCodeElm.firstChild.focus();
         }
       } catch (err) {
         this.isPending = false;
@@ -533,23 +579,26 @@ export default {
       try {
         this.isPending = true;
         await this.getDepartments();
+        await this.getEmployeeInfo();
         this.isPending = false;
-        this.employeeCode = this.employeeShow.EmployeeCode;
-        this.departmentId = this.employeeShow.DepartmentId;
-        this.employeeName = this.employeeShow.EmployeeName;
-        this.positionName = this.employeeShow.PositionName;
-        this.dateOfBirth = this.employeeShow.DateOfBirth;
-        this.gender = this.employeeShow.Gender;
-        this.identityNumber = this.employeeShow.IdentityNumber;
-        this.identityDate = this.employeeShow.IdentityDate;
-        this.identityPlace = this.employeeShow.IdentityPlace;
-        this.address = this.employeeShow.Address;
-        this.phoneNumber = this.employeeShow.PhoneNumber;
-        this.telephoneNumber = this.employeeShow.TelephoneNumber;
-        this.email = this.employeeShow.Email;
-        this.bankAccountNumber = this.employeeShow.BankAccountNumber;
-        this.bankName = this.employeeShow.BankName;
-        this.bankBranchName = this.employeeShow.BankBranchName;
+        // this.employeeCode = this.employeeShow.EmployeeCode;
+        // this.departmentId = this.employeeShow.DepartmentId;
+        // this.employeeName = this.employeeShow.EmployeeName;
+        // this.positionName = this.employeeShow.PositionName;
+        // this.dateOfBirth = this.employeeShow.DateOfBirth;
+        // this.gender = this.employeeShow.Gender;
+        // this.identityNumber = this.employeeShow.IdentityNumber;
+        // this.identityDate = this.employeeShow.IdentityDate;
+        // this.identityPlace = this.employeeShow.IdentityPlace;
+        // this.address = this.employeeShow.Address;
+        // this.phoneNumber = this.employeeShow.PhoneNumber;
+        // this.telephoneNumber = this.employeeShow.TelephoneNumber;
+        // this.email = this.employeeShow.Email;
+        // this.bankAccountNumber = this.employeeShow.BankAccountNumber;
+        // this.bankName = this.employeeShow.BankName;
+        // this.bankBranchName = this.employeeShow.BankBranchName;
+        this.$refs.employeeCodeElm.firstChild.focus();
+        console.log([this.$refs.employeeCodeElm]);
       } catch (err) {
         this.isPending = false;
         this.messages.push(err);
@@ -570,7 +619,7 @@ export default {
         //focus vào input đầu tiên bị lỗi
 
         setTimeout(() => {
-          this.$refs[this.inputErr].focus();
+          this.$refs[this.inputErr].firstChild.focus();
         }, 100);
       }
     },
@@ -719,7 +768,7 @@ export default {
               bankName: this.bankName,
               bankBranchName: this.bankBranchName,
             };
-            fetch(`${employesUrl}/${this.employeeShow.EmployeeId}`, {
+            fetch(`${employesUrl}/${this.employeeShow}`, {
               method: "PUT",
               body: JSON.stringify(dataNewEmployee),
               headers,
@@ -751,17 +800,25 @@ export default {
     isErrForm() {
       let inputErrResult = false;
       let messagesResult = [];
-
+      this.$refs.departmentIdElm.classList.remove("err")
+      this.$refs.employeeNameElm.classList.remove("err")
+      this.$refs.employeeCodeElm.classList.remove("err")
       if (!this.departmentId) {
         inputErrResult = "departmentIdElm";
+        this.$refs[inputErrResult].classList.add("err")
+        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredDepartmentID;
         messagesResult.push(this.resources.employeeNotify.RequiredDepartmentID);
       }
       if (!this.employeeName) {
         inputErrResult = "employeeNameElm";
+        this.$refs[inputErrResult].classList.add("err")
+        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredEmployeeName;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeName);
       }
       if (!this.employeeCode) {
         inputErrResult = "employeeCodeElm";
+        this.$refs[inputErrResult].classList.add("err")
+        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredEmployeeCode;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeCode);
       }
       if (inputErrResult !== false) {
