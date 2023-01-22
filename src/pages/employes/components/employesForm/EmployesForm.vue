@@ -279,13 +279,14 @@
             <label class="input__label" for="txtEmail">{{
               resources.employee.Email
             }}</label>
-            <div class="input__controller">
+            <div class="input__controller" ref="emailElm">
               <input
                 type="email"
                 v-model="email"
                 class="input__primary"
                 id="txtEmail"
               />
+              <div class="input__error_messenger"></div>
             </div>
           </div>
         </div>
@@ -391,6 +392,7 @@ import BaseButton from "../../../../components/common/BaseButton.vue";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { departmentsUrl, employesUrl } from "../../../../config/index";
 import { employeePage } from "@/resources";
+import {IsValidEmail} from "@/utils/format"
 export default {
   components: {
     BasePopup,
@@ -806,11 +808,43 @@ export default {
       this.$refs.employeeCodeElm.classList.remove("err")
       this.$refs.dateOfBirthElm.classList.remove("err")
       this.$refs.identityDateElm.classList.remove("err")
+      this.$refs.emailElm.classList.remove("err")
+
+      //kiểm tra có đúng định dạng email
+      if(this.email && !IsValidEmail(this.email)){
+        inputErrResult = "emailElm";
+        this.$refs[inputErrResult].classList.add("err")
+        this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.EmailNotValidate;
+        messagesResult.push(this.resources.employeeNotify.EmailNotValidate);
+      }
+
+      //so sánh ngày cấp với ngày hiện tại
+      if(this.identityDate){
+        let currentDate = new Date();
+        let identityDate2 = new Date(this.identityDate)
+        if(currentDate<identityDate2){
+          inputErrResult = "identityDateElm";
+          this.$refs[inputErrResult].classList.add("err")
+          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.IdentityDateNotValid;
+          messagesResult.push(this.resources.employeeNotify.IdentityDateNotValid);
+        }
+      }
       if (!this.departmentId) {
         inputErrResult = "departmentIdElm";
         this.$refs[inputErrResult].classList.add("err")
         this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredDepartmentID;
         messagesResult.push(this.resources.employeeNotify.RequiredDepartmentID);
+      }
+      //so sánh ngày sinh với ngày hiện tại
+      if(this.dateOfBirth){
+        let currentDate = new Date();
+        let dateOfBirth2 = new Date(this.dateOfBirth)
+        if(currentDate < dateOfBirth2){
+          inputErrResult = "dateOfBirthElm";
+          this.$refs[inputErrResult].classList.add("err")
+          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.DateOfBirthNotValid;
+          messagesResult.push(this.resources.employeeNotify.DateOfBirthNotValid);
+        }
       }
       if (!this.employeeName) {
         inputErrResult = "employeeNameElm";
@@ -824,28 +858,7 @@ export default {
         this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.RequiredEmployeeCode;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeCode);
       }
-      //so sánh ngày sinh với ngày hiện tại
-      if(this.dateOfBirth){
-        let currentDate = new Date();
-        let dateOfBirth2 = new Date(this.dateOfBirth)
-        if(currentDate < dateOfBirth2){
-          inputErrResult = "dateOfBirthElm";
-          this.$refs[inputErrResult].classList.add("err")
-          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.DateOfBirthNotValid;
-          messagesResult.push(this.resources.employeeNotify.DateOfBirthNotValid);
-        }
-      }
-      //so sánh ngày cấp với ngày hiện tại
-      if(this.identityDate){
-        let currentDate = new Date();
-        let identityDate2 = new Date(this.identityDate)
-        if(currentDate<identityDate2){
-          inputErrResult = "identityDateElm";
-          this.$refs[inputErrResult].classList.add("err")
-          this.$refs[inputErrResult].lastChild.innerHTML = this.resources.employeeNotify.IdentityDateNotValid;
-          messagesResult.push(this.resources.employeeNotify.IdentityDateNotValid);
-        }
-      }
+      
       if (inputErrResult !== false) {
         this.inputErr = inputErrResult;
         this.messages = messagesResult;

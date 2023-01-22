@@ -117,7 +117,8 @@ export const employeePage = {
     RequiredEmployeeCode: "Mã nhân viên là bắt buộc!",
     ConfirmEmployeeDelete: "Bạn có thực sự muấn xóa Nhân viên",
     DateOfBirthNotValid: "Ngày sinh không được lớn hơn ngày hiện tại!",
-    IdentityDateNotValid: "Ngày cấp không được lớn hơn ngày hiện tại!"
+    IdentityDateNotValid: "Ngày cấp không được lớn hơn ngày hiện tại!",
+    EmailNotValidate: "Email không hợp lệ!"
   }
 }
 

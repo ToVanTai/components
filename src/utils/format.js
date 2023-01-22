@@ -23,3 +23,15 @@ export function formatDate (dateString) {
     console.log(err);
   }
 }
+/**
+ * useTo: kiểm tra email có đúng định dạng
+ * updateAt
+ * author: tovantai
+ * createdAt: 22/12/2022
+ * @param {*} email 
+ * @returns 
+ */
+export function IsValidEmail (email) {
+  var re = /\S+@\S+\.\S+/;
+  return re.test(email);
+}
