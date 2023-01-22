@@ -423,6 +423,16 @@ export default {
       bankAccountNumber: "",
       bankName: "",
       bankBranchName: "",
+
+      joinDate: "",
+      workStatus: "",
+      salary: "",
+      bankAccountName: "",
+      createdBy: "",
+      createdDate: "",
+      updatedBy: "",
+      updatedDate: "",
+      positionId: "",
       //hiển thị notify lỗi
       messages: [], //nếu có thì sẽ hiện notify
       inputErr: null, // true nếu submit form bị lỗi do server, hoặc input đầu tiên đang bị lỗi
@@ -523,6 +533,16 @@ export default {
           this.bankAccountNumber = res.BankAccountNumber;
           this.bankName = res.BankName;
           this.bankBranchName = res.BankBranchName;
+
+          this.joinDate = res.JoinDate
+          this.workStatus = res.WorkStatus
+          this.salary = res.Salary
+          this.bankAccountName = res.BankAccountName
+          this.createdBy = res.CreatedBy
+          this.createdDate = res.CreatedDate
+          this.updatedBy = res.UpdatedBy
+          this.updatedDate = res.UpdatedDate
+          this.positionId = res.PositionId
         })
         .catch((err) => {
           this.messages.push(err);
@@ -638,17 +658,26 @@ export default {
         employeeName: this.employeeName.trim(),//
         positionName: this.positionName.trim(),
         dateOfBirth: this.dateOfBirth || null,
-        gender: this.gender.trim(),
-        identityNumber: this.identityNumber.trim(),
+        gender: this.gender || -1,
+        identityNumber: this.identityNumber,
         identityDate: this.identityDate || null,
-        identityPlace: this.identityPlace.trim(),
-        address: this.address.trim(),
+        identityPlace: this.identityPlace,
+        address: this.address,
         phoneNumber: this.phoneNumber.trim(),//
-        telephoneNumber: this.telephoneNumber.trim(),
+        telephoneNumber: this.telephoneNumber,
         email: this.email.trim(),
-        bankAccountNumber: this.bankAccountNumber.trim(),
-        bankName: this.bankName.trim(),
-        bankBranchName: this.bankBranchName.trim(),
+        bankAccountNumber: this.bankAccountNumber,
+        bankName: this.bankName,
+        bankBranchName: this.BankBranchName,
+        joinDate: this.joinDate || null,
+        workStatus: this.workStatus || 0,
+        salary: this.salary || 0,
+        bankAccountName: this.bankAccountName,
+        createdBy: this.createdBy,
+        createdDate: this.createdDate || null,
+        updatedBy: this.updatedBy,
+        updatedDate: this.updatedDate || null,
+        positionId: this.positionId || null
       };
       return employeeData;
     },
