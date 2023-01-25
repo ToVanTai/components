@@ -34,7 +34,7 @@
       </thead>
       <tbody id="employestable">
         <!-- danh sách employes sẽ hiển thị tại đây -->
-        <EmployesTableItem v-for="employee in employeeList" :key="employee" :employee="employee" :showEmployeeFormInfor="showEmployeeFormInfor" :resetTable="resetTable"></EmployesTableItem>
+        <EmployesTableItem v-for="employee in employeeList" :key="employee" :employee="employee" :showEmployeeFormInfor="showEmployeeFormInfor" :showFormDuplicateEmployee="showFormDuplicateEmployee" :resetTable="resetTable"></EmployesTableItem>
       </tbody>
     </table>
   </div>
@@ -65,6 +65,10 @@ export default {
     resetTable:{
       type: [Function, null],
       default: null
+    },
+    showFormDuplicateEmployee:{
+      type: [Function, null],
+      default: function(){}
     }
   },
   mounted(){

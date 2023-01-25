@@ -28,7 +28,7 @@
           <i class="fas fa-sort-down"></i>
         </div>
         <div class="employespage__table__action__dropdown--list">
-          <div class="employespage__table__action__dropdown--item">
+          <div class="employespage__table__action__dropdown--item" @click="showFormDuplicateEmployee(employee.EmployeeId)">
             {{ resources.employee.ActionDuplicate }}
           </div>
           <div
@@ -120,6 +120,10 @@ export default {
     resetTable:{
       type: [Function, null],
       default: null
+    },
+    showFormDuplicateEmployee: {
+      type: [Function, null],
+      default: function () {},
     }
   },
   methods: {

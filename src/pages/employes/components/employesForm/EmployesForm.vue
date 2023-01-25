@@ -440,6 +440,10 @@ export default {
     };
   },
   props: {
+    isShowForm:{
+      type:[Boolean, String],
+      default: false
+    },
     isShowInfo: {
       type: Boolean,
       default: false,
@@ -462,8 +466,14 @@ export default {
     if (this.isShowInfo) {
       //ở trạng thái hiển thị thông tin nhân viên...
       this.initFromInfoEmployee();
+      
     } else {
       this.initFromCreatenewEmployee();
+      if(this.isShowForm !== true){
+        this.initFormDuplicateEmployee()
+      }else{
+        this.initFromCreatenewEmployee()
+      }
     }
   },
   updated() {
@@ -504,7 +514,7 @@ export default {
      */
     async getEmployeeInfo() {
       await new Promise((resolve, reject) => {
-        fetch(`${employesUrl}/${this.employeeShow}`).then((res) => {
+        fetch(`${employesUrl}/${this.employeeShow || this.isShowForm}`).then((res) => {
           if (res.status == 200) {
             resolve(res.json());
           } else {
@@ -593,6 +603,26 @@ export default {
       }
     },
     /**
+     * useTo: mã nhân viên mới, lấy danh sách phòng ban, focus input tên nhân viên
+     * updateBy: tovantai_12/12/2022
+     * author: tovantai
+     * createdAt: 21/12/2022
+     */
+    async initFormDuplicateEmployee() {
+      try {
+        this.isPending = true;
+        await this.getEmployeeInfo();
+        await Promise.all([this.getNewEmployeeCode(), this.getDepartments()]);
+        this.isPending = false;
+        if (this.messages.length == 0 && this.inputErr == null) {
+          this.$refs.employeeCodeElm.firstChild.focus();
+        }
+      } catch (err) {
+        this.isPending = false;
+        this.messages.push(err);
+      }
+    },
+    /**
      * useTo: lấy danh sách phòng ban, rồi hiển thị thông tin nhân viên ra form
      * updateBy: tovantai_12/12/2022
      * author: tovantai
@@ -653,19 +683,19 @@ export default {
      */
     getEmployeeFormData() {
       var employeeData = {
-        employeeCode: this.employeeCode.trim(),//
-        departmentId: this.departmentId.trim(),//
-        employeeName: this.employeeName.trim(),//
-        positionName: this.positionName.trim(),
+        employeeCode: this.employeeCode?.trim(),//
+        departmentId: this.departmentId?.trim(),//
+        employeeName: this.employeeName?.trim(),//
+        positionName: this.positionName?.trim(),
         dateOfBirth: this.dateOfBirth || null,
         gender: this.gender || 0,
         IndentityNumber: this.identityNumber || "",
         IndentityDate: this.identityDate || null,
         IndentityPlace: this.identityPlace || "",
         address: this.address || "",
-        phoneNumber: this.phoneNumber.trim(),//
+        phoneNumber: this.phoneNumber?.trim(),//
         telephoneNumber: this.telephoneNumber || "",
-        email: this.email.trim(),
+        email: this.email?.trim(),
         bankAccountNumber: this.bankAccountNumber || "",
         bankName: this.bankName || "",
         bankBranchName: this.BankBranchName || "",
@@ -816,11 +846,11 @@ export default {
       this.$refs.phoneNumberElm.classList.remove("err");
 
       //số điện thoại là bắt buộc
-      if(!this.phoneNumber.trim()){
+      if(!this.phoneNumber?.trim()){
         inputErrResult = "phoneNumberElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
-          this.resources.employeeNotify.EmailNotValidate;
+          this.resources.employeeNotify.RequiredPhonenumber;
         messagesResult.push(this.resources.employeeNotify.RequiredPhonenumber);
       }
       //kiểm tra có đúng định dạng email
@@ -866,14 +896,14 @@ export default {
           );
         }
       }
-      if (!this.employeeName.trim()) {
+      if (!this.employeeName?.trim()) {
         inputErrResult = "employeeNameElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.RequiredEmployeeName;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeName);
       }
-      if (!this.employeeCode.trim()) {
+      if (!this.employeeCode?.trim()) {
         inputErrResult = "employeeCodeElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =

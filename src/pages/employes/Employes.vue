@@ -8,6 +8,7 @@
       :isPending="isPendingEmployes"
       :showEmployeeFormInfor="showEmployeeFormInfor"
       :resetTable="initEmployesTable"
+      :showFormDuplicateEmployee="showFormDuplicateEmployee"
     />
     <EmployesPagination />
   </div>
@@ -18,6 +19,7 @@
     :closeForm="closeForm"
     :employeeShow="employeeShow"
     :resetTable="initEmployesTable"
+    :isShowForm="isShowForm"
   />
   <!-- hiển thị thông báo ở chỗ này -->
   <BaseNotify
@@ -51,7 +53,7 @@ export default {
   },
   data() {
     return {
-      isShowForm: false, //trạng thái đóng, mở form
+      isShowForm: false, //trạng thái đóng, mở form, duplicate
       isShowInfo: false, //trạng thái thêm mới || thông tin nhân viên
       employeeShow: null, //mã id nhân viên đang show
       employes: {}, //danh sách nhân viên
@@ -77,6 +79,21 @@ export default {
     showFormCreatenewEmployee() {
       try {
         this.isShowForm = true;
+        this.isShowInfo = false;
+        this.employeeShow = null;
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    /**
+     * useTo: hiển thị form nhân bản nhân viên
+     * updatedAt:
+     * author: tovantai
+     * createdAt: 25/01/2022
+     */
+    showFormDuplicateEmployee(id) {
+      try {
+        this.isShowForm = id;
         this.isShowInfo = false;
         this.employeeShow = null;
       } catch (err) {
