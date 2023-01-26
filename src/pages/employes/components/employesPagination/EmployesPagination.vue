@@ -3,14 +3,14 @@
           <!-- hiển thị số lượng bản ghi đã tìm thấy -->
           <div class="employespage__pagination__left">
             <div class="employespage__pagination__left--text">
-              {{ paginationResource.total }}: <b>25</b> {{ paginationResource.records }}
+              {{ paginationResource.total }}: <b>{{employes?.TotalRecord}}</b> {{ paginationResource.records }}
             </div>
           </div>
           <div class="employespage__pagination__right">
             <div class="employespage__pagination__right--selectquantity">
               <!-- ô select để thay đổi số lượng bản ghi trên 1 trang -->
               <div class="input__controller input__iconend">
-                <select class="input__primary">
+                <select class="input__primary" v-model="pageSize" >
                   <option value="5" selected="">5 {{paginationResource.recordPerPage}}</option>
                   <option value="10">10 {{paginationResource.recordPerPage}}</option>
                   <option value="15">15 {{paginationResource.recordPerPage}}</option>
@@ -23,7 +23,7 @@
             </div>
             <div class="employespage__pagination__right--pagination">
               <!-- hiển thị thanh phân trang -->
-              <BasePagination :totalPage="totalPage" :currentPage="currentPage" :onPaginationClick="handleChangePage"/>
+              <BasePagination :totalPage="employes?.TotalPage || 1" :currentPage="employes?.PageNumber || $route.query?.pageNumber || 1" :onPaginationClick="handleChangePage"/>
             </div>
           </div>
         </div>
@@ -39,13 +39,52 @@ export default {
   data(){
     return  {
       paginationResource: employeePage.pagination,
-      totalPage: 7,
-      currentPage: 5
+      pageSize: this.$route.query.pageSize || 5
+    }
+  },
+  props: {
+    employes: {
+      type: [Object],
+      default: null
+    },
+    initEmployesTable:{
+      type: [Function],
+      default: null
     }
   },
   methods: {
     handleChangePage(pageChange){
-      this.currentPage = pageChange
+      let employeeQuery = {
+        pageSize: this.$route.query.pageSize || 5,
+        pageNumber: this.$route.query.pageNumber || 1 ,
+        employeeFilter: this.$route.query.employeeFilter || "",
+        filter: this.$route.query.filter || "",
+      }
+      employeeQuery.pageNumber = pageChange
+      this.$router.push({query:{
+        ...employeeQuery
+      }})
+      setTimeout(() => {
+        this.initEmployesTable()
+      }, 100);
+    }
+  },
+  watch:{
+    pageSize(newPageSize){
+      let employeeQuery = {
+        pageSize: this.$route.query.pageSize || 5,
+        pageNumber: this.$route.query.pageNumber || 1 ,
+        employeeFilter: this.$route.query.employeeFilter || "",
+        filter: this.$route.query.filter || "",
+      }
+      employeeQuery.pageSize = newPageSize
+      employeeQuery.pageNumber = 1
+      this.$router.push({query:{
+        ...employeeQuery
+      }})
+      setTimeout(() => {
+        this.initEmployesTable()
+      }, 100);
     }
   }
 }

@@ -2,7 +2,7 @@
   <TheTitle :btnCreatenewEmployeeClick="showFormCreatenewEmployee" />
   <div class="employespage">
     <!-- tìm kiếm theo tên, mã, số điện thoại -->
-    <EmployesController :btnReloadClick="initEmployesTable" />
+    <EmployesController :initEmployesTable="initEmployesTable" />
     <EmployesTable
       :employeeList="employes?.Data"
       :isPending="isPendingEmployes"
@@ -10,7 +10,7 @@
       :resetTable="initEmployesTable"
       :showFormDuplicateEmployee="showFormDuplicateEmployee"
     />
-    <EmployesPagination />
+    <EmployesPagination :employes="employes" :initEmployesTable="initEmployesTable" />
   </div>
   <!-- hiển thị employesForm ở chỗ này -->
   <EmployesForm
@@ -130,14 +130,28 @@ export default {
       }
     },
     /**
-     * useTo: lấy danh sách nhân viên
-     * updateBy: tovantai_22/12/2022
+     * useTo: lấy danh sách nhân viên theo filter
+     * updateBy: tovantai_26/01/2022
      * author: tovantai
      * createdAt: 22/12/2022
      */
     async getEmployeeList() {
+      let employeeQuery = {
+        pageSize: this.$route.query.pageSize || 5,
+        pageNumber: this.$route.query.pageNumber || 1 ,
+        employeeFilter: this.$route.query.employeeFilter || "",
+        filter: this.$route.query.filter || "",
+      }
+      let queryString = ""
+      for(var item in employeeQuery){
+        if(queryString == ""){
+          queryString=`${item}=${employeeQuery[item]}`
+        }else{
+          queryString+=`&${item}=${employeeQuery[item]}`
+        }
+      }
       await new Promise((resolve, reject) => {
-        fetch(`${employesUrl}/filter?pageSize=20&pageNumber=1`).then((res) => {
+        fetch(`${employesUrl}/filter?${queryString}`).then((res) => {
           if (res.status == 200) {
             resolve(res.json());
           } else {
@@ -164,7 +178,7 @@ export default {
       }
     },
     /**
-     * useTo: lấy danh sách nhân viên
+     * useTo: lấy danh sách nhân viên theo filter
      * updateBy: tovantai_21/12/2022
      * author: tovantai
      * createdAt: 21/12/2022

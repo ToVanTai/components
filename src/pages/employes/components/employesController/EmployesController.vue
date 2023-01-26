@@ -7,12 +7,13 @@
       <input
         class="italic input__primary"
         type="text"
+        v-model="employeefilter"
         :placeholder="employeePage.controller.inputPlaceholder"
         name="txtEmployeeFilter" />
-      <div class="input__icon--end"><i class="fas fa-search"></i></div>
+      <div class="input__icon--end" @click="btnSearchClick"><i class="fas fa-search"></i></div>
       <!-- <div class="input__error_messenger">da co loi</div> -->
     </div>
-    <div class="employespage__controller__iconreload" @click="btnReloadClick">
+    <div class="employespage__controller__iconreload" @click="initEmployesTable">
       <i class="fas fa-redo"></i>
     </div>
   </div>
@@ -25,18 +26,35 @@ import { employeePage } from '@/resources';
 export default {
   data() {
     return {
-      employeePage
+      employeePage,
+      employeefilter: this.$route.query?.filter || this.$route.query?.employeeFilter || "" 
     };
   },
   props: {
-    btnReloadClick: {
+    initEmployesTable: {
       type: [Function, null],
       default: function () {},
     }
   }
   ,
-  components: {
-    
+  methods: {
+    btnSearchClick(){
+      let employeeQuery = {
+        pageSize: this.$route.query.pageSize || 5,
+        pageNumber: this.$route.query.pageNumber || 1 ,
+        employeeFilter: this.$route.query.employeeFilter || "",
+        filter: this.$route.query.filter || "",
+      }
+      employeeQuery.filter = this.employeefilter
+      employeeQuery.employeeFilter = this.employeefilter
+      employeeQuery.pageNumber = 1
+      this.$router.push({query:{
+        ...employeeQuery
+      }})
+      setTimeout(() => {
+        this.initEmployesTable()
+      }, 100);
+    }
   }
 };
 </script>
