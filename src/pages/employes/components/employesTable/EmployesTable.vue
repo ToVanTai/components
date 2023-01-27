@@ -6,7 +6,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="checkbox"><input type="checkbox" /></th>
+          <th class="checkbox"><input type="checkbox" :checked="employeeListChecked.length == employeeList?.length" name="kk" @change="toggleEmployeeListCheck" /></th>
           <th>{{ employeePage.employee.EmployeeCode }}</th>
           <th>{{ employeePage.employee.EmployeeName }}</th>
           <th>{{ employeePage.employee.Gender }}</th>
@@ -34,7 +34,7 @@
       </thead>
       <tbody id="employestable">
         <!-- danh sách employes sẽ hiển thị tại đây -->
-        <EmployesTableItem v-for="employee in employeeList" :key="employee" :employee="employee" :showEmployeeFormInfor="showEmployeeFormInfor" :showFormDuplicateEmployee="showFormDuplicateEmployee" :resetTable="resetTable"></EmployesTableItem>
+        <EmployesTableItem v-for="employee in employeeList" :key="employee" :employee="employee" :showEmployeeFormInfor="showEmployeeFormInfor" :showFormDuplicateEmployee="showFormDuplicateEmployee" :resetTable="resetTable" :toggleEmployeeCheck="toggleEmployeeCheck" :employeeListChecked="employeeListChecked"></EmployesTableItem>
       </tbody>
     </table>
   </div>
@@ -68,6 +68,18 @@ export default {
     },
     showFormDuplicateEmployee:{
       type: [Function, null],
+      default: function(){}
+    },
+    employeeListChecked:{
+      type:[Array, null],
+      default: ()=>{return []}
+    },
+    toggleEmployeeListCheck:{
+      type:[Function,null],
+      default: function(){}
+    },
+    toggleEmployeeCheck:{
+      type:[Function,null],
       default: function(){}
     }
   },

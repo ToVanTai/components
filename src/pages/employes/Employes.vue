@@ -2,7 +2,7 @@
   <TheTitle :btnCreatenewEmployeeClick="showFormCreatenewEmployee" />
   <div class="employespage">
     <!-- tìm kiếm theo tên, mã, số điện thoại -->
-    <EmployesController :initEmployesTable="initEmployesTable" />
+    <EmployesController :initEmployesTable="initEmployesTable" :employeeListChecked="employeeListChecked" />
     <EmployesTable
       :employeeList="employes?.Data"
       :isPending="isPendingEmployes"
@@ -10,6 +10,8 @@
       :resetTable="initEmployesTable"
       :showFormDuplicateEmployee="showFormDuplicateEmployee"
       :employeeListChecked="employeeListChecked"
+      :toggleEmployeeListCheck="toggleEmployeeListCheck"
+      :toggleEmployeeCheck="toggleEmployeeCheck"
     />
     <EmployesPagination
       :employes="employes"
@@ -161,7 +163,10 @@ export default {
           if (res.status == 200) {
             resolve(res.json());
           } else {
-            reject("Không lấy được danh sách employee");
+            res.json().then(res=>{
+              reject(res.UserMsg || res.userMsg);
+            })
+            
           }
         });
       })
@@ -199,6 +204,46 @@ export default {
         this.messages = [err];
       }
     },
+    /**
+     * useTo: thêm đầy hoặc xóa xóa toàn bộ phần tử trong danh sách employee muấn xóa 
+     * updateBy:
+     * author: tovantai
+     * createdAt: 27/01/2023
+     */
+    toggleEmployeeListCheck() {
+      try {
+        
+        if(this.employeeListChecked?.length != this.employes?.Data.length){
+          this.employeeListChecked = this.employes.Data.map((item)=>item.EmployeeId)
+        }else{
+          this.employeeListChecked = []
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    /**
+     * useTo: thêm hoặc xóa 1 phần tử trong danh sách các employee muấn xóa
+     * updateBy:
+     * author: tovantai
+     * createdAt: 27/01/2023
+     */
+    toggleEmployeeCheck(id) {
+      try {
+        if(this.employeeListChecked.includes(id)){
+          for(let i = 0;i<this.employeeListChecked.length;i++){
+            if(id==this.employeeListChecked[i]){
+              this.employeeListChecked.splice(i,1);
+              break;
+            }
+          }
+        }else{
+          this.employeeListChecked.push(id)
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    }
   },
   watch: {
     employes() {

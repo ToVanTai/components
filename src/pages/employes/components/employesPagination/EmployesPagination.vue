@@ -53,6 +53,12 @@ export default {
     }
   },
   methods: {
+    /**
+     * useTo: thay đổi url của trình duyệt và lấy ds employee từ server
+     * updateBy:
+     * author: tovantai
+     * createdAt: 27/01/2023
+     */
     handleChangePage(pageChange){
       let employeeQuery = {
         pageSize: this.$route.query.pageSize || 5,

@@ -1,6 +1,6 @@
 <template>
   <tr @dblclick="(event) => showEmployeeDetail(event, employee)">
-    <td class="checkbox"><input type="checkbox" /></td>
+    <td class="checkbox"><input type="checkbox" :checked="employeeListChecked.includes(employee.EmployeeId)" @change="toggleEmployeeCheck(employee.EmployeeId)"/></td>
     <td>{{ employee.EmployeeCode }}</td>
     <td>{{ employee.EmployeeName }}</td>
     <td>
@@ -124,6 +124,14 @@ export default {
     showFormDuplicateEmployee: {
       type: [Function, null],
       default: function () {},
+    },
+    toggleEmployeeCheck: {
+      type: [Function, null],
+      default: function () {},
+    },
+    employeeListChecked:{
+      type: Array,
+      default: ()=>{[]}
     }
   },
   methods: {
@@ -191,7 +199,9 @@ export default {
             if (res.status == 200) {
               resolve();
             } else {
-              reject(res.json());
+              res.json().then(res=>{
+                  reject(res.UserMsg || res.userMsg);
+                })
             }
           });
         })
@@ -201,7 +211,7 @@ export default {
           })
           .catch((err) => {
             this.messages = [];
-            console.log(err);
+            this.messages.push(err);
           });
       } catch (err) {
         console.log(err);

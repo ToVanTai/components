@@ -2,10 +2,10 @@
   <!-- hiển thị ô input tìm kiếm theo mã và tên nhân viên, và icon để thực hiện hành động tìm kiếm -->
   <div class="employespage__controller">
     <div class="employespage__controller__left">
-      <div class="dropdown">
+      <div class="dropdown" v-show="employeeListChecked?.length">
         <div class="dropdown__btn btn">{{employeePage.controller.deleteList}} <i class="fas fa-sort-down"></i></div>
         <div class="dropdown__list">
-          <div class="dropdown__item btn">{{employeePage.controller.delete}}</div>
+          <div class="dropdown__item btn" @click="showNofifyDeleteListEmployee">{{employeePage.controller.delete}}</div>
         </div>  
       </div>
     </div>
@@ -27,27 +27,50 @@
     </div>
     </div>
   </div>
-  
+  <!-- hiển thị các thông báo khi xóa ở đây -->
+  <BaseNotify
+    v-if="messages.length != 0"
+    :isShow="messages.length != 0"
+    :isQuestion="true"
+    :messages="messages"
+    :overlayClick="cancelDeleteList"
+    :btnOKClick="handleDeleteListEmployee"
+    :btnCloseClick="cancelDeleteList"
+    :isPending="isPending"
+  />
 </template>
 
 <script>
 import { employeePage } from '@/resources';
-
+import BaseNotify from "../../../../components/common/BaseNotify.vue";
 export default {
+  components:{BaseNotify},
   data() {
     return {
       employeePage,
-      employeefilter: this.$route.query?.filter || this.$route.query?.employeeFilter || "" 
+      employeefilter: this.$route.query?.filter || this.$route.query?.employeeFilter || "" ,
+      messages: [], //nếu có thì sẽ hiện notify,
+      isPending: false,
     };
   },
   props: {
     initEmployesTable: {
       type: [Function, null],
       default: function () {},
+    },
+    employeeListChecked:{
+      type:[Array, null],
+      default: ()=>{return []}
     }
   }
   ,
   methods: {
+    /**
+     * useTo: thay đổi url của trình duyệt và lấy ds employee từ server
+     * updateBy:
+     * author: tovantai
+     * createdAt: 27/01/2023
+     */
     btnSearchClick(){
       let employeeQuery = {
         pageSize: this.$route.query.pageSize || 5,
@@ -64,6 +87,62 @@ export default {
       setTimeout(() => {
         this.initEmployesTable()
       }, 100);
+    },
+    /**
+     * useTo: Xử lý xóa ds nhân viên
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
+    showNofifyDeleteListEmployee() {
+      try {
+        this.messages = [`${this.employeePage.controller.confirmDeleteListEmployee}`];
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    /**
+     * useTo: Xử lý hủy xóa ds nhân viên
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
+    cancelDeleteList() {
+      this.messages = [];
+    },
+    /**
+     * useTo: Xử lý xóa nhân viên
+     * updatedBy: tovantai_22/12/2022
+     * author: tovantai
+     * createAt: 22/12/2022
+     */
+    async handleDeleteListEmployee() {
+      try {
+        this.isPending = true;
+        console.log(this.employeeListChecked);
+        // await new Promise((resolve, reject) => {
+        //   fetch(`${employesUrl}/${this.employee.EmployeeId}`, {
+        //     method: "DELETE",
+        //   }).then((res) => {
+        //     this.isPending = false;
+        //     if (res.status == 200) {
+        //       resolve();
+        //     } else {
+        //       reject(res.json());
+        //     }
+        //   });
+        // })
+        //   .then(() => {
+        //     this.messages = [];
+        //     this.resetTable();
+        //   })
+        //   .catch((err) => {
+        //     this.messages = [];
+        //     console.log(err);
+        //   });
+      } catch (err) {
+        console.log(err);
+      }
     }
   }
 };

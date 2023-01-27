@@ -492,11 +492,9 @@ export default {
           if (res.status == 200) {
             resolve(res.text());
           } else {
-            if (res.status == 500) {
-              res.text().then((res) => reject(JSON.parse(res).userMsg));
-            } else {
-              reject(this.resources.employeeNotify.GetNewEmployeeCodeFailed);
-            }
+            res.json().then(res=>{
+              reject(res.UserMsg || res.userMsg);
+            })
           }
         });
       })
@@ -518,11 +516,9 @@ export default {
           if (res.status == 200) {
             resolve(res.json());
           } else {
-            if (res.status == 500) {
-              res.text().then((res) => reject(JSON.parse(res).userMsg));
-            } else {
-              reject(this.resources.employeeNotify.GetNewEmployeeCodeFailed);
-            }
+            res.json().then(res=>{
+              reject(res.UserMsg || res.userMsg);
+            })
           }
         });
       })
@@ -571,7 +567,9 @@ export default {
           if (res.status == 200) {
             resolve(res.json());
           } else {
-            reject(this.resources.employeeNotify.GetDepartmentsFailed);
+            res.json().then(res=>{
+              reject(res.UserMsg || res.userMsg);
+            })
           }
         });
       })
@@ -739,10 +737,10 @@ export default {
                 this.resetTable();
               } else {
                 this.isPending = false;
-                res.json().then((res) => {
+                res.json().then(res=>{
                   this.inputErr = "employeeCodeElm";
-                  this.messages.push(res.devMsg);
-                });
+                  this.messages.push(res.UserMsg || res.userMsg);
+                })
               }
             });
           }
@@ -777,10 +775,10 @@ export default {
                 this.resetTable();
               } else {
                 this.isPending = false;
-                res.json().then((res) => {
+                res.json().then(res=>{
                   this.inputErr = "employeeCodeElm";
-                  this.messages.push(res.devMsg);
-                });
+                  this.messages.push(res.UserMsg || res.userMsg);
+                })
               }
             });
           }
@@ -816,10 +814,10 @@ export default {
                 this.resetTable();
               } else {
                 this.isPending = false;
-                res.json().then((res) => {
+                res.json().then(res=>{
                   this.inputErr = true;
-                  this.messages.push(res.devMsg);
-                });
+                  this.messages.push(res.UserMsg || res.userMsg);
+                })
               }
             });
           }
@@ -917,6 +915,12 @@ export default {
       }
       return inputErrResult;
     },
+    /**
+     * useTo: reset form 
+     * updateBy: tovantai_22/12/2022
+     * author: tovantai
+     * createdAt: 22/12/2022
+     */
     clearForm() {
       this.employeeCode = "";
       this.departmentId = "";

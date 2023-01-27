@@ -33,7 +33,8 @@ export const employeePage = {
   controller: {
     inputPlaceholder: "Tìm theo mã, tên nhân viên",
     deleteList: "Thực hiện xóa hàng loạt",
-    delete:"Xóa"
+    delete:"Xóa",
+    confirmDeleteListEmployee:"Bạn có muấn xóa toàn bộ danh sách nhân viên đã chọn không?"
   },
   employee: {
     "ActionDelete": "Xóa",
@@ -114,6 +115,7 @@ export const employeePage = {
   employeeNotify: {
     GetNewEmployeeCodeFailed: "Không lấy được mã nhân viên mới.",
     GetDepartmentsFailed: "Không lấy danh sách phòng ban.",
+    GetEmployeesFailed: "Không lấy danh sách nhân viên.",
     RequiredDepartmentID: "Mã phòng ban là bắt buộc!",
     RequiredEmployeeName: "Tên nhân viên là bắt buộc!",
     RequiredEmployeeCode: "Mã nhân viên là bắt buộc!",
