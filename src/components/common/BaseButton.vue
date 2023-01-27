@@ -55,7 +55,7 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 /**Start css cho nút phụ */
 .btn {
   outline: none;

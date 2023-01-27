@@ -31,7 +31,9 @@ export const mainTitle = {
 
 export const employeePage = {
   controller: {
-    inputPlaceholder: "Tìm theo mã, tên nhân viên"
+    inputPlaceholder: "Tìm theo mã, tên nhân viên",
+    deleteList: "Thực hiện xóa hàng loạt",
+    delete:"Xóa"
   },
   employee: {
     "ActionDelete": "Xóa",

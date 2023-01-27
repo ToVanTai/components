@@ -9,8 +9,12 @@
       :showEmployeeFormInfor="showEmployeeFormInfor"
       :resetTable="initEmployesTable"
       :showFormDuplicateEmployee="showFormDuplicateEmployee"
+      :employeeListChecked="employeeListChecked"
     />
-    <EmployesPagination :employes="employes" :initEmployesTable="initEmployesTable" />
+    <EmployesPagination
+      :employes="employes"
+      :initEmployesTable="initEmployesTable"
+    />
   </div>
   <!-- hiển thị employesForm ở chỗ này -->
   <EmployesForm
@@ -57,9 +61,11 @@ export default {
       isShowInfo: false, //trạng thái thêm mới || thông tin nhân viên
       employeeShow: null, //mã id nhân viên đang show
       employes: {}, //danh sách nhân viên
-      isPendingEmployes: false,//trạng thái pending khi lấy danh sách nhân viên
+      isPendingEmployes: false, //trạng thái pending khi lấy danh sách nhân viên
       //hiển thị notify lỗi
       messages: [], //nếu có thì sẽ hiện notify
+      //danh sách các employee muấn xóa
+      employeeListChecked: [],
     };
   },
   mounted() {
@@ -138,16 +144,16 @@ export default {
     async getEmployeeList() {
       let employeeQuery = {
         pageSize: this.$route.query.pageSize || 5,
-        pageNumber: this.$route.query.pageNumber || 1 ,
+        pageNumber: this.$route.query.pageNumber || 1,
         employeeFilter: this.$route.query.employeeFilter || "",
         filter: this.$route.query.filter || "",
-      }
-      let queryString = ""
-      for(var item in employeeQuery){
-        if(queryString == ""){
-          queryString=`${item}=${employeeQuery[item]}`
-        }else{
-          queryString+=`&${item}=${employeeQuery[item]}`
+      };
+      let queryString = "";
+      for (var item in employeeQuery) {
+        if (queryString == "") {
+          queryString = `${item}=${employeeQuery[item]}`;
+        } else {
+          queryString += `&${item}=${employeeQuery[item]}`;
         }
       }
       await new Promise((resolve, reject) => {
@@ -194,6 +200,11 @@ export default {
       }
     },
   },
+  watch: {
+    employes() {
+      this.employeeListChecked = [];
+    },
+  }
 };
 </script>
 

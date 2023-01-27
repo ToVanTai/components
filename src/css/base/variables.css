@@ -32,6 +32,8 @@
 
   /* start defind size for border */
   --border-radius: 4px;
+  --border-radius-8: 8px;
+  --border-radius-16: 16px;
   /* end defind size for border */
 
   /* start defind font size */
