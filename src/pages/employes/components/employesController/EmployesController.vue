@@ -25,6 +25,9 @@
     <div class="employespage__controller__iconreload" @click="initEmployesTable">
       <i class="fas fa-redo"></i>
     </div>
+    <div class="employespage__controller__iconreload" @click="downloadEmployeeToExcel">
+      <i class="far fa-file-excel"></i>
+    </div>
     </div>
   </div>
   <!-- hiển thị các thông báo khi xóa ở đây -->
@@ -43,6 +46,8 @@
 <script>
 import { employeePage } from '@/resources';
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
+import {employesUrl} from "@/config/index"
+import {formatDate} from "@/utils/format"
 export default {
   components:{BaseNotify},
   data() {
@@ -61,6 +66,10 @@ export default {
     employeeListChecked:{
       type:[Array, null],
       default: ()=>{return []}
+    },
+    employes:{
+      type:[Object, null],
+      default: ()=>{return null}
     }
   }
   ,
@@ -119,30 +128,91 @@ export default {
     async handleDeleteListEmployee() {
       try {
         this.isPending = true;
-        console.log(this.employeeListChecked);
-        // await new Promise((resolve, reject) => {
-        //   fetch(`${employesUrl}/${this.employee.EmployeeId}`, {
-        //     method: "DELETE",
-        //   }).then((res) => {
-        //     this.isPending = false;
-        //     if (res.status == 200) {
-        //       resolve();
-        //     } else {
-        //       reject(res.json());
-        //     }
-        //   });
-        // })
-        //   .then(() => {
-        //     this.messages = [];
-        //     this.resetTable();
-        //   })
-        //   .catch((err) => {
-        //     this.messages = [];
-        //     console.log(err);
-        //   });
+        let bodyData = {ids: this.employeeListChecked.join(",")};
+        await new Promise((resolve, reject) => {
+          fetch(`${employesUrl}`, {
+            method: "DELETE",
+            body: JSON.stringify(bodyData)
+          }).then((res) => {
+            this.isPending = false;
+            if (res.status == 200) {
+              resolve();
+            } else {
+              res.json().then(res=>{
+                reject(res.UserMsg || res.userMsg)
+              })
+            }
+          });
+        })
+          .then(() => {
+            this.messages = [];
+            this.initEmployesTable()
+          })
+          .catch((err) => {
+            this.messages = [err];
+          });
       } catch (err) {
         console.log(err);
       }
+    },
+    /**
+     * useTo: tải file excel employees về client
+     * updatedBy: tovantai_28/01/2022
+     * author: tovantai
+     * createAt: 28/01/2022
+     */
+    downloadEmployeeToExcel(){
+      if(this.employes?.Data.length > 0){
+        import("@/plugins/Export2Excel").then(excel=>{
+          //data json
+          let OBJ = this.employes.Data.map((item, index)=>{
+            let genderName;
+            if(Number(item.Gender + "") == 1)
+              genderName = this.employeePage.employee.GenderMale
+            else if(Number(item.Gender + "") == 0)
+              genderName = this.employeePage.employee.GenderFemale
+            else
+              genderName = this.employeePage.employee.GenderOther
+
+            return {
+              Index: index+1,
+              EmployeeCode: item.EmployeeCode,
+              EmployeeName: item.EmployeeName,
+              Gender: genderName,
+              DateOfBirth: item?.DateOfBirth ? formatDate(item.DateOfBirth) : "",
+              PositionName: item?.PositionName || "",
+              DepartmentName : item?.DepartmentName  || "",
+              BankAccountNumber: item?.BankAccountNumber || "",
+              BankName: item?.BankName || ""
+            }
+          })
+          //header in excel
+          let Header = [this.employeePage.employee.Index,this.employeePage.employee.EmployeeCode, this.employeePage.employee.EmployeeName, this.employeePage.employee.Gender, this.employeePage.employee.DateOfBirth, this.employeePage.employee.PositionName, this.employeePage.employee.DepartmentName, this.employeePage.employee.BankAccountNumber, this.employeePage.employee.BankName]
+          //field for map with datajson
+          let Fields = ["Index", "EmployeeCode", "EmployeeName", "Gender", "DateOfBirth", "PositionName", "DepartmentName", "BankAccountNumber", "BankName"]
+          //data mapped field and obj
+          const DataMapped = this.FormatJson(Fields, OBJ);
+          excel.export_json_to_excel({
+            header: Header,
+            data: DataMapped,
+            sheetName: "Danh sach nhan vien",
+            filename: "Danh_sach_nhan_vien",
+            autoWidth : true,
+            bookType : "xlsx",
+          })
+        })
+      }
+    },
+    /**
+     * useTo: format json
+     * updatedBy: tovantai_28/01/2022
+     * author: tovantai
+     * createAt: 28/01/2022
+     */
+    FormatJson(fieldData, jsonData){
+      return jsonData.map((v)=>fieldData.map((j)=>{
+        return v[j]
+      }))
     }
   }
 };

@@ -103,7 +103,8 @@ export const employeePage = {
     "Functions": "Chức năng",
     "GenderMale": "Nam",
     "GenderFemale": "Nữ",
-    "GenderOther": "Khác"
+    "GenderOther": "Khác",
+    "Index": "STT"
   },
   pagination: {
     "total": "Tổng số",

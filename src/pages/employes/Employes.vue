@@ -2,7 +2,7 @@
   <TheTitle :btnCreatenewEmployeeClick="showFormCreatenewEmployee" />
   <div class="employespage">
     <!-- tìm kiếm theo tên, mã, số điện thoại -->
-    <EmployesController :initEmployesTable="initEmployesTable" :employeeListChecked="employeeListChecked" />
+    <EmployesController :initEmployesTable="initEmployesTable" :employeeListChecked="employeeListChecked" :employes="employes" />
     <EmployesTable
       :employeeList="employes?.Data"
       :isPending="isPendingEmployes"
