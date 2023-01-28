@@ -128,11 +128,14 @@ export default {
     async handleDeleteListEmployee() {
       try {
         this.isPending = true;
+        var headers = new Headers();
+         headers.append("Content-Type", "application/json");
         let bodyData = {ids: this.employeeListChecked.join(",")};
         await new Promise((resolve, reject) => {
           fetch(`${employesUrl}`, {
             method: "DELETE",
-            body: JSON.stringify(bodyData)
+            body: JSON.stringify(bodyData),
+            headers
           }).then((res) => {
             this.isPending = false;
             if (res.status == 200) {
