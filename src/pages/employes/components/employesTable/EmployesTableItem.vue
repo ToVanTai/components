@@ -15,7 +15,7 @@
     <td class="date">
       {{ employee.DateOfBirth && formatDate(employee.DateOfBirth) }}
     </td>
-    <td>{{ employee.IdentityNumber }}</td>
+    <td>{{ employee.IndentityNumber }}</td>
     <td>{{ employee.PositionName }}</td>
     <td>{{ employee.DepartmentName }}</td>
     <td>{{ employee.BankAccountNumber }}</td>

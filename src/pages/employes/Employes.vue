@@ -147,7 +147,6 @@ export default {
       let employeeQuery = {
         pageSize: this.$route.query.pageSize || 5,
         pageNumber: this.$route.query.pageNumber || 1,
-        employeeFilter: this.$route.query.employeeFilter || "",
         filter: this.$route.query.filter || "",
       };
       let queryString = "";

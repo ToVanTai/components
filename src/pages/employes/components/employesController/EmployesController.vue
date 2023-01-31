@@ -16,7 +16,7 @@
       <input
         class="italic input__primary"
         type="text"
-        v-model="employeefilter"
+        v-model="employeeFilter"
         :placeholder="employeePage.controller.inputPlaceholder"
         name="txtEmployeeFilter" />
       <div class="input__icon--end" @click="btnSearchClick"><i class="fas fa-search"></i></div>
@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       employeePage,
-      employeefilter: this.$route.query?.filter || this.$route.query?.employeeFilter || "" ,
+      employeeFilter: this.$route.query?.filter || "" ,
       messages: [], //nếu có thì sẽ hiện notify,
       isPending: false,
     };
@@ -84,11 +84,9 @@ export default {
       let employeeQuery = {
         pageSize: this.$route.query.pageSize || 5,
         pageNumber: this.$route.query.pageNumber || 1 ,
-        employeeFilter: this.$route.query.employeeFilter || "",
         filter: this.$route.query.filter || "",
       }
-      employeeQuery.filter = this.employeefilter
-      employeeQuery.employeeFilter = this.employeefilter
+      employeeQuery.filter = this.employeeFilter
       employeeQuery.pageNumber = 1
       this.$router.push({query:{
         ...employeeQuery
