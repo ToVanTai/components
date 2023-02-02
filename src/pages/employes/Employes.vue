@@ -2,7 +2,11 @@
   <TheTitle :btnCreatenewEmployeeClick="showFormCreatenewEmployee" />
   <div class="employespage">
     <!-- tìm kiếm theo tên, mã, số điện thoại -->
-    <EmployesController :initEmployesTable="initEmployesTable" :employeeListChecked="employeeListChecked" :employes="employes" />
+    <EmployesController
+      :initEmployesTable="initEmployesTable"
+      :employeeListChecked="employeeListChecked"
+      :employes="employes"
+    />
     <EmployesTable
       :employeeList="employes?.Data"
       :isPending="isPendingEmployes"
@@ -74,7 +78,7 @@ export default {
     try {
       this.initEmployesTable();
     } catch (err) {
-      console.log(err);
+      this.messages=[err]
     }
   },
   methods: {
@@ -90,7 +94,7 @@ export default {
         this.isShowInfo = false;
         this.employeeShow = null;
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -105,7 +109,7 @@ export default {
         this.isShowInfo = false;
         this.employeeShow = null;
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -120,7 +124,7 @@ export default {
         this.isShowInfo = true;
         this.employeeShow = employee.EmployeeId;
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -134,7 +138,7 @@ export default {
         this.isShowForm = false;
         this.isShowInfo = false;
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -144,35 +148,38 @@ export default {
      * createdAt: 22/12/2022
      */
     async getEmployeeList() {
-      let employeeQuery = {
-        pageSize: this.$route.query.pageSize || 5,
-        pageNumber: this.$route.query.pageNumber || 1,
-        filter: this.$route.query.filter || "",
-      };
-      let queryString = "";
-      for (var item in employeeQuery) {
-        if (queryString == "") {
-          queryString = `${item}=${employeeQuery[item]}`;
-        } else {
-          queryString += `&${item}=${employeeQuery[item]}`;
-        }
-      }
-      await new Promise((resolve, reject) => {
-        fetch(`${employesUrl}/filter?${queryString}`).then((res) => {
-          if (res.status == 200) {
-            resolve(res.json());
+      try {
+        let employeeQuery = {
+          pageSize: this.$route.query.pageSize || 5,
+          pageNumber: this.$route.query.pageNumber || 1,
+          filter: this.$route.query.filter || "",
+        };
+        let queryString = "";
+        for (var item in employeeQuery) {
+          if (queryString == "") {
+            queryString = `${item}=${employeeQuery[item]}`;
           } else {
-            res.json().then(res=>{
-              reject(res.UserMsg || res.userMsg);
-            })
-            
+            queryString += `&${item}=${employeeQuery[item]}`;
           }
-        });
-      })
-        .then((res) => (this.employes = res))
-        .catch((err) => {
-          this.messages = [err];
-        });
+        }
+        await new Promise((resolve, reject) => {
+          fetch(`${employesUrl}/filter?${queryString}`).then((res) => {
+            if (res.status == 200) {
+              resolve(res.json());
+            } else {
+              res.json().then((res) => {
+                reject(res.UserMsg || res.userMsg);
+              });
+            }
+          });
+        })
+          .then((res) => (this.employes = res))
+          .catch((err) => {
+            this.messages = [err];
+          });
+      } catch (err) {
+        this.messages=[err]
+      }
     },
     /**
      * useTo: đóng thông báo
@@ -184,7 +191,7 @@ export default {
       try {
         this.messages = []; //đóng form
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -204,21 +211,22 @@ export default {
       }
     },
     /**
-     * useTo: thêm đầy hoặc xóa xóa toàn bộ phần tử trong danh sách employee muấn xóa 
+     * useTo: thêm đầy hoặc xóa xóa toàn bộ phần tử trong danh sách employee muấn xóa
      * updateBy:
      * author: tovantai
      * createdAt: 27/01/2023
      */
     toggleEmployeeListCheck() {
       try {
-        
-        if(this.employeeListChecked?.length != this.employes?.Data.length){
-          this.employeeListChecked = this.employes.Data.map((item)=>item.EmployeeId)
-        }else{
-          this.employeeListChecked = []
+        if (this.employeeListChecked?.length != this.employes?.Data.length) {
+          this.employeeListChecked = this.employes.Data.map(
+            (item) => item.EmployeeId
+          );
+        } else {
+          this.employeeListChecked = [];
         }
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -229,26 +237,26 @@ export default {
      */
     toggleEmployeeCheck(id) {
       try {
-        if(this.employeeListChecked.includes(id)){
-          for(let i = 0;i<this.employeeListChecked.length;i++){
-            if(id==this.employeeListChecked[i]){
-              this.employeeListChecked.splice(i,1);
+        if (this.employeeListChecked.includes(id)) {
+          for (let i = 0; i < this.employeeListChecked.length; i++) {
+            if (id == this.employeeListChecked[i]) {
+              this.employeeListChecked.splice(i, 1);
               break;
             }
           }
-        }else{
-          this.employeeListChecked.push(id)
+        } else {
+          this.employeeListChecked.push(id);
         }
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
-    }
+    },
   },
   watch: {
     employes() {
       this.employeeListChecked = [];
     },
-  }
+  },
 };
 </script>
 
@@ -262,7 +270,8 @@ export default {
 /* start css employes table */
 .employespage .employespage__table {
   height: calc(100vh - (40px + 92px + 18px + 50px + 18px + 18px + 24px));
-  position: relative;
-  /* overflow: hidden; */
+  /* position: relative; */
+  overflow: auto;
 }
+
 </style>

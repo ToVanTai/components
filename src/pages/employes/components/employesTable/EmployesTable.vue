@@ -6,7 +6,7 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="checkbox"><input type="checkbox" :checked="employeeListChecked.length == employeeList?.length" name="kk" @change="toggleEmployeeListCheck" /></th>
+          <th class="checkbox"><input type="checkbox" :checked="employeeListChecked.length !=0 && employeeListChecked.length == employeeList?.length" name="kk" @change="toggleEmployeeListCheck" /></th>
           <th>{{ employeePage.employee.EmployeeCode }}</th>
           <th>{{ employeePage.employee.EmployeeName }}</th>
           <th>{{ employeePage.employee.Gender }}</th>
@@ -93,12 +93,6 @@ export default {
 </script>
 
 <style scoped>
-.employespage__table {
-  height: calc(100vh - (40px + 92px + 18px + 50px + 18px + 18px + 24px));
-  position: relative;
-  /* overflow: hidden; */
-}
-
 .employespage__table.pending::before {
   content: "";
   position: absolute;
@@ -137,6 +131,5 @@ export default {
   display: block;
   height: 100%;
   width: 100%;
-  overflow: auto;
 }
 </style>

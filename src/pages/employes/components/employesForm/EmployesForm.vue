@@ -440,9 +440,9 @@ export default {
     };
   },
   props: {
-    isShowForm:{
-      type:[Boolean, String],
-      default: false
+    isShowForm: {
+      type: [Boolean, String],
+      default: false,
     },
     isShowInfo: {
       type: Boolean,
@@ -466,18 +466,14 @@ export default {
     if (this.isShowInfo) {
       //ở trạng thái hiển thị thông tin nhân viên...
       this.initFromInfoEmployee();
-      
     } else {
       this.initFromCreatenewEmployee();
-      if(this.isShowForm !== true){
-        this.initFormDuplicateEmployee()
-      }else{
-        this.initFromCreatenewEmployee()
+      if (this.isShowForm !== true) {
+        this.initFormDuplicateEmployee();
+      } else {
+        this.initFromCreatenewEmployee();
       }
     }
-  },
-  updated() {
-    // console.log(this.departmentId);
   },
   methods: {
     /**
@@ -492,9 +488,9 @@ export default {
           if (res.status == 200) {
             resolve(res.text());
           } else {
-            res.json().then(res=>{
+            res.json().then((res) => {
               reject(res.UserMsg || res.userMsg);
-            })
+            });
           }
         });
       })
@@ -512,15 +508,17 @@ export default {
      */
     async getEmployeeInfo() {
       await new Promise((resolve, reject) => {
-        fetch(`${employesUrl}/${this.employeeShow || this.isShowForm}`).then((res) => {
-          if (res.status == 200) {
-            resolve(res.json());
-          } else {
-            res.json().then(res=>{
-              reject(res.UserMsg || res.userMsg);
-            })
+        fetch(`${employesUrl}/${this.employeeShow || this.isShowForm}`).then(
+          (res) => {
+            if (res.status == 200) {
+              resolve(res.json());
+            } else {
+              res.json().then((res) => {
+                reject(res.UserMsg || res.userMsg);
+              });
+            }
           }
-        });
+        );
       })
         .then((res) => {
           this.employeeCode = res.EmployeeCode;
@@ -530,7 +528,8 @@ export default {
           this.dateOfBirth = res.DateOfBirth && formatDateV2(res.DateOfBirth);
           this.gender = res.Gender;
           this.identityNumber = res.IndentityNumber;
-          this.identityDate = res.IndentityDate && formatDateV2(res.IndentityDate);
+          this.identityDate =
+            res.IndentityDate && formatDateV2(res.IndentityDate);
           this.identityPlace = res.IndentityPlace;
           this.address = res.Address;
           this.phoneNumber = res.PhoneNumber;
@@ -540,15 +539,15 @@ export default {
           this.bankName = res.BankName;
           this.bankBranchName = res.BankBranchName;
 
-          this.joinDate = res.JoinDate
-          this.workStatus = res.WorkStatus
-          this.salary = res.Salary
-          this.bankAccountName = res.BankAccountName
-          this.createdBy = res.CreatedBy
-          this.createdDate = res.CreatedDate
-          this.updatedBy = res.UpdatedBy
-          this.updatedDate = res.UpdatedDate
-          this.positionId = res.PositionId
+          this.joinDate = res.JoinDate;
+          this.workStatus = res.WorkStatus;
+          this.salary = res.Salary;
+          this.bankAccountName = res.BankAccountName;
+          this.createdBy = res.CreatedBy;
+          this.createdDate = res.CreatedDate;
+          this.updatedBy = res.UpdatedBy;
+          this.updatedDate = res.UpdatedDate;
+          this.positionId = res.PositionId;
         })
         .catch((err) => {
           this.messages.push(err);
@@ -567,9 +566,9 @@ export default {
           if (res.status == 200) {
             resolve(res.json());
           } else {
-            res.json().then(res=>{
+            res.json().then((res) => {
               reject(res.UserMsg || res.userMsg);
-            })
+            });
           }
         });
       })
@@ -632,22 +631,6 @@ export default {
         await this.getDepartments();
         await this.getEmployeeInfo();
         this.isPending = false;
-        // this.employeeCode = this.employeeShow.EmployeeCode;
-        // this.departmentId = this.employeeShow.DepartmentId;
-        // this.employeeName = this.employeeShow.EmployeeName;
-        // this.positionName = this.employeeShow.PositionName;
-        // this.dateOfBirth = this.employeeShow.DateOfBirth;
-        // this.gender = this.employeeShow.Gender;
-        // this.identityNumber = this.employeeShow.IdentityNumber;
-        // this.identityDate = this.employeeShow.IdentityDate;
-        // this.identityPlace = this.employeeShow.IdentityPlace;
-        // this.address = this.employeeShow.Address;
-        // this.phoneNumber = this.employeeShow.PhoneNumber;
-        // this.telephoneNumber = this.employeeShow.TelephoneNumber;
-        // this.email = this.employeeShow.Email;
-        // this.bankAccountNumber = this.employeeShow.BankAccountNumber;
-        // this.bankName = this.employeeShow.BankName;
-        // this.bankBranchName = this.employeeShow.BankBranchName;
         this.$refs.employeeCodeElm.firstChild.focus();
       } catch (err) {
         this.isPending = false;
@@ -661,16 +644,14 @@ export default {
      * createdAt: 21/12/2022
      */
     closeNotify() {
-      this.messages = []; //đóng form
-      //nếu submit form bị lỗi thì đóng luân form
-      if (this.inputErr === true) {
-        console.log("Đóng luân form do submit form bị lỗi do server");
-      } else if (this.inputErr !== null) {
-        //focus vào input đầu tiên bị lỗi
-
-        setTimeout(() => {
-          this.$refs[this.inputErr].firstChild.focus();
-        }, 100);
+      try {
+        this.messages = []; //đóng form
+          //focus vào input đầu tiên bị lỗi
+          setTimeout(() => {
+            this.$refs[this.inputErr].firstChild.focus();
+          }, 100);
+      } catch (err) {
+        this.messages = [err]
       }
     },
     /**
@@ -681,9 +662,9 @@ export default {
      */
     getEmployeeFormData() {
       var employeeData = {
-        employeeCode: this.employeeCode?.trim(),//
-        departmentId: this.departmentId?.trim(),//
-        employeeName: this.employeeName?.trim(),//
+        employeeCode: this.employeeCode?.trim(), //
+        departmentId: this.departmentId?.trim(), //
+        employeeName: this.employeeName?.trim(), //
         positionName: this.positionName?.trim(),
         dateOfBirth: this.dateOfBirth || null,
         gender: this.gender || 0,
@@ -691,7 +672,7 @@ export default {
         IndentityDate: this.identityDate || null,
         IndentityPlace: this.identityPlace || "",
         address: this.address || "",
-        phoneNumber: this.phoneNumber?.trim(),//
+        phoneNumber: this.phoneNumber?.trim(), //
         telephoneNumber: this.telephoneNumber || "",
         email: this.email?.trim(),
         bankAccountNumber: this.bankAccountNumber || "",
@@ -700,12 +681,12 @@ export default {
         joinDate: this.joinDate || null,
         workStatus: this.workStatus || 0,
         salary: this.salary || 0,
-        bankAccountName: this.bankAccountName || "", 
+        bankAccountName: this.bankAccountName || "",
         createdBy: this.createdBy || "",
         createdDate: this.createdDate || null,
         updatedBy: this.updatedBy || "",
         updatedDate: this.updatedDate || null,
-        positionId: this.positionId || "7c4f14d8-66fb-14ae-198f-6354f958f4c0"
+        positionId: this.positionId || "7c4f14d8-66fb-14ae-198f-6354f958f4c0",
       };
       return employeeData;
     },
@@ -737,16 +718,16 @@ export default {
                 this.resetTable();
               } else {
                 this.isPending = false;
-                res.json().then(res=>{
+                res.json().then((res) => {
                   this.inputErr = "employeeCodeElm";
                   this.messages.push(res.UserMsg || res.userMsg);
-                })
+                });
               }
             });
           }
         }
       } catch (err) {
-        console.log(err);
+        this.messages = [err]
       }
     },
     /**
@@ -775,16 +756,16 @@ export default {
                 this.resetTable();
               } else {
                 this.isPending = false;
-                res.json().then(res=>{
+                res.json().then((res) => {
                   this.inputErr = "employeeCodeElm";
                   this.messages.push(res.UserMsg || res.userMsg);
-                })
+                });
               }
             });
           }
         }
       } catch (err) {
-        console.log(err);
+        this.messages = [err]
       }
     },
     /**
@@ -814,16 +795,16 @@ export default {
                 this.resetTable();
               } else {
                 this.isPending = false;
-                res.json().then(res=>{
+                res.json().then((res) => {
                   this.inputErr = true;
                   this.messages.push(res.UserMsg || res.userMsg);
-                })
+                });
               }
             });
           }
         }
       } catch (err) {
-        console.log(err);
+        this.messages = [err]
       }
     },
     /**
@@ -844,7 +825,7 @@ export default {
       this.$refs.phoneNumberElm.classList.remove("err");
 
       //số điện thoại là bắt buộc
-      if(!this.phoneNumber?.trim()){
+      if (!this.phoneNumber?.trim()) {
         inputErrResult = "phoneNumberElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
@@ -916,28 +897,32 @@ export default {
       return inputErrResult;
     },
     /**
-     * useTo: reset form 
+     * useTo: reset form
      * updateBy: tovantai_22/12/2022
      * author: tovantai
      * createdAt: 22/12/2022
      */
     clearForm() {
-      this.employeeCode = "";
-      this.departmentId = "";
-      this.employeeName = "";
-      this.positionName = "";
-      this.dateOfBirth = "";
-      this.gender = "";
-      this.identityNumber = "";
-      this.identityDate = "";
-      this.identityPlace = "";
-      this.address = "";
-      this.phoneNumber = "";
-      this.telephoneNumber = "";
-      this.email = "";
-      this.bankAccountNumber = "";
-      this.bankName = "";
-      this.bankBranchName = "";
+      try {
+        this.employeeCode = "";
+        this.departmentId = "";
+        this.employeeName = "";
+        this.positionName = "";
+        this.dateOfBirth = "";
+        this.gender = "";
+        this.identityNumber = "";
+        this.identityDate = "";
+        this.identityPlace = "";
+        this.address = "";
+        this.phoneNumber = "";
+        this.telephoneNumber = "";
+        this.email = "";
+        this.bankAccountNumber = "";
+        this.bankName = "";
+        this.bankBranchName = "";
+      } catch (err) {
+        this.messages = [err]
+      }
     },
   },
   watch: {
@@ -957,8 +942,8 @@ export default {
   overflow-x: hidden;
   background-color: var(--color-bg-white);
   cursor: default;
-  padding: var(--padding-28) var(--padding-28) var(--padding-18)
-    var(--padding-28);
+  padding: var(--padding-28);
+  border-radius: var(--border-radius);
 }
 
 .employeeForm::-webkit-scrollbar {

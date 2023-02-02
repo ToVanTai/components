@@ -2,7 +2,7 @@
   <tr @dblclick="(event) => showEmployeeDetail(event, employee)">
     <td class="checkbox"><input type="checkbox" :checked="employeeListChecked.includes(employee.EmployeeId)" @change="toggleEmployeeCheck(employee.EmployeeId)"/></td>
     <td>{{ employee.EmployeeCode }}</td>
-    <td>{{ employee.EmployeeName }}</td>
+    <td :style="{whiteSpace: 'nowrap'}">{{ employee.EmployeeName }}</td>
     <td>
       {{
         employee.Gender + "" === "0"
@@ -157,7 +157,7 @@ export default {
           this.showEmployeeFormInfor(employee);
         }
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -170,7 +170,7 @@ export default {
       try {
         this.messages = [`${this.resources.employeeNotify.ConfirmEmployeeDelete} <${this.employee.EmployeeCode}>? `];
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
     /**
@@ -180,7 +180,11 @@ export default {
      * createAt: 22/12/2022
      */
     cancelDelete() {
-      this.messages = [];
+      try{
+        this.messages = [];
+      }catch(err){
+        this.messages=[err]
+      }
     },
     /**
      * useTo: Xử lý xóa nhân viên
@@ -214,7 +218,7 @@ export default {
             this.messages.push(err);
           });
       } catch (err) {
-        console.log(err);
+        this.messages=[err]
       }
     },
   },
