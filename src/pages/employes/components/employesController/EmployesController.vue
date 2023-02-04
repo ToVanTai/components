@@ -64,8 +64,16 @@ import { employeePage } from "@/resources";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { employesUrl } from "@/config/index";
 import { formatDate } from "@/utils/format";
+import {inject} from "vue"
 export default {
   components: { BaseNotify },
+  setup() {
+    //inject đối tượng showToast được cung cấp từ App.vue
+    let showToast = inject("showToast");
+    return {
+      showToast,
+    };
+  },
   data() {
     return {
       employeePage,
@@ -175,9 +183,11 @@ export default {
           .then(() => {
             this.messages = [];
             this.initEmployesTable();
+            this.showToast("success",this.employeePage.employeeNotify.DeleteListEmployeeSuccess)
           })
           .catch((err) => {
-            this.messages = [err];
+            this.messages = [];
+            this.showToast("error",err)
           });
       } catch (err) {
         this.messages=[err]

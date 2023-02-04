@@ -392,11 +392,20 @@ import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { departmentsUrl, employesUrl } from "../../../../config/index";
 import { employeePage } from "@/resources";
 import { IsValidEmail, formatDateV2 } from "@/utils/format";
+
+import { inject } from "vue";
 export default {
   components: {
     BasePopup,
     BaseNotify,
     BaseButton,
+  },
+  setup() {
+    //inject đối tượng showToast được cung cấp từ App.vue
+    let showToast = inject("showToast");
+    return {
+      showToast,
+    };
   },
   data() {
     return {
@@ -405,7 +414,6 @@ export default {
       //trạng thái pending
       isPending: false,
       departments: "",
-
       //model cho input
       employeeCode: "", //required
       departmentId: "", //required
@@ -646,12 +654,12 @@ export default {
     closeNotify() {
       try {
         this.messages = []; //đóng form
-          //focus vào input đầu tiên bị lỗi
-          setTimeout(() => {
-            this.$refs[this.inputErr].firstChild.focus();
-          }, 100);
+        //focus vào input đầu tiên bị lỗi
+        setTimeout(() => {
+          this.$refs[this.inputErr].firstChild.focus();
+        }, 100);
       } catch (err) {
-        this.messages = [err]
+        this.messages = [err];
       }
     },
     /**
@@ -716,18 +724,26 @@ export default {
                 this.clearForm();
                 this.initFromCreatenewEmployee();
                 this.resetTable();
+                this.showToast(
+                  "success",
+                  this.resources.employeeNotify.CreateNewEmployeeSuccess
+                );
               } else {
                 this.isPending = false;
                 res.json().then((res) => {
                   this.inputErr = "employeeCodeElm";
                   this.messages.push(res.UserMsg || res.userMsg);
+                  this.showToast(
+                    "error",
+                    this.resources.employeeNotify.CreateNewEmployeeFailed
+                  );
                 });
               }
             });
           }
         }
       } catch (err) {
-        this.messages = [err]
+        this.messages = [err];
       }
     },
     /**
@@ -754,18 +770,26 @@ export default {
               if (res.status == 201) {
                 this.closeForm();
                 this.resetTable();
+                this.showToast(
+                  "success",
+                  this.resources.employeeNotify.CreateNewEmployeeSuccess
+                );
               } else {
                 this.isPending = false;
                 res.json().then((res) => {
                   this.inputErr = "employeeCodeElm";
                   this.messages.push(res.UserMsg || res.userMsg);
+                  this.showToast(
+                    "error",
+                    this.resources.employeeNotify.CreateNewEmployeeFailed
+                  );
                 });
               }
             });
           }
         }
       } catch (err) {
-        this.messages = [err]
+        this.messages = [err];
       }
     },
     /**
@@ -793,18 +817,26 @@ export default {
                 this.isPending = false;
                 this.closeForm();
                 this.resetTable();
+                this.showToast(
+                  "success",
+                  this.resources.employeeNotify.UpdateEmployeeSuccess
+                );
               } else {
                 this.isPending = false;
                 res.json().then((res) => {
                   this.inputErr = true;
                   this.messages.push(res.UserMsg || res.userMsg);
+                  this.showToast(
+                    "error",
+                    this.resources.employeeNotify.UpdateEmployeeFailed
+                  );
                 });
               }
             });
           }
         }
       } catch (err) {
-        this.messages = [err]
+        this.messages = [err];
       }
     },
     /**
@@ -921,7 +953,7 @@ export default {
         this.bankName = "";
         this.bankBranchName = "";
       } catch (err) {
-        this.messages = [err]
+        this.messages = [err];
       }
     },
   },

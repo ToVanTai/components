@@ -1,4 +1,4 @@
-import myResource, { sidebar, mainHeader, mainTitle, employeePage, notFoundPage } from "./vi/resources";
+import myResource, { toast ,sidebar, mainHeader, mainTitle, employeePage, notFoundPage } from "./vi/resources";
 //import myResource from "./en/resources";
 export default myResource;
-export { sidebar, mainHeader, mainTitle, employeePage, notFoundPage };
+export {toast, sidebar, mainHeader, mainTitle, employeePage, notFoundPage };

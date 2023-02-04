@@ -1,3 +1,10 @@
+export const toast = {
+  success: "Thành công!",
+  error: "Lỗi!",
+  warning: "Cảnh báo!",
+  info: "Thông tin!"
+}
+
 export const sidebar = {
   'overview': "Tổng quan",
   'cash': "Tiền mặt",
@@ -124,7 +131,15 @@ export const employeePage = {
     ConfirmEmployeeDelete: "Bạn có thực sự muấn xóa Nhân viên",
     DateOfBirthNotValid: "Ngày sinh không được lớn hơn ngày hiện tại!",
     IdentityDateNotValid: "Ngày cấp không được lớn hơn ngày hiện tại!",
-    EmailNotValidate: "Email không hợp lệ!"
+    EmailNotValidate: "Email không hợp lệ!",
+    CreateNewEmployeeSuccess: "Thêm mới nhân viên thành công!",
+    CreateNewEmployeeFailed: "Thêm mới nhân viên thất bại",
+    UpdateEmployeeSuccess: "Cập nhật nhân viên thành công!",
+    UpdateEmployeeFailed: "Cập nhật nhân viên thất bại",
+    DeleteEmployeeSuccess: "Xóa nhân viên thành công!",
+    DeleteEmployeeFailed: "Xóa nhân viên thất bại",
+    DeleteListEmployeeSuccess: "Xóa danh sách nhân viên thành công!",
+    DeleteListEmployeeFailed: "Xóa danh sách nhân viên thất bại",
   }
 }
 
@@ -133,6 +148,7 @@ export const notFoundPage = {
 }
 
 const myResource = {
+  toast,
   sidebar,
   mainHeader,
   mainTitle,
