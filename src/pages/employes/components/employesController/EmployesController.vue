@@ -64,7 +64,7 @@ import { employeePage } from "@/resources";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
 import { employesUrl } from "@/config/index";
 import { formatDate } from "@/utils/format";
-import {inject} from "vue"
+import { inject } from "vue";
 export default {
   components: { BaseNotify },
   setup() {
@@ -125,7 +125,7 @@ export default {
           this.initEmployesTable();
         }, 100);
       } catch (err) {
-        this.messages=[err]
+        this.messages = [err];
       }
     },
     /**
@@ -140,7 +140,7 @@ export default {
           `${this.employeePage.controller.confirmDeleteListEmployee}`,
         ];
       } catch (err) {
-        this.messages=[err]
+        this.messages = [err];
       }
     },
     /**
@@ -183,14 +183,17 @@ export default {
           .then(() => {
             this.messages = [];
             this.initEmployesTable();
-            this.showToast("success",this.employeePage.employeeNotify.DeleteListEmployeeSuccess)
+            this.showToast(
+              "success",
+              this.employeePage.employeeNotify.DeleteListEmployeeSuccess
+            );
           })
           .catch((err) => {
             this.messages = [];
-            this.showToast("error",err)
+            this.showToast("error", err);
           });
       } catch (err) {
-        this.messages=[err]
+        this.messages = [err];
       }
     },
     /**
@@ -200,7 +203,7 @@ export default {
      * createAt: 28/01/2022
      */
     downloadEmployeeToExcel() {
-      try{
+      try {
         if (this.employes?.Data.length > 0) {
           import("@/plugins/Export2Excel").then((excel) => {
             //data json
@@ -211,7 +214,7 @@ export default {
               else if (Number(item.Gender + "") == 0)
                 genderName = this.employeePage.employee.GenderFemale;
               else genderName = this.employeePage.employee.GenderOther;
-  
+
               return {
                 Index: index + 1,
                 EmployeeCode: item.EmployeeCode,
@@ -260,10 +263,22 @@ export default {
               autoWidth: true,
               bookType: "xlsx",
             });
+            this.showToast(
+              "success",
+              this.employeePage.employeeNotify.ExportExcelEmployeeListSuccess
+            );
           });
+        } else {
+          this.showToast(
+            "error",
+            this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
+          );
         }
-      }catch(err){
-        this.messages=[err]
+      } catch (err) {
+        this.showToast(
+          "error",
+          this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
+        );
       }
     },
     /**
@@ -273,14 +288,14 @@ export default {
      * createAt: 28/01/2022
      */
     FormatJson(fieldData, jsonData) {
-      try{
+      try {
         return jsonData.map((v) =>
           fieldData.map((j) => {
             return v[j];
           })
         );
-      }catch(err){
-        this.messages=[err]
+      } catch (err) {
+        this.messages = [err];
       }
     },
   },

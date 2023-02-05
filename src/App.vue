@@ -41,6 +41,13 @@ export default {
   },
   data(){
     return {
+      isChecked : true
+    }
+  },
+  methods:{
+    handleToggleCheckbox(){
+      this.isChecked=!this.isChecked;
+      console.log("sfs");
     }
   }
 };

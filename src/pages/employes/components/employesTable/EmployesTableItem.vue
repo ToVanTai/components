@@ -1,6 +1,8 @@
 <template>
   <tr @dblclick="(event) => showEmployeeDetail(event, employee)">
-    <td class="checkbox"><input type="checkbox" :checked="employeeListChecked.includes(employee.EmployeeId)" @change="toggleEmployeeCheck(employee.EmployeeId)"/></td>
+    <td class="checkbox">
+      <BaseCheckbox :isChecked="employeeListChecked.includes(employee.EmployeeId)" @onToggleCheckbox="toggleEmployeeCheck(employee.EmployeeId)"/>
+      </td>
     <td>{{ employee.EmployeeCode }}</td>
     <td :style="{whiteSpace: 'nowrap'}">{{ employee.EmployeeName }}</td>
     <td>
@@ -61,9 +63,10 @@ import { employeePage } from "@/resources";
 import { formatDate } from "../../../../utils/format";
 import { employesUrl } from "../../../../config/index";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
+import BaseCheckbox from "@/components/common/BaseCheckbox.vue"
 import { inject } from "vue";
 export default {
-  components: { BaseNotify },
+  components: { BaseNotify, BaseCheckbox },
   setup() {
     //inject đối tượng showToast được cung cấp từ App.vue
     let showToast = inject("showToast");

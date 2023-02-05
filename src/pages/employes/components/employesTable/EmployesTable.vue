@@ -6,7 +6,12 @@
     <table class="table">
       <thead>
         <tr>
-          <th class="checkbox"><input type="checkbox" :checked="employeeListChecked.length !=0 && employeeListChecked.length == employeeList?.length" name="kk" @change="toggleEmployeeListCheck" /></th>
+          <th class="checkbox">
+            <BaseCheckbox 
+              :isChecked="employeeListChecked.length !=0" 
+              @onToggleCheckbox="toggleEmployeeListCheck"
+              :icon="employeeListChecked.length == employeeList?.length ? 'minus' : 'check'"/>
+            </th>
           <th>{{ employeePage.employee.EmployeeCode }}</th>
           <th>{{ employeePage.employee.EmployeeName }}</th>
           <th>{{ employeePage.employee.Gender }}</th>
@@ -44,8 +49,9 @@
 <script>
 import { employeePage } from "@/resources";
 import EmployesTableItem from "./EmployesTableItem.vue"
+import BaseCheckbox from "@/components/common/BaseCheckbox.vue"
 export default {
-  components: {EmployesTableItem},
+  components: {EmployesTableItem, BaseCheckbox},
   data(){return {
     employeePage
   }},

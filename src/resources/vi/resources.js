@@ -140,6 +140,8 @@ export const employeePage = {
     DeleteEmployeeFailed: "Xóa nhân viên thất bại",
     DeleteListEmployeeSuccess: "Xóa danh sách nhân viên thành công!",
     DeleteListEmployeeFailed: "Xóa danh sách nhân viên thất bại",
+    ExportExcelEmployeeListSuccess: "Xuất excel thành công",
+    ExportExcelEmployeeListFailed: "Xuất excel thất bại",
   }
 }
 

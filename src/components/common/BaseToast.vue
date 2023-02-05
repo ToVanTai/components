@@ -18,7 +18,7 @@
       </div>
     </div>
     <div>
-      <div class="mstoast__close" @click="onCloseToast"><i class="fas fa-times"></i></div>
+      <div class="mstoast__close" @click="$emit('onCloseToast')"><i class="fas fa-times"></i></div>
     </div>
   </div>
 </template>
@@ -50,17 +50,7 @@ export default {
     },
     toastMessage: String
   },
-  methods:{
-    /**
-     * useTo: emit sk khi click vào icon close
-     * updateBy: tovantai_3/2/2022
-     * author: tovantai
-     * createdAt: 3/2/2022
-     */
-    onCloseToast(){
-        this.$emit("onCloseToast")
-    }
-  },
+  emits: ["onCloseToast"],
   watch:{
     /**
      * useTo: emit sk close sau 2 giây
