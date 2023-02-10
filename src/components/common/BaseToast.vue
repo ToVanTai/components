@@ -62,7 +62,7 @@ export default {
         if(current){
             this.idTimeout = setTimeout(()=>{
                 this.$emit("onCloseToast")
-            },5000)
+            },3500)
         }else{
           clearTimeout(this.idTimeout)
         }

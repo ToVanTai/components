@@ -475,10 +475,9 @@ export default {
       //ở trạng thái hiển thị thông tin nhân viên...
       this.initFromInfoEmployee();
     } else {
-      this.initFromCreatenewEmployee();
-      if (this.isShowForm !== true) {
+      if (this.isShowForm !== true) {//ở trạng thái hiển thị form duplicate
         this.initFormDuplicateEmployee();
-      } else {
+      } else {//ở trạng thái hiển thị form thêm mới
         this.initFromCreatenewEmployee();
       }
     }
@@ -863,6 +862,12 @@ export default {
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.RequiredPhonenumber;
         messagesResult.push(this.resources.employeeNotify.RequiredPhonenumber);
+      }else if(this.phoneNumber?.length > 15){
+        inputErrResult = "phoneNumberElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.LengthPhonenumberIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthPhonenumberIsnotvalid);
       }
       //kiểm tra có đúng định dạng email
       if (this.email && !IsValidEmail(this.email)) {
@@ -871,7 +876,14 @@ export default {
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.EmailNotValidate;
         messagesResult.push(this.resources.employeeNotify.EmailNotValidate);
+      }else if(this.email?.length > 30){
+        inputErrResult = "emailElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.LengthEmailNotValidate;
+        messagesResult.push(this.resources.employeeNotify.LengthEmailNotValidate);
       }
+
       //so sánh ngày cấp với ngày hiện tại
       if (this.identityDate) {
         let currentDate = new Date();
@@ -907,14 +919,14 @@ export default {
           );
         }
       }
-      if (!this.employeeName?.trim()) {
+      if (!this.employeeName?.trim() || this.employeeName?.length > 20) {
         inputErrResult = "employeeNameElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.RequiredEmployeeName;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeName);
       }
-      if (!this.employeeCode?.trim()) {
+      if (!this.employeeCode?.trim() || this.employeeCode?.length > 20) {
         inputErrResult = "employeeCodeElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =

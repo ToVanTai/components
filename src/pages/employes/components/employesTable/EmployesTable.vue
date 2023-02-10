@@ -99,6 +99,9 @@ export default {
 </script>
 
 <style scoped>
+.employespage__table{
+  position: relative;
+}
 .employespage__table.pending::before {
   content: "";
   position: absolute;
@@ -135,7 +138,19 @@ export default {
 
 .employespage__table table {
   display: block;
-  height: 100%;
+  height: calc(100vh - (40px + 92px + 18px + 50px + 18px + 18px + 24px));
   width: 100%;
+  overflow: auto;
+}
+.employespage__table table::-webkit-scrollbar{
+  height: 10px;
+  width: 10px;
+  background: var(--color-border);
+  border-radius: var( --border-radius);
+}
+.employespage__table table::-webkit-scrollbar-thumb{
+  background: var(--color-border-green) ;
+  border-radius: var( --border-radius);
+  box-shadow: var(--color-shadow);
 }
 </style>

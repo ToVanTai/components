@@ -267,11 +267,4 @@ export default {
   margin: 0px var(--margin-18) var(--margin-18) 0px;
 }
 
-/* start css employes table */
-.employespage .employespage__table {
-  height: calc(100vh - (40px + 92px + 18px + 50px + 18px + 18px + 24px));
-  /* position: relative; */
-  overflow: auto;
-}
-
 </style>
