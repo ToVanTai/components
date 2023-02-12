@@ -135,7 +135,7 @@ export default {
 
 .notify__container {
   position: relative;
-  width: var(--popupnotify-width);
+  min-width: var(--popupnotify-width);
   background-color: var(--color-bg-white);
   border-radius: var(--border-radius);
   padding: var(--padding-24);
@@ -174,9 +174,9 @@ export default {
   font-size: 14px;
   line-height: 18px;
 }
-.notify__body__messenger li{
+/* .notify__body__messenger li{
   list-style: unset;
-}
+} */
 .notify__footer {
   display: flex;
   align-items: center;

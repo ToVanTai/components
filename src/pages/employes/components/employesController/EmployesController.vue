@@ -202,77 +202,110 @@ export default {
      * author: tovantai
      * createAt: 28/01/2022
      */
-    downloadEmployeeToExcel() {
+    async downloadEmployeeToExcel() {
       try {
-        if (this.employes?.Data.length > 0) {
-          import("@/plugins/Export2Excel").then((excel) => {
-            //data json
-            let OBJ = this.employes.Data.map((item, index) => {
-              let genderName;
-              if (Number(item.Gender + "") == 1)
-                genderName = this.employeePage.employee.GenderMale;
-              else if (Number(item.Gender + "") == 0)
-                genderName = this.employeePage.employee.GenderFemale;
-              else genderName = this.employeePage.employee.GenderOther;
+        let employeeListExport = [];
+        //gọi api lấy danh sách employee
 
-              return {
-                Index: index + 1,
-                EmployeeCode: item.EmployeeCode,
-                EmployeeName: item.EmployeeName,
-                Gender: genderName,
-                DateOfBirth: item?.DateOfBirth
-                  ? formatDate(item.DateOfBirth)
-                  : "",
-                PositionName: item?.PositionName || "",
-                DepartmentName: item?.DepartmentName || "",
-                BankAccountNumber: item?.BankAccountNumber || "",
-                BankName: item?.BankName || "",
-              };
+        await new Promise((resolve, reject) => {
+          fetch(`${employesUrl}`)
+            .then((res) => {
+              if (res.status == 200) {
+                res.json().then((res) => {
+                  console.log("resolve");
+                  resolve(res);
+                });
+              } else {
+                console.log("reject");
+                res.json().then((err) => reject(err.UserMsg));
+              }
+            })
+            .catch(() => {
+              console.log("reject");
+              reject(
+                this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
+              );
             });
-            //header in excel
-            let Header = [
-              this.employeePage.employee.Index,
-              this.employeePage.employee.EmployeeCode,
-              this.employeePage.employee.EmployeeName,
-              this.employeePage.employee.Gender,
-              this.employeePage.employee.DateOfBirth,
-              this.employeePage.employee.PositionName,
-              this.employeePage.employee.DepartmentName,
-              this.employeePage.employee.BankAccountNumber,
-              this.employeePage.employee.BankName,
-            ];
-            //field for map with datajson
-            let Fields = [
-              "Index",
-              "EmployeeCode",
-              "EmployeeName",
-              "Gender",
-              "DateOfBirth",
-              "PositionName",
-              "DepartmentName",
-              "BankAccountNumber",
-              "BankName",
-            ];
-            //data mapped field and obj
-            const DataMapped = this.FormatJson(Fields, OBJ);
-            excel.export_json_to_excel({
-              header: Header,
-              data: DataMapped,
-              sheetName: "Danh sach nhan vien",
-              filename: "Danh_sach_nhan_vien",
-              autoWidth: true,
-              bookType: "xlsx",
-            });
-            this.showToast(
-              "success",
-              this.employeePage.employeeNotify.ExportExcelEmployeeListSuccess
-            );
+        })
+          .then((res) => {
+            employeeListExport = res;
+          })
+          .catch((err) => {
+            //nếu lỗi thì hiện thông báo
+            this.showToast("error", err);
           });
-        } else {
-          this.showToast(
-            "error",
-            this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
-          );
+
+        if (employeeListExport.length > 0) {
+          import("@/plugins/Export2Excel")
+            .then((excel) => {
+              //data json
+              let OBJ = employeeListExport.map((item, index) => {
+                let genderName;
+                if (Number(item.Gender + "") == 1)
+                  genderName = this.employeePage.employee.GenderMale;
+                else if (Number(item.Gender + "") == 0)
+                  genderName = this.employeePage.employee.GenderFemale;
+                else genderName = this.employeePage.employee.GenderOther;
+
+                return {
+                  Index: index + 1,
+                  EmployeeCode: item.EmployeeCode,
+                  EmployeeName: item.EmployeeName,
+                  Gender: genderName,
+                  DateOfBirth: item?.DateOfBirth
+                    ? formatDate(item.DateOfBirth)
+                    : "",
+                  PositionName: item?.PositionName || "",
+                  DepartmentName: item?.DepartmentName || "",
+                  BankAccountNumber: item?.BankAccountNumber || "",
+                  BankName: item?.BankName || "",
+                };
+              });
+              //header in excel
+              let Header = [
+                this.employeePage.employee.Index,
+                this.employeePage.employee.EmployeeCode,
+                this.employeePage.employee.EmployeeName,
+                this.employeePage.employee.Gender,
+                this.employeePage.employee.DateOfBirth,
+                this.employeePage.employee.PositionName,
+                this.employeePage.employee.DepartmentName,
+                this.employeePage.employee.BankAccountNumber,
+                this.employeePage.employee.BankName,
+              ];
+              //field for map with datajson
+              let Fields = [
+                "Index",
+                "EmployeeCode",
+                "EmployeeName",
+                "Gender",
+                "DateOfBirth",
+                "PositionName",
+                "DepartmentName",
+                "BankAccountNumber",
+                "BankName",
+              ];
+              //data mapped field and obj
+              const DataMapped = this.FormatJson(Fields, OBJ);
+              excel.export_json_to_excel({
+                header: Header,
+                data: DataMapped,
+                sheetName: "Danh sach nhan vien",
+                filename: "Danh_sach_nhan_vien",
+                autoWidth: true,
+                bookType: "xlsx",
+              });
+              this.showToast(
+                "success",
+                this.employeePage.employeeNotify.ExportExcelEmployeeListSuccess
+              );
+            })
+            .catch(() => {
+              this.showToast(
+                "error",
+                this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
+              );
+            });
         }
       } catch (err) {
         this.showToast(
@@ -322,7 +355,7 @@ export default {
 .dropdown__list {
   display: none;
   position: absolute;
-  z-index: 1;
+  z-index: 2;
   bottom: 0;
   right: 0;
   transform: translate(0px, 100%);

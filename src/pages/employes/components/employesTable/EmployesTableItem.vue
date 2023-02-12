@@ -4,7 +4,7 @@
       <BaseCheckbox :isChecked="employeeListChecked.includes(employee.EmployeeId)" @onToggleCheckbox="toggleEmployeeCheck(employee.EmployeeId)"/>
       </td>
     <td>{{ employee.EmployeeCode }}</td>
-    <td :style="{whiteSpace: 'nowrap'}">{{ employee.EmployeeName }}</td>
+    <td>{{ employee.EmployeeName }}</td>
     <td>
       {{
         employee.Gender + "" === "0"
@@ -247,7 +247,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+tr td:not(:last-child){
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    text-overflow: ellipsis;
+}
 .employespage__table .employespage__table__action__dropdown {
   position: relative;
   display: flex;

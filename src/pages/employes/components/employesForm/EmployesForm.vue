@@ -99,16 +99,23 @@
             <!-- chức danh -->
             <div class="row">
               <div class="col col-12">
-                <label class="input__label" for="txtPositionName">{{
-                  resources.employee.PositionName
+                <label class="input__label required" for="txtPositionId">{{
+                  resources.employee.PositionId
                 }}</label>
-                <div class="input__controller" ref="positionNameElm">
-                  <input
-                    type="text"
-                    v-model="positionName"
+                <div class="input__controller" ref="positionIdElm">
+                  <select
                     class="input__primary"
-                    id="txtPositionName"
-                  />
+                    id="txtPositionId"
+                    v-model="positionId"
+                  >
+                    <option
+                      v-for="position in positions"
+                      :value="position.PositionId"
+                      :key="position.PositionId"
+                    >
+                      {{ position.PositionName }}
+                    </option>
+                  </select>
                   <div class="input__error_messenger"></div>
                 </div>
               </div>
@@ -396,7 +403,7 @@
 import BasePopup from "../../../../components/common/BasePopup.vue";
 import BaseButton from "../../../../components/common/BaseButton.vue";
 import BaseNotify from "../../../../components/common/BaseNotify.vue";
-import { departmentsUrl, employesUrl } from "../../../../config/index";
+import { departmentsUrl, employesUrl, positionsUrl } from "../../../../config/index";
 import { employeePage } from "@/resources";
 import { IsValidEmail, formatDateV2 } from "@/utils/format";
 
@@ -421,10 +428,12 @@ export default {
       //trạng thái pending
       isPending: false,
       departments: "",
+      positions: "",
       //model cho input
       employeeCode: "", //required
       departmentId: "", //required
       employeeName: "", //required
+      positionId: "",
       positionName: "",
       dateOfBirth: "",
       gender: "",
@@ -447,7 +456,6 @@ export default {
       createdDate: "",
       updatedBy: "",
       updatedDate: "",
-      positionId: "",
       //hiển thị notify lỗi
       messages: [], //nếu có thì sẽ hiện notify
       inputErr: null, // true nếu submit form bị lỗi do server, hoặc input đầu tiên đang bị lỗi
@@ -538,7 +546,6 @@ export default {
           this.employeeCode = res.EmployeeCode;
           this.departmentId = res.DepartmentId;
           this.employeeName = res.EmployeeName;
-          this.positionName = res.PositionName;
           this.dateOfBirth = res.DateOfBirth && formatDateV2(res.DateOfBirth);
           this.gender = res.Gender;
           this.identityNumber = res.IndentityNumber;
@@ -562,6 +569,7 @@ export default {
           this.updatedBy = res.UpdatedBy;
           this.updatedDate = res.UpdatedDate;
           this.positionId = res.PositionId;
+          this.positionName = res.positionName;
         })
         .catch((err) => {
           this.messages.push(err);
@@ -595,6 +603,32 @@ export default {
         });
     },
     /**
+     * useTo: lấy danh sách vị trí
+     * updateBy: tovantai_12/2/2023
+     * author: tovantai
+     * createdAt: 12/2/2023
+     */
+    async getPositions() {
+      await new Promise((resolve, reject) => {
+        fetch(`${positionsUrl}`).then((res) => {
+          if (res.status == 200) {
+            resolve(res.json());
+          } else {
+            res.json().then((res) => {
+              reject(res.UserMsg || res.userMsg);
+            });
+          }
+        });
+      })
+        .then((res) => {
+          this.positions = res;
+        })
+        .catch((err) => {
+          this.messages.push(err);
+          this.inputErr = "positionIdElm";
+        });
+    },
+    /**
      * useTo: lấy danh sách phòng ban, mã nhân viên mới, focus input tên nhân viên
      * updateBy: tovantai_12/12/2022
      * author: tovantai
@@ -603,7 +637,7 @@ export default {
     async initFromCreatenewEmployee() {
       try {
         this.isPending = true;
-        await Promise.all([this.getNewEmployeeCode(), this.getDepartments()]);
+        await Promise.all([this.getNewEmployeeCode(), this.getDepartments(), this.getPositions()]);
         this.isPending = false;
         if (this.messages.length == 0 && this.inputErr == null) {
           this.$refs.employeeCodeElm.firstChild.focus();
@@ -623,7 +657,7 @@ export default {
       try {
         this.isPending = true;
         await this.getEmployeeInfo();
-        await Promise.all([this.getNewEmployeeCode(), this.getDepartments()]);
+        await Promise.all([this.getNewEmployeeCode(), this.getDepartments(), this.getPositions()]);
         this.isPending = false;
         if (this.messages.length == 0 && this.inputErr == null) {
           this.$refs.employeeCodeElm.firstChild.focus();
@@ -642,7 +676,7 @@ export default {
     async initFromInfoEmployee() {
       try {
         this.isPending = true;
-        await this.getDepartments();
+        await Promise.all([this.getPositions(),this.getDepartments()])
         await this.getEmployeeInfo();
         this.isPending = false;
         this.$refs.employeeCodeElm.firstChild.focus();
@@ -691,7 +725,7 @@ export default {
         email: this.email?.trim(),
         bankAccountNumber: this.bankAccountNumber || "",
         bankName: this.bankName || "",
-        bankBranchName: this.BankBranchName || "",
+        bankBranchName: this.bankBranchName || "",
         joinDate: this.joinDate || null,
         workStatus: this.workStatus || 0,
         salary: this.salary || 0,
@@ -700,7 +734,7 @@ export default {
         createdDate: this.createdDate || null,
         updatedBy: this.updatedBy || "",
         updatedDate: this.updatedDate || null,
-        positionId: this.positionId || "35e773ea-5d44-2dda-26a8-6d513e380bde",
+        positionId: this.positionId?.trim(),
       };
       return employeeData;
     },
@@ -854,19 +888,29 @@ export default {
         this.$refs[refName].classList.remove("err");
       }
 
-      //số điện thoại là bắt buộc
-      if (!this.phoneNumber?.trim()) {
-        inputErrResult = "phoneNumberElm";
+      //chi nhánh tài khoản ngân hàng
+      if(this.bankBranchName?.trim().length > 255){
+        inputErrResult = "bankBranchNameElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
-          this.resources.employeeNotify.RequiredPhonenumber;
-        messagesResult.push(this.resources.employeeNotify.RequiredPhonenumber);
-      }else if(this.phoneNumber?.length > 15){
-        inputErrResult = "phoneNumberElm";
+          this.resources.employeeNotify.LengthBankNameIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthBankNameIsnotvalid);
+      }
+      //Tên tài khoản ngân hàng
+      if(this.bankName?.trim().length > 255){
+        inputErrResult = "bankNameElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
-          this.resources.employeeNotify.LengthPhonenumberIsnotvalid;
-        messagesResult.push(this.resources.employeeNotify.LengthPhonenumberIsnotvalid);
+          this.resources.employeeNotify.LengthBankNameIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthBankNameIsnotvalid);
+      }
+      //Số tài khoản ngân hàng
+      if(this.bankAccountNumber?.trim().length > 50){
+        inputErrResult = "bankAccountNumberElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.LengthBankAccountNumberIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthBankAccountNumberIsnotvalid);
       }
       //kiểm tra có đúng định dạng email
       if (this.email && !IsValidEmail(this.email)) {
@@ -875,15 +919,52 @@ export default {
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.EmailNotValidate;
         messagesResult.push(this.resources.employeeNotify.EmailNotValidate);
-      }else if(this.email?.length > 30){
+      }else if(this.email?.trim().length > 100){
         inputErrResult = "emailElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.LengthEmailNotValidate;
         messagesResult.push(this.resources.employeeNotify.LengthEmailNotValidate);
       }
-
-      //so sánh ngày cấp với ngày hiện tại
+      //Số điện thoại cố định
+      if(this.telephoneNumber?.trim().length > 50){
+        inputErrResult = "telephoneNumberElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.LengthTelephoneNumberIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthTelephoneNumberIsnotvalid);
+      }
+      //số điện thoại 
+      if (!this.phoneNumber?.trim()) {
+        inputErrResult = "phoneNumberElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.RequiredPhonenumber;
+        messagesResult.push(this.resources.employeeNotify.RequiredPhonenumber);
+      }else if(this.phoneNumber?.trim().length > 50){
+        inputErrResult = "phoneNumberElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.LengthPhonenumberIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthPhonenumberIsnotvalid);
+      }
+      //Địa chỉ
+      if(this.address?.trim().length > 255){
+        inputErrResult = "addressElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.LengthAddressIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthAddressIsnotvalid);
+      }
+      //Nơi cấp chứng minh nhân dân(8)
+      if(this.identityPlace?.trim().length > 255){
+        inputErrResult = "identityPlaceElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.LengthIdentityPlaceIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthIdentityPlaceIsnotvalid);
+      }
+      //Ngày cấp chứng minh nhân đân
       if (this.identityDate) {
         let currentDate = new Date();
         let identityDate2 = new Date(this.identityDate);
@@ -897,15 +978,13 @@ export default {
           );
         }
       }
-
-
-      //mã phòng ban là bắt buộc
-      if (!this.departmentId) {
-        inputErrResult = "departmentIdElm";
+      //Số chứng minh nhân dân(10)
+      if(this.identityNumber?.trim().length > 25){
+        inputErrResult = "identityNumberElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
-          this.resources.employeeNotify.RequiredDepartmentID;
-        messagesResult.push(this.resources.employeeNotify.RequiredDepartmentID);
+          this.resources.employeeNotify.LengthIdentityNumberIsnotvalid;
+        messagesResult.push(this.resources.employeeNotify.LengthIdentityNumberIsnotvalid);
       }
       //so sánh ngày sinh với ngày hiện tại
       if (this.dateOfBirth) {
@@ -921,20 +1000,39 @@ export default {
           );
         }
       }
+
+      //mã/tên chức danh là bắt buộc
+      if (!this.positionId?.trim().length) {
+        inputErrResult = "positionIdElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.RequiredPositionID;
+        messagesResult.push(this.resources.employeeNotify.RequiredPositionID);
+      }
+      //mã phòng ban là bắt buộc
+      if (!this.departmentId) {
+        inputErrResult = "departmentIdElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.RequiredDepartmentID;
+        messagesResult.push(this.resources.employeeNotify.RequiredDepartmentID);
+      }
+      //tên nhân viên
       if (!this.employeeName?.trim()) {
         inputErrResult = "employeeNameElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.RequiredEmployeeName;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeName);
-      }else if(this.employeeName?.length > 25){
+      }else if(this.employeeName?.trim().length > 100){
         inputErrResult = "employeeNameElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.RequiredEmployeeName;
         messagesResult.push(this.resources.employeeNotify.LengthEmployeeNameIsnotvalid);
       }
-      if (!this.employeeCode?.trim() || this.employeeCode?.length > 20) {
+      //mã nhân viên
+      if (!this.employeeCode?.trim() || this.employeeCode?.trim().length > 20) {
         inputErrResult = "employeeCodeElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
@@ -942,7 +1040,7 @@ export default {
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeCode);
       }
 
-      
+
       //nếu có ít nhất 1 thẻ input mà value not valid thì
       //focus vào input lỗi đầu tiên và hiển thị thông báo lỗi
       if (inputErrResult !== false) {

@@ -99,6 +99,12 @@ export default {
 </script>
 
 <style scoped>
+th{
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 200px;
+    text-overflow: ellipsis;
+}
 .employespage__table{
   position: relative;
 }

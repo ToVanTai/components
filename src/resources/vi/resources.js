@@ -87,7 +87,7 @@ export const employeePage = {
       "Title": "ĐT cố định",
       "Subtitle": "Điện thoại cố định"
     },
-    "BankAccountNumber": "Tài khoản ngân hàng",
+    "BankAccountNumber": "Số tài khoản",
     "BankName": "Tên ngân hàng",
     "BankBranchName": {
       "Title": "Chi nhánh TK ngân hàng",
@@ -96,9 +96,10 @@ export const employeePage = {
     "BankProvinceName": "",
     "EmployeePosition": "Chức danh",
     "PositionCode": "Mã chức danh",
-    "PositionName": "Chức danh",
+    "PositionId": "Chức danh",
     "DepartmentCode": "Mã phòng ban",
-    "DepartmentName": "Tên phòng ban",
+    "DepartmentName": "Tên đơn vị",
+    "PositionName": "Chức danh",
     "QualificationName": "",
     "GenderName": "Giới tính",
     "EducationalBackgroundName": "",
@@ -145,24 +146,25 @@ export const employeePage = {
     /** 13 */   RequiredDepartmentID: "Mã phòng ban là bắt buộc.", // departmentId      required
     /** 12 */   RequiredPositionID: "Mã chức danh là bắt buộc.", //  positionId     required
     /** 14 */   RequiredEmployeeName: "Tên nhân viên là bắt buộc.", // employeeName     required
-    /** 15 */   RequiredEmployeeCode: "Mã nhân viên là bắt buộc.", // employeeCode      required
+    /** 15 */   RequiredEmployeeCode: "Mã nhân viên là bắt buộc và không được quá 20 ký tự.", // employeeCode      required
     RequiredPhonenumber: "Số điện thoại là bắt buộc.", // phonenumber      required
 
     /**  */    LengthEmployeeNameIsnotvalid: "Tên nhân viên không được quá 100 ký tự.",//employeeName > 100
     /**  */    LengthEmployeeCodeIsnotvalid: "Mã nhân viên không được quá 20 ký tự.",//employeeCode > 20
     /** 6 */   LengthPhonenumberIsnotvalid: "Số điện thoại không được quá 50 ký tự.",//phoneNumber > 50
 
-    /** 10 */  LengthIdentityNumberIsnotvalid: "Độ dài số chứng minh nhân dân không được vượt quá 25 ký tự.", //identityNumber > 25
-    /** 8 */   LengthIdentityPlaceIsnotvalid: "Độ dài nơi cấp chứng minh nhân dân không được vượt quá 255 ký tự.", //identityPlace > 255
-    /** 7 */   LengthAddressIsnotvalid: "Độ dài địa chỉ không được vượt quá 255 ký tự.", //address > 255
-    /** 5 */   LengthTelephoneNumberIsnotvalid: "Độ dài số điện thoại cố định không được quá 50 ký tự.",//telehoneNumber > 50
-    /** 4 */   LengthEmailNotValidate: "Độ dài email không được vượt quá 100 ký tự.",//email > 100
-    /** 3 */   LengthBankAccountNumberIsnotvalid: "Độ dài số tài khoản ngân hàng không được quá 50 ký tự.",//bankAccountNumber > 50
-    /** 2 */   LengthBankNameIsnotvalid: "Độ dài tên ngân hàng không được quá 255 ký tự.",//bankAccountName > 255
-    /** 1 */   LengthBankBranchNameIsnotvalid: "Độ dài chi nhánh ngân hàng không được quá 255 ký tự.",//bankBranchName > 255
+    /** 10 */  LengthIdentityNumberIsnotvalid: "Số chứng minh nhân dân không được vượt quá 25 ký tự.", //identityNumber > 25
+    /** 8 */   LengthIdentityPlaceIsnotvalid: "Nơi cấp chứng minh nhân dân không được vượt quá 255 ký tự.", //identityPlace > 255
+    /** 7 */   LengthAddressIsnotvalid: "Địa chỉ không được vượt quá 255 ký tự.", //address > 255
+    /** 5 */   LengthTelephoneNumberIsnotvalid: "Số điện thoại cố định không được quá 50 ký tự.",//telehoneNumber > 50
+    /** 4 */   LengthEmailNotValidate: "Email không được vượt quá 100 ký tự.",//email > 100
+    /** 3 */   LengthBankAccountNumberIsnotvalid: "Số tài khoản ngân hàng không được quá 50 ký tự.",//bankAccountNumber > 50
+    /** 2 */   LengthBankNameIsnotvalid: "Tên ngân hàng không được quá 255 ký tự.",//bankAccountName > 255
+    /** 1 */   LengthBankBranchNameIsnotvalid: "Chi nhánh ngân hàng không được quá 255 ký tự.",//bankBranchName > 255
   }
 }
-// <div class="input__error_messenger"></div>
+
+// positionNameElm
 export const notFoundPage = {
   "title": "Không tìm thấy trang"
 }
