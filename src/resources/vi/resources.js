@@ -40,8 +40,8 @@ export const employeePage = {
   controller: {
     inputPlaceholder: "Tìm theo mã, tên nhân viên",
     deleteList: "Thực hiện xóa hàng loạt",
-    delete:"Xóa",
-    confirmDeleteListEmployee:"Bạn có muấn xóa toàn bộ danh sách nhân viên đã chọn không?"
+    delete: "Xóa",
+    confirmDeleteListEmployee: "Bạn có muấn xóa toàn bộ danh sách nhân viên đã chọn không?"
   },
   employee: {
     "ActionDelete": "Xóa",
@@ -50,7 +50,7 @@ export const employeePage = {
     "ActionCancel": "Hủy",
     "ActionKeep": "Cất",
     "ActionKeepAndContinue": "Cất và Thêm",
-    "ActionUpdate": "Sửa",
+    "ActionUpdate": "Cất",
     "Info": "Thông tin nhân viên",
     "Create": "Thêm mới nhân viên",
     "IsCustomer": "Là khách hàng",
@@ -124,29 +124,45 @@ export const employeePage = {
     GetNewEmployeeCodeFailed: "Không lấy được mã nhân viên mới.",
     GetDepartmentsFailed: "Không lấy danh sách phòng ban.",
     GetEmployeesFailed: "Không lấy danh sách nhân viên.",
-    RequiredDepartmentID: "Mã phòng ban là bắt buộc!",
-    RequiredEmployeeName: "Tên nhân viên là bắt buộc!",
-    RequiredEmployeeCode: "Mã nhân viên là bắt buộc!",
-    RequiredPhonenumber: "Số điện thoại là bắt buộc!",
-    LengthPhonenumberIsnotvalid: "Số điện thoại không được quá 15 ký tự!",
+
     ConfirmEmployeeDelete: "Bạn có thực sự muấn xóa Nhân viên",
-    DateOfBirthNotValid: "Ngày sinh không được lớn hơn ngày hiện tại!",
-    IdentityDateNotValid: "Ngày cấp không được lớn hơn ngày hiện tại!",
-    EmailNotValidate: "Email không hợp lệ!",
-    LengthEmailNotValidate: "Độ dài email không được vượt quá 30 ký tự!",
-    CreateNewEmployeeSuccess: "Thêm mới nhân viên thành công!",
+
+    CreateNewEmployeeSuccess: "Thêm mới nhân viên thành công.",
     CreateNewEmployeeFailed: "Thêm mới nhân viên thất bại",
-    UpdateEmployeeSuccess: "Cập nhật nhân viên thành công!",
+    UpdateEmployeeSuccess: "Cập nhật nhân viên thành công.",
     UpdateEmployeeFailed: "Cập nhật nhân viên thất bại",
-    DeleteEmployeeSuccess: "Xóa nhân viên thành công!",
+    DeleteEmployeeSuccess: "Xóa nhân viên thành công.",
     DeleteEmployeeFailed: "Xóa nhân viên thất bại",
-    DeleteListEmployeeSuccess: "Xóa danh sách nhân viên thành công!",
+    DeleteListEmployeeSuccess: "Xóa danh sách nhân viên thành công.",
     DeleteListEmployeeFailed: "Xóa danh sách nhân viên thất bại",
     ExportExcelEmployeeListSuccess: "Xuất excel thành công",
     ExportExcelEmployeeListFailed: "Xuất excel thất bại",
+
+    /** 11 */   DateOfBirthNotValid: "Ngày sinh không được lớn hơn ngày hiện tại.",
+    /** 9  */   IdentityDateNotValid: "Ngày cấp không được lớn hơn ngày hiện tại.",
+    EmailNotValidate: "Email không hợp lệ.",
+
+    /** 13 */   RequiredDepartmentID: "Mã phòng ban là bắt buộc.", // departmentId      required
+    /** 12 */   RequiredPositionID: "Mã chức danh là bắt buộc.", //  positionId     required
+    /** 14 */   RequiredEmployeeName: "Tên nhân viên là bắt buộc.", // employeeName     required
+    /** 15 */   RequiredEmployeeCode: "Mã nhân viên là bắt buộc.", // employeeCode      required
+    RequiredPhonenumber: "Số điện thoại là bắt buộc.", // phonenumber      required
+
+    /**  */    LengthEmployeeNameIsnotvalid: "Tên nhân viên không được quá 100 ký tự.",//employeeName > 100
+    /**  */    LengthEmployeeCodeIsnotvalid: "Mã nhân viên không được quá 20 ký tự.",//employeeCode > 20
+    /** 6 */   LengthPhonenumberIsnotvalid: "Số điện thoại không được quá 50 ký tự.",//phoneNumber > 50
+
+    /** 10 */  LengthIdentityNumberIsnotvalid: "Độ dài số chứng minh nhân dân không được vượt quá 25 ký tự.", //identityNumber > 25
+    /** 8 */   LengthIdentityPlaceIsnotvalid: "Độ dài nơi cấp chứng minh nhân dân không được vượt quá 255 ký tự.", //identityPlace > 255
+    /** 7 */   LengthAddressIsnotvalid: "Độ dài địa chỉ không được vượt quá 255 ký tự.", //address > 255
+    /** 5 */   LengthTelephoneNumberIsnotvalid: "Độ dài số điện thoại cố định không được quá 50 ký tự.",//telehoneNumber > 50
+    /** 4 */   LengthEmailNotValidate: "Độ dài email không được vượt quá 100 ký tự.",//email > 100
+    /** 3 */   LengthBankAccountNumberIsnotvalid: "Độ dài số tài khoản ngân hàng không được quá 50 ký tự.",//bankAccountNumber > 50
+    /** 2 */   LengthBankNameIsnotvalid: "Độ dài tên ngân hàng không được quá 255 ký tự.",//bankAccountName > 255
+    /** 1 */   LengthBankBranchNameIsnotvalid: "Độ dài chi nhánh ngân hàng không được quá 255 ký tự.",//bankBranchName > 255
   }
 }
-
+// <div class="input__error_messenger"></div>
 export const notFoundPage = {
   "title": "Không tìm thấy trang"
 }

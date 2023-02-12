@@ -27,7 +27,6 @@ export default {
     //hàm để ẩn toast
     function hideToast(){
       toastManager.isShowToast = false
-      toastManager.typeToast = "success"
       toastManager.toastMessage = ""
     }
 

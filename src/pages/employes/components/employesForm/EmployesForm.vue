@@ -1,5 +1,5 @@
 <template>
-  <BasePopup :isShow="true" :isPending="isPending" :overlayClick="closeForm">
+  <BasePopup :isShow="true" :isPending="isPending">
     <form class="employeeForm">
       <!-- start btn close -->
       <div class="employeeForm__close" @click="closeForm">
@@ -102,13 +102,14 @@
                 <label class="input__label" for="txtPositionName">{{
                   resources.employee.PositionName
                 }}</label>
-                <div class="input__controller">
+                <div class="input__controller" ref="positionNameElm">
                   <input
                     type="text"
                     v-model="positionName"
                     class="input__primary"
                     id="txtPositionName"
                   />
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
             </div>
@@ -178,13 +179,14 @@
                     </div>
                   </div>
                 </label>
-                <div class="input__controller">
+                <div class="input__controller" ref="identityNumberElm">
                   <input
                     type="text"
                     class="input__primary"
                     v-model="identityNumber"
                     id="txtIdentityNumber"
                   />
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
               <div class="col col-4">
@@ -208,13 +210,14 @@
                 <label class="input__label" for="txtIdentityPlace">{{
                   resources.employee.IdentityPlace
                 }}</label>
-                <div class="input__controller">
+                <div class="input__controller" ref="identityPlaceElm">
                   <input
                     type="text"
                     v-model="identityPlace"
                     class="input__primary"
                     id="txtIdentityPlace"
                   />
+                  <div class="input__error_messenger"></div>
                 </div>
               </div>
             </div>
@@ -226,13 +229,14 @@
           <label class="input__label" for="txtAddress">{{
             resources.employee.Address
           }}</label>
-          <div class="input__controller">
+          <div class="input__controller" ref="addressElm">
             <input
               type="text"
               v-model="address"
               id="txtAddress"
               class="input__primary"
             />
+            <div class="input__error_messenger"></div>
           </div>
         </div>
         <!-- phone, điện thoại cố định, email -->
@@ -265,13 +269,14 @@
                 </div>
               </div>
             </label>
-            <div class="input__controller">
+            <div class="input__controller" ref="telephoneNumberElm">
               <input
                 type="tel"
                 v-model="telephoneNumber"
                 class="input__primary"
                 id="txtTelephoneNumber"
               />
+              <div class="input__error_messenger"></div>
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
@@ -295,26 +300,28 @@
             <label class="input__label" for="txtBankAccountNumber">{{
               resources.employee.BankAccountNumber
             }}</label>
-            <div class="input__controller">
+            <div class="input__controller" ref="bankAccountNumberElm">
               <input
                 type="text"
                 v-model="bankAccountNumber"
                 class="input__primary"
                 id="txtBankAccountNumber"
               />
+              <div class="input__error_messenger"></div>
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
             <label class="input__label" for="txtBankName">{{
               resources.employee.BankName
             }}</label>
-            <div class="input__controller">
+            <div class="input__controller" ref="bankNameElm">
               <input
                 type="text"
                 v-model="bankName"
                 class="input__primary"
                 id="txtBankName"
               />
+              <div class="input__error_messenger"></div>
             </div>
           </div>
           <div class="col col-3" style="padding-right: 8px">
@@ -326,7 +333,7 @@
                 </div>
               </div></label
             >
-            <div class="input__controller">
+            <div class="input__controller" ref="bankBranchNameElm">
               <input
                 type="text"
                 v-model="bankBranchName"
@@ -693,7 +700,7 @@ export default {
         createdDate: this.createdDate || null,
         updatedBy: this.updatedBy || "",
         updatedDate: this.updatedDate || null,
-        positionId: this.positionId || "7c4f14d8-66fb-14ae-198f-6354f958f4c0",
+        positionId: this.positionId || "35e773ea-5d44-2dda-26a8-6d513e380bde",
       };
       return employeeData;
     },
@@ -705,7 +712,6 @@ export default {
      */
     async handleSubmitCreatenew() {
       try {
-        if (this.isShowInfo === false) {
           //nếu không có lỗi gì thì gọi api thêm mới nv
           if (this.isErrForm() == false) {
             //goị api đẩy dữ liệu lên sever
@@ -740,7 +746,6 @@ export default {
               }
             });
           }
-        }
       } catch (err) {
         this.messages = [err];
       }
@@ -753,7 +758,6 @@ export default {
      */
     async handleSubmitCreatenewAndClose() {
       try {
-        if (this.isShowInfo === false) {
           //nếu không có lỗi gì thì gọi api thêm mới nv
           if (this.isErrForm() == false) {
             //goị api đẩy dữ liệu lên sever
@@ -786,7 +790,6 @@ export default {
               }
             });
           }
-        }
       } catch (err) {
         this.messages = [err];
       }
@@ -799,7 +802,6 @@ export default {
      */
     async handleSubmitUpdateEmployee() {
       try {
-        if (this.isShowInfo === true) {
           //nếu không có lỗi gì thì gọi api thêm mới nv
           if (this.isErrForm() == false) {
             //goị api đẩy dữ liệu lên sever
@@ -833,7 +835,6 @@ export default {
               }
             });
           }
-        }
       } catch (err) {
         this.messages = [err];
       }
@@ -847,13 +848,11 @@ export default {
     isErrForm() {
       let inputErrResult = false;
       let messagesResult = [];
-      this.$refs.departmentIdElm.classList.remove("err");
-      this.$refs.employeeNameElm.classList.remove("err");
-      this.$refs.employeeCodeElm.classList.remove("err");
-      this.$refs.dateOfBirthElm.classList.remove("err");
-      this.$refs.identityDateElm.classList.remove("err");
-      this.$refs.emailElm.classList.remove("err");
-      this.$refs.phoneNumberElm.classList.remove("err");
+
+      //xóa hết lỗi ở các thẻ input
+      for(var refName in this.$refs){
+        this.$refs[refName].classList.remove("err");
+      }
 
       //số điện thoại là bắt buộc
       if (!this.phoneNumber?.trim()) {
@@ -898,6 +897,9 @@ export default {
           );
         }
       }
+
+
+      //mã phòng ban là bắt buộc
       if (!this.departmentId) {
         inputErrResult = "departmentIdElm";
         this.$refs[inputErrResult].classList.add("err");
@@ -919,12 +921,18 @@ export default {
           );
         }
       }
-      if (!this.employeeName?.trim() || this.employeeName?.length > 20) {
+      if (!this.employeeName?.trim()) {
         inputErrResult = "employeeNameElm";
         this.$refs[inputErrResult].classList.add("err");
         this.$refs[inputErrResult].lastChild.innerHTML =
           this.resources.employeeNotify.RequiredEmployeeName;
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeName);
+      }else if(this.employeeName?.length > 25){
+        inputErrResult = "employeeNameElm";
+        this.$refs[inputErrResult].classList.add("err");
+        this.$refs[inputErrResult].lastChild.innerHTML =
+          this.resources.employeeNotify.RequiredEmployeeName;
+        messagesResult.push(this.resources.employeeNotify.LengthEmployeeNameIsnotvalid);
       }
       if (!this.employeeCode?.trim() || this.employeeCode?.length > 20) {
         inputErrResult = "employeeCodeElm";
@@ -934,6 +942,9 @@ export default {
         messagesResult.push(this.resources.employeeNotify.RequiredEmployeeCode);
       }
 
+      
+      //nếu có ít nhất 1 thẻ input mà value not valid thì
+      //focus vào input lỗi đầu tiên và hiển thị thông báo lỗi
       if (inputErrResult !== false) {
         this.inputErr = inputErrResult;
         this.messages = messagesResult;
@@ -968,11 +979,7 @@ export default {
         this.messages = [err];
       }
     },
-  },
-  watch: {
-    // forcus vào input lỗi đầu tiên
-    inputErr() {},
-  },
+  }
 };
 </script>
 

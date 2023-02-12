@@ -153,4 +153,12 @@ export default {
   border-radius: var( --border-radius);
   box-shadow: var(--color-shadow);
 }
+
+table thead{
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1;
+}
 </style>

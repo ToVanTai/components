@@ -174,6 +174,9 @@ export default {
   font-size: 14px;
   line-height: 18px;
 }
+.notify__body__messenger li{
+  list-style: unset;
+}
 .notify__footer {
   display: flex;
   align-items: center;

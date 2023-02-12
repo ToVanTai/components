@@ -62,7 +62,7 @@ export default {
         if(current){
             this.idTimeout = setTimeout(()=>{
                 this.$emit("onCloseToast")
-            },3500)
+            },2500)
         }else{
           clearTimeout(this.idTimeout)
         }
@@ -87,9 +87,10 @@ export default {
   justify-content: space-between;
   gap: 110px;
   padding: var(--padding-20) var(--padding-16);
-  transition: opacity 0.3s, top 0.3s;
+  transition: opacity 0.5s, top 0.5s;
   opacity: 0;
   top: -75px;
+  border-radius: var(--border-radius);
 }
 
 .mstoast.show{

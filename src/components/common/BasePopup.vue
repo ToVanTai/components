@@ -3,7 +3,7 @@
     :class="{
       popup: true,
       show: isShow,
-      pending: isPending,
+      pending: isPending
     }"
     @click.self="overlayClick"
   >
@@ -27,7 +27,7 @@ export default {
       type: [Function, null],
       default: function () {},
     }
-  },
+  }
 };
 </script>
 
@@ -41,7 +41,7 @@ export default {
   justify-content: center;
   align-items: center;
   padding: var(--padding-28) 0px;
-  cursor: pointer;
+  cursor: default;
   transform: translateY(-100%);
 }
 .popup.show {
