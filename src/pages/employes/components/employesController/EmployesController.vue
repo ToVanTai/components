@@ -70,8 +70,13 @@ export default {
   setup() {
     //inject đối tượng showToast được cung cấp từ App.vue
     let showToast = inject("showToast");
+    //inject đối tượng showPendingContainer và hidePendingContainer được cung cấp từ App.vue
+    let showPendingContainer = inject("showPendingContainer");
+    let hidePendingContainer = inject("hidePendingContainer");
     return {
       showToast,
+      showPendingContainer,
+      hidePendingContainer,
     };
   },
   data() {
@@ -204,6 +209,8 @@ export default {
      */
     async downloadEmployeeToExcel() {
       try {
+        //hiện icon pending
+        this.showPendingContainer();
         let employeeListExport = [];
         //gọi api lấy danh sách employee
 
@@ -212,16 +219,13 @@ export default {
             .then((res) => {
               if (res.status == 200) {
                 res.json().then((res) => {
-                  console.log("resolve");
                   resolve(res);
                 });
               } else {
-                console.log("reject");
                 res.json().then((err) => reject(err.UserMsg));
               }
             })
             .catch(() => {
-              console.log("reject");
               reject(
                 this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
               );
@@ -233,6 +237,7 @@ export default {
           .catch((err) => {
             //nếu lỗi thì hiện thông báo
             this.showToast("error", err);
+            this.hidePendingContainer();
           });
 
         if (employeeListExport.length > 0) {
@@ -299,13 +304,22 @@ export default {
                 "success",
                 this.employeePage.employeeNotify.ExportExcelEmployeeListSuccess
               );
+              this.hidePendingContainer()
             })
             .catch(() => {
+              this.hidePendingContainer()
               this.showToast(
                 "error",
                 this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
               );
             });
+        } else {
+          //không có bản ghi nào
+          this.hidePendingContainer();
+          this.showToast(
+            "error",
+            this.employeePage.employeeNotify.ExportExcelEmployeeListFailed
+          );
         }
       } catch (err) {
         this.showToast(

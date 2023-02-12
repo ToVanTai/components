@@ -1,6 +1,9 @@
 <template>
   <!-- thùng chứa để bao quanh 2 components là sidebar và main -->
-  <div class="container">
+  <div :class="{
+    'container': true,
+    'pending': isPending
+  }">
     <Sidebar/>
     <Main/>
   </div>
@@ -15,6 +18,9 @@ export default {
   components: {
     Sidebar,
     Main
+  },
+  props: {
+    isPending: false
   }
 }
 </script>
@@ -24,4 +30,42 @@ export default {
   display: flex;
   height: 100%;
 }
+.container.pending{
+  position: relative;
+  overflow: hidden;
+}
+.container.pending::before {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-image: url("../../assets/loading.svg");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 50px 50px;
+  animation: pendingRotate 2s linear 0s infinite reverse;
+  cursor: not-allowed;
+}
+.container.pending::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background-color: transparent;
+  cursor: not-allowed;
+}
+@keyframes pendingRotate {
+  from {
+    transform: rotate(360deg);
+  }
+  to {
+    transform: rotate(0deg);
+  }
+}
+
 </style>
