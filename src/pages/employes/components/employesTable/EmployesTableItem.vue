@@ -254,6 +254,20 @@ tr td:not(:last-child){
     max-width: 200px;
     text-overflow: ellipsis;
 }
+tr td:first-child{
+  position: sticky;
+  left: 0;
+  background-color: var(--color-bg-white);
+}
+tr td:first-child::after{
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    right: 0;
+    background: var(--color-border);
+    top: 0;
+}
 .employespage__table .employespage__table__action__dropdown {
   position: relative;
   display: flex;

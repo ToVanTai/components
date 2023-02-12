@@ -101,9 +101,23 @@ export default {
 <style scoped>
 th{
     white-space: nowrap;
-    overflow: hidden;
     max-width: 200px;
     text-overflow: ellipsis;
+}
+table th:first-child{
+  position: sticky;
+  left: 0;
+  z-index: 2;
+  border-right: 1px solid var(--color-border);
+}
+table th:first-child::after{
+    content: "";
+    position: absolute;
+    width: 1px;
+    height: 100%;
+    right: 0;
+    background: var(--color-border);
+    top: 0;
 }
 .employespage__table{
   position: relative;
@@ -165,6 +179,6 @@ table thead{
   top: 0;
   left: 0;
   right: 0;
-  z-index: 1;
+  z-index: 2;
 }
 </style>

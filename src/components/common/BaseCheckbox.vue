@@ -70,7 +70,6 @@ export default {
         content: "";
         position: absolute;
         color: #fff;
-        z-index: 1;
         top: 50%;
         left: 50%;
         transform: translate(-50%,-50%);

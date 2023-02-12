@@ -20,7 +20,10 @@ export default {
     Main
   },
   props: {
-    isPending: false
+    isPending: {
+      type: [Boolean, null],
+      default: false
+    }
   }
 }
 </script>
@@ -56,8 +59,10 @@ export default {
   left: 0;
   right: 0;
   height: 100%;
-  background-color: transparent;
+  background-color: var(--color-bg-black);
+  opacity: var(--opacity-16);
   cursor: not-allowed;
+  z-index: 999;
 }
 @keyframes pendingRotate {
   from {

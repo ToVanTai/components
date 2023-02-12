@@ -41,6 +41,7 @@
   line-height: var(--size-text-sm);
   color: var(--color-text-grey);
 }
-.table tbody tr:hover {
+.table tbody tr:hover,
+.table tbody tr:hover td {
   background-color: var(--color-text-white-second);
 }

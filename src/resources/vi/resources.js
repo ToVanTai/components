@@ -79,7 +79,6 @@ export const employeePage = {
     "EducationalBackground": "",
     "QualificationId": "",
     "DepartmentId": "Mã phòng ban",
-    "PositionId": "Mã vị trí",
     "WorkStatus": "Trạng thái làm việc",
     "PersonalTaxCode": "",
     "Salary": "Lương",
