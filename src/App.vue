@@ -8,7 +8,6 @@
 import Container from "./components/layout/TheContainer.vue"
 import BaseToast from "@/components/common/BaseToast.vue"
 import {provide, reactive, ref} from "vue" 
-
 export default {
   components: {Container, BaseToast},
   setup(){

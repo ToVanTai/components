@@ -4,7 +4,7 @@
     [icon] : true,
     [bgColor] : true,
     [size] : true
-  }" type="checkbox" :checked="isChecked" @change="(event)=>{handleToggleChange(event)}"/>
+  }" type="checkbox" :checked="isChecked" ref="checkboxElm" @change="(event)=>{handleToggleChange(event)}"/>
 </template>
 
 <script>

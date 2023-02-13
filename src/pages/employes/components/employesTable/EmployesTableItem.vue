@@ -230,10 +230,9 @@ export default {
           })
           .catch((err) => {
             this.messages = [];
-            this.messages.push(err);
             this.showToast(
               "error",
-              this.resources.employeeNotify.DeleteEmployeeFailed
+              err
             );
           });
       } catch (err) {

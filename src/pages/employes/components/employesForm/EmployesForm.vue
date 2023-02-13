@@ -806,7 +806,6 @@ export default {
             }).then((res) => {
               if (res.status == 201) {
                 this.closeForm();
-                this.resetTable();
                 this.showToast(
                   "success",
                   this.resources.employeeNotify.CreateNewEmployeeSuccess
@@ -849,9 +848,7 @@ export default {
               headers,
             }).then((res) => {
               if (res.status == 200) {
-                this.isPending = false;
                 this.closeForm();
-                this.resetTable();
                 this.showToast(
                   "success",
                   this.resources.employeeNotify.UpdateEmployeeSuccess

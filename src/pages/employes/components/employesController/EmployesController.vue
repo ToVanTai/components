@@ -187,17 +187,18 @@ export default {
         })
           .then(() => {
             this.messages = [];
-            this.initEmployesTable();
             this.showToast(
               "success",
               this.employeePage.employeeNotify.DeleteListEmployeeSuccess
             );
+            this.initEmployesTable();
           })
           .catch((err) => {
             this.messages = [];
             this.showToast("error", err);
           });
       } catch (err) {
+        this.isPending = false;
         this.messages = [err];
       }
     },
@@ -352,7 +353,7 @@ export default {
 <style>
 .dropdown {
   position: relative;
-
+  z-index: 3;
   display: inline-block;
 }
 .dropdown__btn {

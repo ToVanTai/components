@@ -123,7 +123,7 @@ export const employeePage = {
   employeeNotify: {
     GetNewEmployeeCodeFailed: "Không lấy được mã nhân viên mới.",
     GetDepartmentsFailed: "Không lấy danh sách phòng ban.",
-    GetEmployeesFailed: "Không lấy danh sách nhân viên.",
+    GetEmployeesFailed: "Lấy danh sách nhân viên thất bại.",
 
     ConfirmEmployeeDelete: "Bạn có thực sự muấn xóa Nhân viên",
 

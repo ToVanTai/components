@@ -51,6 +51,7 @@ import EmployesTable from "./components/employesTable/EmployesTable.vue";
 import TheTitle from "../../components/layout/title/TheTitle.vue";
 import BaseNotify from "../../components/common/BaseNotify.vue";
 import { employesUrl } from "../../config/index";
+import {employeePage} from "@/resources/index.js"
 export default {
   name: "EmployesPage",
   components: {
@@ -72,6 +73,8 @@ export default {
       messages: [], //nếu có thì sẽ hiện notify
       //danh sách các employee muấn xóa
       employeeListChecked: [],
+      //resource
+      resources: employeePage
     };
   },
   mounted() {
@@ -163,7 +166,8 @@ export default {
           }
         }
         await new Promise((resolve, reject) => {
-          fetch(`${employesUrl}/filter?${queryString}`).then((res) => {
+          fetch(`${employesUrl}/filter?${queryString}`)
+          .then((res) => {
             if (res.status == 200) {
               resolve(res.json());
             } else {
@@ -171,7 +175,9 @@ export default {
                 reject(res.UserMsg || res.userMsg);
               });
             }
-          });
+          }).catch(()=>{
+            reject(this.resources.employeeNotify.GetEmployeesFailed)
+          })
         })
           .then((res) => (this.employes = res))
           .catch((err) => {
