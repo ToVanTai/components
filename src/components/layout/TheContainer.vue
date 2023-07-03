@@ -1,76 +1,67 @@
 <template>
-  <!-- thùng chứa để bao quanh 2 components là sidebar và main -->
-  <div :class="{
-    'container': true,
-    'pending': isPending
-  }">
-    <Sidebar/>
-    <Main/>
+  <div class="my-container">
+    <ms-rail v-if="showRails"
+      :listData="getDefaultData"
+      :keyField="keyField"
+      :textField="textField"
+      :rowNumber="2"
+      :heightItem="30"
+      @rail-click="handleRailClick"
+    />
+    <button @click="n++">increase</button>
+    <button @click="n--">decrease</button>
+    <button @click="showRails = !showRails">close</button>
   </div>
+
 </template>
 
 
 <script>
-import Sidebar from "./sidebar/TheSidebar.vue"
-import Main from "./TheMain.vue"
+import MsRail from "../common/MsRails.vue";
+import { ref, getCurrentInstance, onMounted, computed  } from 'vue';
 export default {
   name: "MainContainer",
   components: {
-    Sidebar,
-    Main
+    MsRail
   },
-  props: {
-    isPending: {
-      type: [Boolean, null],
-      default: false
+  setup(){
+    const {proxy} = getCurrentInstance();
+    const keyField = ref();
+    const textField = ref();
+    const n = ref(16);
+    const getDefaultData = computed(()=>{
+      let arr = [];
+      for(let i = 1; i<=proxy.n; i++){
+        arr.push({
+          id:'AB'+i,
+          value: 'ABC_'+i
+        })
+      }
+      return arr;
+    });
+    const handleRailClick = (item)=>{
+      console.log(item);
     }
+    onMounted(()=>{
+      proxy.keyField = 'id';
+      proxy.textField = 'value';
+    })
+    return {
+      keyField,
+      textField,
+      getDefaultData,
+      handleRailClick,
+      n,
+      showRails:ref(true)
+    };
   }
 }
 </script>
 
 <style >
-  .container {
-  display: flex;
-  height: 100%;
-}
-.container.pending{
-  position: relative;
-  overflow: hidden;
-}
-.container.pending::before {
-  content: "";
-  position: absolute;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background-image: url("../../assets/loading.svg");
-  background-repeat: no-repeat;
-  background-position: center center;
-  background-size: 50px 50px;
-  animation: pendingRotate 2s linear 0s infinite reverse;
-  cursor: not-allowed;
-}
-.container.pending::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 100%;
-  background-color: var(--color-bg-black);
-  opacity: var(--opacity-16);
-  cursor: not-allowed;
-  z-index: 999;
-}
-@keyframes pendingRotate {
-  from {
-    transform: rotate(360deg);
-  }
-  to {
-    transform: rotate(0deg);
-  }
+.my-container{
+  padding: 25px;
+  margin: 24px 12px;
 }
 
 </style>
